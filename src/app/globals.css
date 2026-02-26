@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #05070f;
+  --foreground: #e6f4ff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Main page atmosphere inspired by futuristic UI */
+.page-background {
+  background:
+    radial-gradient(circle at 10% 18%, rgba(34, 211, 238, 0.2), transparent 34%),
+    radial-gradient(circle at 88% 12%, rgba(99, 102, 241, 0.24), transparent 38%),
+    radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.18), transparent 40%),
+    linear-gradient(145deg, #05070f 0%, #060a18 48%, #070d1f 100%);
+}
+
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(71, 85, 126, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 126, 0.1) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 95%);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.circuit-overlay {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 54px,
+      rgba(34, 211, 238, 0.09) 54px 56px,
+      transparent 56px 118px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 42px,
+      rgba(129, 140, 248, 0.08) 42px 44px,
+      transparent 44px 98px
+    );
+  background-size: 220px 220px, 260px 260px, 200px 200px, 240px 240px, 100% 100%, 100% 100%;
+  background-position: center;
+  mask-image: radial-gradient(circle at center, black 26%, transparent 92%);
+  opacity: 0.52;
+  pointer-events: none;
+}
+
+@keyframes circuit-sweep {
+  0% {
+    background-position: -40% 0;
+    opacity: 0.2;
+  }
+  50% {
+    background-position: 55% 0;
+    opacity: 0.45;
+  }
+  100% {
+    background-position: 120% 0;
+    opacity: 0.2;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+*:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: white;
 }
