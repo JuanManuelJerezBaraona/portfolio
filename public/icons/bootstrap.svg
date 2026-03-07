@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Bootstrap">
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="#7952B3"/>
+  <g transform="translate(-5 -9)">
+    <path d="M44 34h28c15 0 24 7 24 19 0 8-5 14-12 17 10 3 16 10 16 20 0 14-11 24-30 24H44V34zm20 33c8 0 13-4 13-10s-4-10-12-10H60v20h5zm4 34c9 0 14-4 14-11s-5-11-14-11h-8v22h8z" fill="#FFFFFF"/>
+  </g>
+</svg>
