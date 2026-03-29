@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# Credenciales npm locales (nunca subir tokens). El .npmrc del repo solo define registry público.
+.npmrc.local
+
 # debug
 npm-debug.log*
 yarn-debug.log*
