@@ -45,7 +45,7 @@ export const PROJECTS: Project[] = [
     title: 'Portal de Seguros Falabella',
     category: 'Seguros Falabella',
     description:
-      'Portal regional para descubrir productos, cotizar en pocos pasos y contratar seguros de forma totalmente online. Se diseñó para Chile, Perú y Colombia con foco en conversión, consistencia visual y rendimiento en múltiples dispositivos.',
+      'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia. Foco en conversión y UX.',
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Strapi 5', 'MongoDB'],
     filters: ['Cotización', 'Contratación'],
     url: 'https://www.segurosfalabella.com',
@@ -59,7 +59,7 @@ export const PROJECTS: Project[] = [
     title: 'Botón de Pago',
     category: 'Seguros Falabella',
     description:
-      'Portal transaccional para consultar cuotas pendientes y completar pagos de seguros en línea de forma simple. El flujo inicia con el número de propuesta, muestra la deuda asociada y conduce al cliente hasta la confirmación final.',
+      'Pago de cuotas de seguros en línea. Flujo guiado desde la propuesta hasta la confirmación del pago.',
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     filters: ['Pagos'],
     url: 'https://pago.segurosfalabella.com/',
@@ -73,7 +73,7 @@ export const PROJECTS: Project[] = [
     title: 'Aceptación Digital',
     category: 'Seguros Falabella',
     description:
-      'Módulo digital para cerrar la contratación de seguros previamente cotizados u ofertados por el canal comercial. Reemplaza firmas y documentos físicos por una experiencia guiada, segura y validada completamente en línea.',
+      'Contratación digital sin papeles ni firmas físicas. Experiencia guiada y validada completamente online.',
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     filters: ['Contratación', 'Pagos'],
     url: 'https://aceptacion.segurosfalabella.com/',
@@ -87,7 +87,7 @@ export const PROJECTS: Project[] = [
     title: 'Postventa',
     category: 'Seguros Falabella',
     description:
-      'Plataforma regional de postventa para gestionar trámites posteriores a la contratación con alta autonomía del usuario. Unifica procesos de clientes y equipos internos en Chile, Perú y Colombia con una operación continua y escalable.',
+      'Gestión de trámites post-contratación para CL, PE y CO. Plataforma unificada, autónoma y escalable.',
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5','MongoDB'],
     filters: ['Cotización', 'Contratación', 'Pagos', 'Postventa'],
   },
@@ -96,7 +96,7 @@ export const PROJECTS: Project[] = [
     title: 'Login Postventa',
     category: 'Seguros Falabella',
     description:
-      'Componente de autenticación regional que habilita el acceso seguro al ecosistema de postventa de Seguros Falabella. Centraliza el inicio de sesión para clientes de banco y seguros en CL, CO y PE con una experiencia homogénea.',
+      'Autenticación centralizada para el ecosistema postventa. Acceso seguro y unificado para CL, CO y PE.',
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5','MongoDB'],
     filters: ['Login'],
     url: 'https://clientes.segurosfalabella.com/',
