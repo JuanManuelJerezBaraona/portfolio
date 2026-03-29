@@ -15,7 +15,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
 
   return (
     <article
-      className={`group relative z-0 h-full rounded-3xl border border-indigo-300/20 bg-slate-950/65 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)] ${
+      className={`relative z-0 h-full rounded-3xl border border-indigo-300/20 bg-slate-950/65 backdrop-blur-md ${
         compact ? 'p-4 sm:p-5 xl:p-6' : 'p-6'
       }`}
     >
@@ -50,7 +50,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
         href={projectHref}
         target={isExternalProject ? '_blank' : undefined}
         rel={isExternalProject ? 'noopener noreferrer' : undefined}
-        className={`${compact ? 'mt-5 text-[13px] xl:mt-6 xl:text-sm' : 'mt-6 text-sm'} inline-flex items-center font-semibold text-cyan-100 transition-colors group-hover:text-white`}
+        className={`${compact ? 'mt-5 text-[13px] xl:mt-6 xl:text-sm' : 'mt-6 text-sm'} inline-flex items-center font-semibold text-cyan-100`}
         aria-label={
           isExternalProject
             ? `Visitar ${project.title}`
@@ -58,7 +58,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
         }
       >
         {isExternalProject ? 'Visitar sitio' : 'Ver caso completo'}
-        <span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">
+        <span className="ml-2" aria-hidden="true">
           &rarr;
         </span>
       </Link>

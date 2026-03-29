@@ -10,7 +10,7 @@ interface SkillCardProps {
 const SkillCard = ({ skill }: SkillCardProps) => {
   return (
     <div
-      className="group rounded-2xl border border-indigo-300/20 bg-slate-950/65 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
+      className="rounded-2xl border border-indigo-300/20 bg-slate-950/65 p-5 backdrop-blur-md"
       role="listitem"
       aria-label={`Skill: ${skill.name}`}
     >
@@ -21,7 +21,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
             alt={`${skill.name} icon`}
             width={64}
             height={64}
-            className="object-contain transition-transform duration-300 group-hover:scale-110"
+            className="object-contain"
             loading="lazy"
           />
         </div>
