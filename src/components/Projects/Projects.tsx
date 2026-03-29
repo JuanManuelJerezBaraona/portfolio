@@ -10,10 +10,6 @@ const Projects = () => {
           Proyectos destacados
         </h2>
 
-        <p className="mx-auto mt-4 max-w-2xl text-center text-slate-300">
-          Una muestra de productos diseñados para destacar visualmente y cumplir objetivos reales de negocio.
-        </p>
-
         <ProjectsCarousel projects={PROJECTS} />
 
         {PROJECTS.length === 0 && (

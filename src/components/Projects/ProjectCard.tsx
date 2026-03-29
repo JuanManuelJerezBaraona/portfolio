@@ -40,6 +40,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
               width={1366}
               height={768}
               className={`mx-auto w-full rounded-2xl object-contain ${compact ? 'max-h-55 lg:max-h-65 xl:max-h-none' : 'h-full'}`}
+              loading="lazy"
             />
           </div>
         </div>

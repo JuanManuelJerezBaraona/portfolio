@@ -22,6 +22,7 @@ const SkillCard = ({ skill }: SkillCardProps) => {
             width={64}
             height={64}
             className="object-contain transition-transform duration-300 group-hover:scale-110"
+            loading="lazy"
           />
         </div>
         <span className="text-center text-sm font-medium text-slate-100">

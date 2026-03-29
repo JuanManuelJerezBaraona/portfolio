@@ -14,10 +14,11 @@ const Header = () => {
               <Image
                 src={PERSONAL_INFO.profileImage}
                 alt={`Foto de perfil de ${PERSONAL_INFO.name}`}
-                width={500}
-                height={500}
+                width={1000}
+                height={1000}
                 className="h-full w-full object-cover"
                 priority
+                quality={100}
               />
             </div>
           </div>

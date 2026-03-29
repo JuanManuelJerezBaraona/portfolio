@@ -26,14 +26,14 @@ const AboutMe = () => {
                 He trabajado creando plataformas para Seguros Falabella en Chile, Perú y Colombia,
                 participando en flujos clave como cotizacion, contratacion, pagos y postventa. Me
                 motiva combinar código limpio, buena UX y soluciones que de verdad le hagan la vida
-                mas facil a las personas. 🚀🤝
+                mas fácil a las personas. 🚀🤝
               </p>
             </div>
           </article>
 
           <div className="grid gap-4">
             <article className="rounded-2xl border border-indigo-200/20 bg-slate-900/65 p-6 backdrop-blur-md">
-              <p className="font-heading text-3xl font-bold text-cyan-200">3+</p>
+              <p className="font-heading text-3xl font-bold text-cyan-200">2+</p>
               <p className="mt-1 text-sm text-slate-300">Años creando productos web escalables</p>
             </article>
             <article className="rounded-2xl border border-indigo-200/20 bg-slate-900/65 p-6 backdrop-blur-md">
