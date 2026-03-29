@@ -23,9 +23,9 @@ const AboutMe = () => {
                 ayuden a cumplir objetivos reales de negocio.  💻✨
               </p>
               <p>
-                He trabajado creando plataformas para Seguros Falabella en Chile, Peru y Colombia,
+                He trabajado creando plataformas para Seguros Falabella en Chile, Perú y Colombia,
                 participando en flujos clave como cotizacion, contratacion, pagos y postventa. Me
-                motiva combinar codigo limpio, buena UX y soluciones que de verdad le hagan la vida
+                motiva combinar código limpio, buena UX y soluciones que de verdad le hagan la vida
                 mas facil a las personas. 🚀🤝
               </p>
             </div>

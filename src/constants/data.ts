@@ -26,7 +26,6 @@ export const SKILLS: Skill[] = [
   { id: 'vue', name: 'Vue', icon: '/icons/vue.svg', category: 'frontend' },
   { id: 'angular', name: 'Angular', icon: '/icons/angular.svg', category: 'frontend' },
   { id: 'next', name: 'Next.js', icon: '/icons/nextjs.svg', category: 'frontend' },
-  { id: 'zustand', name: 'Zustand', icon: '/icons/zustand.svg', category: 'frontend' },
   { id: 'nest', name: 'NestJS', icon: '/icons/nestjs.svg', category: 'backend' },
   { id: 'strapi', name: 'Strapi', icon: '/icons/strapi.svg', category: 'backend' },
   { id: 'bootstrap', name: 'Bootstrap', icon: '/icons/bootstrap.svg', category: 'frontend' },
@@ -42,7 +41,7 @@ export const SKILLS: Skill[] = [
 export const PROJECTS: Project[] = [
   {
     id: 'seguros-falabella-landing',
-    title: 'Portal de Seguros Falabella',
+    title: 'Portal Seguros Falabella',
     category: 'Seguros Falabella',
     description:
       'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia. Foco en conversión y UX.',

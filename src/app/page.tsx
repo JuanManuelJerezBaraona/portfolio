@@ -4,7 +4,7 @@ import {
   AboutMe,
   Projects,
   Skills,
-  ContactForm,
+  Contact,
   Footer,
 } from '@/components';
 
@@ -20,7 +20,7 @@ const HomePage = () => {
         <AboutMe />
         <Projects />
         <Skills />
-        <ContactForm />
+        <Contact />
       </main>
       <div className="relative z-10">
         <Footer />

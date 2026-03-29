@@ -8,21 +8,21 @@ const CONTACT_CHANNELS = [
     title: 'Email',
     value: 'jjerezbaraona@gmail.com',
     href: 'mailto:jjerezbaraona@gmail.com',
-    description: 'Para propuestas, vacantes o colaboraciones directas.',
+    description: 'El canal directo. Escríbeme y te respondo antes de que enfríe el café.',
   },
   {
     id: 'linkedin',
     title: 'LinkedIn',
     value: 'juan-manuel-jerez-baraona',
     href: 'https://www.linkedin.com/in/juan-manuel-jerez-baraona-b54486274/',
-    description: 'Ideal para conectar a nivel profesional y revisar experiencia.',
+    description: 'Donde vive mi trayectoria profesional. Conectemos y hablemos de lo que viene.',
   },
   {
     id: 'github',
     title: 'GitHub',
     value: 'JuanManuelJerezBaraona',
     href: 'https://github.com/JuanManuelJerezBaraona',
-    description: 'Para ver codigo, proyectos y forma de trabajo.',
+    description: 'Código abierto, commits reales. Aquí se ve cómo construyo, no solo qué construyo.',
   },
 ];
 
@@ -62,7 +62,7 @@ const ContactIcon = ({ channelId }: { channelId: string }) => {
   );
 };
 
-const ContactForm = () => {
+const Contact = () => {
   return (
     <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
       <div className="mx-auto max-w-5xl">
@@ -106,5 +106,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
-
+export default Contact;
