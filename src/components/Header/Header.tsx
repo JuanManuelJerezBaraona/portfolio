@@ -25,7 +25,7 @@ const Header = () => {
         </div>
 
         <div className="flex justify-center items-center w-full flex-col">
-          <p className="mb-6 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
+          <p className="mb-6 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-1 font-heading text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">
             Portafolio
           </p>
 

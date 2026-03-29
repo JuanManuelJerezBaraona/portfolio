@@ -92,7 +92,7 @@ const ContactForm = () => {
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-500/10 text-cyan-100">
                   <ContactIcon channelId={channel.id} />
                 </span>
-                <p className="text-xs uppercase tracking-[0.18em] text-cyan-200/80">
+                <p className="font-heading text-xs uppercase tracking-[0.18em] text-cyan-200/80">
                   {channel.title}
                 </p>
               </div>

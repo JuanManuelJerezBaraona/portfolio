@@ -19,7 +19,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
         compact ? 'p-4 sm:p-5 xl:p-6' : 'p-6'
       }`}
     >
-      <p className="text-xs uppercase tracking-[0.18em] text-cyan-200/80">{project.category}</p>
+      <p className="font-heading text-xs uppercase tracking-[0.18em] text-cyan-200/80">{project.category}</p>
       <h3
         className={`${compact ? 'mt-2 line-clamp-2 text-lg sm:text-xl xl:mt-3 xl:line-clamp-none xl:text-xl' : 'mt-3 text-xl'} font-semibold text-white`}
       >
@@ -33,23 +33,13 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
 
       {project.screenshots && (
         <div className={compact ? 'mt-4 xl:mt-5' : 'mt-5'}>
-          <div className="hidden overflow-hidden rounded-2xl md:block">
+          <div className="overflow-hidden rounded-2xl">
             <Image
               src={project.screenshots.desktop}
               alt={`Vista desktop de ${project.title}`}
               width={1366}
               height={768}
               className={`mx-auto w-full rounded-2xl object-contain ${compact ? 'max-h-55 lg:max-h-65 xl:max-h-none' : 'h-full'}`}
-            />
-          </div>
-
-          <div className="overflow-hidden rounded-2xl md:hidden">
-            <Image
-              src={project.screenshots.mobile}
-              alt={`Vista mobile de ${project.title}`}
-              width={390}
-              height={844}
-              className={`mx-auto rounded-2xl object-contain ${compact ? 'max-w-45 sm:max-w-50' : 'h-full w-full'}`}
             />
           </div>
         </div>

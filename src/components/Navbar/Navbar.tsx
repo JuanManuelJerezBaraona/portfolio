@@ -127,7 +127,7 @@ const Navbar = () => {
             className="group flex items-center gap-3 text-white transition-opacity hover:opacity-90"
             aria-label="Ir al inicio"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/40 bg-gradient-to-br from-cyan-400/30 to-indigo-500/30 text-sm font-bold text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/40 bg-linear-to-br from-cyan-400/30 to-indigo-500/30 font-heading text-sm font-bold text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
               J
             </div>
             <div className="leading-tight">

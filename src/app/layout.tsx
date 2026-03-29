@@ -1,6 +1,19 @@
 import type { Metadata } from 'next';
+import { Orbitron, Space_Grotesk } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-orbitron',
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'Juan Manuel Jerez Baraona - Desarrollador Web',
@@ -29,7 +42,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="es">
+    <html lang="es" className={`${orbitron.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased text-white">
         {children}
         <Toaster position="top-right" richColors />
