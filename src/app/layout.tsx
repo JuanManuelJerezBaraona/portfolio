@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Orbitron, Space_Grotesk } from 'next/font/google';
-import { Toaster } from 'sonner';
 import './globals.css';
 
 const orbitron = Orbitron({
@@ -45,7 +44,6 @@ const RootLayout = ({
     <html lang="es" className={`${orbitron.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased text-white">
         {children}
-        <Toaster position="top-right" richColors />
       </body>
     </html>
   );
