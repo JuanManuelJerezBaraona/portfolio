@@ -31,7 +31,7 @@ const Header = () => {
 
           <h1 className="text-4xl font-bold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
             Desarrollador Web
-            <span className="block bg-gradient-to-r from-cyan-300 via-blue-200 to-indigo-200 bg-clip-text text-transparent">
+            <span className="block bg-linear-to-r from-cyan-300 via-blue-200 to-indigo-200 bg-clip-text text-transparent">
               Full Stack
             </span>
           </h1>
@@ -44,14 +44,14 @@ const Header = () => {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="#projects"
-              className="inline-flex items-center justify-center rounded-full border border-cyan-200/60 bg-gradient-to-r from-cyan-400/40 to-indigo-500/40 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(34,211,238,0.35)] transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full border border-cyan-200/60 bg-linear-to-r from-cyan-400/40 to-indigo-500/40 px-6 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
             >
               Explorar proyectos
             </Link>
             <a
               href="/CV-Juan-Manuel-Jerez-Baraona.pdf"
               download="CV-Juan-Manuel-Jerez-Baraona.pdf"
-              className="inline-flex items-center justify-center rounded-full border border-slate-400/35 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-100 transition-colors hover:border-cyan-300/50 hover:text-cyan-100"
+              className="inline-flex items-center justify-center rounded-full border border-slate-400/35 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-100 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:text-cyan-100 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
               aria-label="Descargar Currículum Vitae en PDF"
             >
               <svg

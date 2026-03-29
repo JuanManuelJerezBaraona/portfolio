@@ -85,7 +85,7 @@ const ContactForm = () => {
               href={channel.href}
               target={channel.href.startsWith('http') ? '_blank' : undefined}
               rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="rounded-3xl border border-indigo-300/20 bg-slate-950/70 p-6 shadow-[0_20px_50px_rgba(2,6,23,0.6)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40"
+              className="rounded-3xl border border-indigo-300/20 bg-slate-950/70 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
               aria-label={`Abrir ${channel.title}`}
             >
               <div className="flex items-center gap-3">
