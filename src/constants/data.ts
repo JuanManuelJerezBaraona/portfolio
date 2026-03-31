@@ -89,6 +89,10 @@ export const PROJECTS: Project[] = [
       'Gestión de trámites post-contratación para CL, PE y CO. Plataforma unificada, autónoma y escalable.',
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5','MongoDB'],
     filters: ['Cotización', 'Contratación', 'Pagos', 'Postventa'],
+    screenshots: {
+      desktop: '/project-shots/desktop/seguros-falabella-postventa-desktop.png',
+      mobile: '',
+    },
   },
   {
     id: 'seguros-falabella-login-postventa',
