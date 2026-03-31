@@ -41,7 +41,7 @@ export const SKILLS: Skill[] = [
 export const PROJECTS: Project[] = [
   {
     id: 'seguros-falabella-landing',
-    title: 'Portal Seguros Falabella',
+    title: 'Seguros Falabella',
     category: 'Seguros Falabella',
     description:
       'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia. Foco en conversión y UX.',
