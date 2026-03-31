@@ -48,7 +48,7 @@ const Header = () => {
             >
               Explorar proyectos
             </Link>
-            {/* <a
+            <a
               href="/CV-Juan-Manuel-Jerez-Baraona.pdf"
               download="CV-Juan-Manuel-Jerez-Baraona.pdf"
               className="inline-flex items-center justify-center rounded-full border border-slate-400/35 bg-slate-900/60 px-6 py-3 text-sm font-semibold text-slate-100 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:text-cyan-100 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
@@ -66,7 +66,7 @@ const Header = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 18h14" />
               </svg>
               Descargar CV
-            </a> */}
+            </a>
           </div>
         </div>
       </div>
