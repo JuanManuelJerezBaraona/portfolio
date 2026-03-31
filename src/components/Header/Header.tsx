@@ -18,7 +18,6 @@ const Header = () => {
                 height={1000}
                 className="h-full w-full object-cover"
                 priority
-                quality={100}
               />
             </div>
           </div>
