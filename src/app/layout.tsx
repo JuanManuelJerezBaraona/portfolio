@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { Orbitron, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  'https://juanmanueljerezportfolio.vercel.app';
+
 const orbitron = Orbitron({
   subsets: ['latin'],
   variable: '--font-orbitron',
@@ -15,6 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Juan Manuel Jerez Baraona - Desarrollador Web',
   description:
     'Portfolio de Juan Manuel Jerez Baraona, Desarrollador Web Full Stack especializado en React, Next.js, TypeScript y más.',
@@ -29,9 +34,18 @@ export const metadata: Metadata = {
   authors: [{ name: 'Juan Manuel Jerez Baraona' }],
   openGraph: {
     title: 'Juan Manuel Jerez Baraona',
-    description: 'Desarrollador Web Full Stack',
+    description:
+      'Desarrollador Web Full Stack · React, Next.js, TypeScript y más.',
     type: 'website',
     locale: 'es_ES',
+    url: siteUrl,
+    siteName: 'Portfolio — Juan Manuel Jerez Baraona',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Juan Manuel Jerez Baraona',
+    description:
+      'Desarrollador Web Full Stack · React, Next.js, TypeScript y más.',
   },
 };
 
