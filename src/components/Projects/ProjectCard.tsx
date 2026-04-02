@@ -6,40 +6,31 @@ import Link from 'next/link';
 
 interface ProjectCardProps {
   project: Project;
-  compact?: boolean;
 }
 
-const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
+const ProjectCard = ({ project }: ProjectCardProps) => {
   const projectHref = project.url ?? '#contact';
   const isExternalProject = Boolean(project.url?.startsWith('http'));
 
   return (
-    <article
-      className={`relative z-0 h-full rounded-3xl border border-indigo-300/20 bg-slate-950/65 backdrop-blur-md ${
-        compact ? 'p-4 sm:p-5 xl:p-6' : 'p-6'
-      }`}
-    >
+    <article className="relative z-0 h-full rounded-3xl border border-indigo-300/20 bg-slate-950/65 p-4 backdrop-blur-md sm:p-5 xl:p-6">
       <p className="font-heading text-xs uppercase tracking-[0.18em] text-cyan-200/80">{project.category}</p>
-      <h3
-        className={`${compact ? 'mt-2 line-clamp-2 text-lg sm:text-xl xl:mt-3 xl:line-clamp-none xl:text-xl' : 'mt-3 text-xl'} font-semibold text-white`}
-      >
+      <h3 className="mt-2 line-clamp-2 text-lg font-semibold text-white sm:text-xl xl:mt-3 xl:line-clamp-none xl:text-xl">
         {project.title}
       </h3>
-      <p
-        className={`${compact ? 'mt-2 line-clamp-3 text-sm xl:mt-3 xl:line-clamp-none' : 'mt-3 text-sm'} leading-relaxed text-slate-300`}
-      >
+      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-slate-300 xl:mt-3 xl:line-clamp-none">
         {project.description}
       </p>
 
       {project.screenshots && (
-        <div className={compact ? 'mt-4 xl:mt-5' : 'mt-5'}>
+        <div className="mt-4 xl:mt-5">
           <div className="overflow-hidden rounded-2xl">
             <Image
               src={project.screenshots.desktop}
               alt={`Vista desktop de ${project.title}`}
               width={1366}
               height={768}
-              className={`mx-auto w-full rounded-2xl object-contain ${compact ? 'max-h-55 lg:max-h-65 xl:max-h-none' : 'h-full'}`}
+              className="mx-auto max-h-55 w-full rounded-2xl object-contain lg:max-h-65 xl:max-h-none"
               loading="lazy"
             />
           </div>
@@ -50,7 +41,7 @@ const ProjectCard = ({ project, compact = false }: ProjectCardProps) => {
         href={projectHref}
         target={isExternalProject ? '_blank' : undefined}
         rel={isExternalProject ? 'noopener noreferrer' : undefined}
-        className={`${compact ? 'mt-5 text-[13px] xl:mt-6 xl:text-sm' : 'mt-6 text-sm'} inline-flex items-center font-semibold text-cyan-100`}
+        className="mt-5 inline-flex items-center text-[13px] font-semibold text-cyan-100 xl:mt-6 xl:text-sm"
         aria-label={
           isExternalProject
             ? `Visitar ${project.title}`

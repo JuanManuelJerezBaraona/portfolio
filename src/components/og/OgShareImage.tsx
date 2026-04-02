@@ -1,7 +1,3 @@
-/**
- * Open Graph: solo la foto a pantalla completa (sin marcos ni fondo).
- * Título y descripción siguen en metadata; WhatsApp las muestra al lado.
- */
 type OgShareImageProps = {
   profileImageSrc: string;
 };

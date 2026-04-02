@@ -1,0 +1,39 @@
+/* Evita que el track ancho del carrusel ensanche el documento (scroll horizontal) */
+.projects-swiper.swiper {
+  overflow: hidden;
+}
+
+/* Estilos de paginación alineados con el carrusel anterior (dots) */
+.projects-carousel .swiper-pagination {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.projects-carousel .swiper-pagination-bullet {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background: rgb(71 85 105);
+  opacity: 1;
+  transition:
+    width 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.projects-carousel .swiper-pagination-bullet-active {
+  width: 2rem;
+  border-radius: 9999px;
+  background: rgb(103 232 249);
+}
+
+/* Altura uniforme de slides con contenido variable */
+.projects-carousel .swiper-slide {
+  height: auto;
+}
+
+.projects-carousel .swiper-slide > .swiper-slide-inner {
+  height: 100%;
+}
