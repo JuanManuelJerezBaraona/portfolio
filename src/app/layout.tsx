@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
-import { Orbitron, Space_Grotesk } from 'next/font/google';
+import { Chakra_Petch, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { Footer, Navbar } from '@/components';
 import './globals.css';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   'https://juanmanueljerezportfolio.vercel.app';
 
-const orbitron = Orbitron({
+const chakraPetch = Chakra_Petch({
   subsets: ['latin'],
-  variable: '--font-orbitron',
+  weight: ['500', '600', '700'],
+  variable: '--font-chakra',
   display: 'swap',
 });
 
@@ -18,24 +20,32 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 });
 
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Juan Manuel Jerez Baraona - Desarrollador Web',
+  title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
   description:
-    'Portfolio de Juan Manuel Jerez Baraona, Desarrollador Web Full Stack especializado en React, Next.js, TypeScript y más.',
+    'Construyo plataformas de seguros 100% online de punta a punta — cotización, aceptación digital, pago y postventa — en producción para Chile, Perú y Colombia.',
   keywords: [
     'desarrollador web',
-    'frontend',
+    'full stack',
     'react',
     'nextjs',
     'typescript',
+    'nestjs',
     'portfolio',
   ],
   authors: [{ name: 'Juan Manuel Jerez Baraona' }],
   openGraph: {
-    title: 'Juan Manuel Jerez Baraona',
+    title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
     description:
-      'Desarrollador Web Full Stack · React, Next.js, TypeScript y más.',
+      'El funnel completo, de punta a punta. Plataformas de seguros en producción para CL · PE · CO.',
     type: 'website',
     locale: 'es_ES',
     url: siteUrl,
@@ -43,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Juan Manuel Jerez Baraona',
+    title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
     description:
-      'Desarrollador Web Full Stack · React, Next.js, TypeScript y más.',
+      'El funnel completo, de punta a punta. Plataformas de seguros en producción para CL · PE · CO.',
   },
 };
 
@@ -55,9 +65,19 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="es" className={`${orbitron.variable} ${spaceGrotesk.variable}`}>
-      <body className="antialiased text-white">
-        {children}
+    <html
+      lang="es"
+      className={`${chakraPetch.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
+    >
+      <body className="antialiased">
+        <div className="app-bg relative min-h-screen overflow-x-hidden">
+          <div className="grid-bg pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+          <Navbar />
+          <div className="relative z-10">
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </div>
       </body>
     </html>
   );

@@ -1,6 +1,5 @@
-'use client';
-
 import Link from 'next/link';
+import { Corners } from '@/components/ui/Hud';
 
 const CONTACT_CHANNELS = [
   {
@@ -30,19 +29,8 @@ const ContactIcon = ({ channelId }: { channelId: string }) => {
   if (channelId === 'email') {
     return (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path
-          d="M4 7h16v10H4z"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-        <path
-          d="m5 8 7 5 7-5"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        <path d="M4 7h16v10H4z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+        <path d="m5 8 7 5 7-5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }
@@ -64,42 +52,54 @@ const ContactIcon = ({ channelId }: { channelId: string }) => {
 
 const Contact = () => {
   return (
-    <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
+    <section id="contact" className="px-4 py-24 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
       <div className="mx-auto max-w-5xl">
-        <h2
-          id="contact-heading"
-          className="text-center text-3xl font-bold text-white sm:text-4xl"
-        >
-          Conectemos
-        </h2>
+        <div className="max-w-2xl">
+          <p className="label text-neon">// Contacto</p>
+          <h2
+            id="contact-heading"
+            className="mt-4 text-3xl font-bold leading-[1.05] text-text sm:text-4xl lg:text-5xl"
+          >
+            Abramos <span className="text-grad">un canal.</span>
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
+            ¿Una oportunidad, un proyecto o solo conectar? Estos son mis canales directos —elige
+            el tuyo.
+          </p>
+        </div>
 
-        <p className="mx-auto mt-4 max-w-2xl text-center text-slate-300">
-          Si quieres conversar sobre una oportunidad, un proyecto o simplemente conectar,
-          aquí tienes mis canales directos.
-        </p>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {CONTACT_CHANNELS.map((channel) => (
-            <Link
-              key={channel.id}
-              href={channel.href}
-              target={channel.href.startsWith('http') ? '_blank' : undefined}
-              rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="rounded-3xl border border-indigo-300/20 bg-slate-950/70 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/40 hover:shadow-[0_10px_28px_rgba(14,165,233,0.24)]"
-              aria-label={`Abrir ${channel.title}`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/30 bg-cyan-500/10 text-cyan-100">
-                  <ContactIcon channelId={channel.id} />
-                </span>
-                <p className="font-heading text-xs uppercase tracking-[0.18em] text-cyan-200/80">
-                  {channel.title}
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {CONTACT_CHANNELS.map((channel) => {
+            const isExternal = channel.href.startsWith('http');
+            return (
+              <Link
+                key={channel.id}
+                href={channel.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+                className="hud hud-hover scanlines group relative overflow-hidden p-6"
+                aria-label={`Abrir ${channel.title}`}
+              >
+                <Corners tone="cyan" />
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-white/[0.03] text-cyan transition-colors group-hover:text-neon">
+                    <ContactIcon channelId={channel.id} />
+                  </span>
+                  <p className="label text-muted">{channel.title}</p>
+                </div>
+                <p className="mt-4 break-words font-mono text-sm text-text sm:text-base">
+                  {channel.value}
                 </p>
-              </div>
-              <p className="mt-3 text-lg font-semibold text-white">{channel.value}</p>
-              <p className="mt-3 text-sm leading-6 text-slate-300">{channel.description}</p>
-            </Link>
-          ))}
+                <p className="mt-3 text-sm leading-6 text-muted">{channel.description}</p>
+                <span className="label mt-5 inline-flex items-center gap-1.5 text-muted transition-colors group-hover:text-neon">
+                  Abrir
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
+                  </svg>
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -3,6 +3,7 @@
 import { NAV_LINKS } from '@/constants/data';
 import { useUIStore } from '@/store/uiStore';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
 const Navbar = () => {
@@ -15,10 +16,19 @@ const Navbar = () => {
   } = useUIStore();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHome = pathname === '/';
 
   const handleNavClick = (href: string, sectionId: string) => {
     setActiveSection(sectionId);
     closeMobileMenu();
+
+    if (!isHome) {
+      router.push(`/${href}`);
+      return;
+    }
+
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -83,7 +93,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateActiveSection);
     };
-  }, [setActiveSection]);
+  }, [setActiveSection, pathname]);
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -120,87 +130,75 @@ const Navbar = () => {
   }, [isMobileMenuOpen, closeMobileMenu]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-      <div className="relative z-50 mx-auto flex h-16 w-full max-w-7xl items-center justify-between rounded-2xl border border-indigo-300/20 bg-slate-950/65 px-4 backdrop-blur-xl shadow-[0_0_35px_rgba(59,130,246,0.18)]">
-          <Link
-            href="/"
-            className="group flex items-center gap-3 text-white transition-opacity hover:opacity-90"
-            aria-label="Ir al inicio"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-cyan-300/40 bg-linear-to-br from-cyan-400/30 to-indigo-500/30 font-heading text-sm font-bold text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
-              J
-            </div>
-            <div className="leading-tight">
-              <span className="block text-[10px] uppercase tracking-[0.22em] text-slate-300">
-                Desarrollador Web
-              </span>
-              <span className="block text-sm font-semibold text-white group-hover:text-cyan-200">
-                Juan Manuel Jerez Baraona
-              </span>
-            </div>
-          </Link>
+    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+      <div className="relative z-50 mx-auto flex h-16 w-full max-w-7xl items-center justify-between rounded-xl border border-line bg-ink-2/80 px-3 backdrop-blur-xl">
+        <Link
+          href="/"
+          className="group flex items-center gap-3 transition-opacity hover:opacity-90"
+          aria-label="Ir al inicio"
+        >
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neon/40 bg-linear-to-br from-neon/20 to-cyan/20 font-display text-sm font-bold text-text shadow-[0_0_18px_-4px_rgba(255,46,136,0.6)]">
+            JJ
+          </div>
+          <div className="leading-tight">
+            <span className="label block text-muted">Full-Stack Dev</span>
+            <span className="block font-display text-sm font-semibold text-text group-hover:text-grad">
+              Juan Manuel Jerez
+            </span>
+          </div>
+        </Link>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <div className="flex items-center gap-1 rounded-full border border-indigo-300/20 bg-slate-900/70 p-1">
+        <div className="hidden items-center gap-3 md:flex">
+          <div className="flex items-center gap-1 rounded-full border border-line bg-ink/60 p-1">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.href, link.id)}
-                onKeyDown={(e) => handleKeyDown(e, link.href, link.id)}
+                onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
                 className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none ${
-                  activeSection === link.id
-                    ? 'bg-cyan-400/20 text-cyan-100 shadow-[0_0_18px_rgba(34,211,238,0.22)]'
-                    : 'text-slate-200 hover:bg-indigo-400/15 hover:text-white'
+                  isHome && activeSection === link.id
+                    ? 'bg-neon/15 text-text shadow-[0_0_18px_-6px_rgba(255,46,136,0.8)]'
+                    : 'text-muted hover:bg-white/5 hover:text-text'
                 }`}
                 tabIndex={0}
                 aria-label={`Ir a ${link.label}`}
-                aria-current={activeSection === link.id ? 'page' : undefined}
+                aria-current={isHome && activeSection === link.id ? 'page' : undefined}
               >
                 {link.label}
               </button>
             ))}
-            </div>
           </div>
+        </div>
 
-          <button
-            ref={mobileMenuButtonRef}
-            onClick={toggleMobileMenu}
-            className="rounded-xl border border-white/15 p-2 text-white transition-colors hover:bg-white/10 md:hidden"
-            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={isMobileMenuOpen}
+        <button
+          ref={mobileMenuButtonRef}
+          onClick={toggleMobileMenu}
+          className="rounded-lg border border-line p-2 text-text transition-colors hover:bg-white/5 md:hidden"
+          aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={isMobileMenuOpen}
+        >
+          <svg
+            className={`h-6 w-6 transition-transform duration-300 ${
+              isMobileMenuOpen ? 'rotate-90' : 'rotate-0'
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <svg
-              className={`h-6 w-6 transition-transform duration-300 ${
-                isMobileMenuOpen ? 'rotate-90' : 'rotate-0'
-              }`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {isMobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
 
       <button
         type="button"
         onClick={closeMobileMenu}
         aria-label="Cerrar menú móvil"
-        className={`fixed inset-x-0 bottom-0 top-24 bg-slate-950/45 backdrop-blur-[3px] transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-24 bg-ink/60 backdrop-blur-[3px] transition-opacity duration-300 md:hidden ${
           isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       />
@@ -210,33 +208,31 @@ const Navbar = () => {
         className={`relative z-50 mx-auto w-full max-w-7xl overflow-hidden transition-all duration-300 ease-out md:hidden ${
           isMobileMenuOpen
             ? 'mt-3 max-h-80 opacity-100'
-            : 'mt-0 max-h-0 opacity-0 pointer-events-none'
+            : 'pointer-events-none mt-0 max-h-0 opacity-0'
         }`}
         aria-hidden={!isMobileMenuOpen}
       >
         <div
-          className={`rounded-2xl border border-indigo-300/20 bg-slate-950/90 p-3 backdrop-blur-xl transition-transform duration-300 ${
+          className={`rounded-xl border border-line bg-ink-2/95 p-3 backdrop-blur-xl transition-transform duration-300 ${
             isMobileMenuOpen ? 'translate-y-0' : '-translate-y-2'
           }`}
         >
-          <div className="flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.href, link.id)}
-                  onKeyDown={(e) => handleKeyDown(e, link.href, link.id)}
-                  className={`rounded-xl px-4 py-2 text-left transition-all hover:bg-indigo-400/20 hover:text-white ${
-                    activeSection === link.id
-                      ? 'bg-cyan-400/15 text-cyan-100'
-                      : 'text-slate-200'
-                  }`}
-                  tabIndex={0}
-                  aria-label={`Ir a ${link.label}`}
-                  aria-current={activeSection === link.id ? 'page' : undefined}
-                >
-                  {link.label}
-                </button>
-              ))}
+          <div className="flex flex-col gap-1">
+            {NAV_LINKS.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.href, link.id)}
+                onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
+                className={`rounded-lg px-4 py-2.5 text-left transition-all hover:bg-white/5 hover:text-text ${
+                  isHome && activeSection === link.id ? 'bg-neon/10 text-text' : 'text-muted'
+                }`}
+                tabIndex={0}
+                aria-label={`Ir a ${link.label}`}
+                aria-current={isHome && activeSection === link.id ? 'page' : undefined}
+              >
+                {link.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -245,4 +241,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

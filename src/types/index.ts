@@ -5,6 +5,15 @@ export interface Skill {
   category: 'frontend' | 'backend' | 'database' | 'tools';
 }
 
+export type CountryCode = 'CL' | 'PE' | 'CO';
+
+export interface ProjectHighlight {
+  /** monospace value, e.g. "03" or "100%" */
+  value: string;
+  /** short label below the value */
+  label: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -17,6 +26,25 @@ export interface Project {
     desktop: string;
     mobile: string;
   };
+
+  /** Position in the customer journey funnel (1 = entry). */
+  stage: number;
+  /** Funnel stage name, e.g. "Cotización". */
+  flow: string;
+  /** Countries where the flow runs in production. */
+  countries: CountryCode[];
+  /** "live" = public URL in production, "internal" = restricted access. */
+  status: 'live' | 'internal';
+  /** What Juan Manuel specifically owned on this flow. */
+  role: string;
+  /** Longer narrative used on the case-file hero. */
+  summary: string;
+  /** The problem this flow had to solve. */
+  challenge: string;
+  /** Concrete contributions, grounded in the real stack. */
+  contributions: string[];
+  /** Honest, derivable stats for the case file. */
+  highlights: ProjectHighlight[];
 }
 
 export interface NavLink {

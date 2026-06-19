@@ -1,9 +1,17 @@
-/* Evita que el track ancho del carrusel ensanche el documento (scroll horizontal) */
+/* Keep the wide track from widening the document (horizontal scroll) */
 .projects-swiper.swiper {
-  overflow: hidden;
+  overflow: visible;
 }
 
-/* Estilos de paginación alineados con el carrusel anterior (dots) */
+/* Uniform slide heights with variable content */
+.projects-carousel .swiper-slide {
+  height: auto;
+}
+.projects-carousel .swiper-slide > .swiper-slide-inner {
+  height: 100%;
+}
+
+/* Pagination dots — HUD palette */
 .projects-carousel .swiper-pagination {
   position: relative;
   bottom: auto;
@@ -13,27 +21,15 @@
 }
 
 .projects-carousel .swiper-pagination-bullet {
-  width: 0.625rem;
-  height: 0.625rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 9999px;
-  background: rgb(71 85 105);
+  background: rgba(150, 140, 205, 0.35);
   opacity: 1;
-  transition:
-    width 0.3s ease,
-    background-color 0.3s ease;
+  transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .projects-carousel .swiper-pagination-bullet-active {
-  width: 2rem;
-  border-radius: 9999px;
-  background: rgb(103 232 249);
-}
-
-/* Altura uniforme de slides con contenido variable */
-.projects-carousel .swiper-slide {
-  height: auto;
-}
-
-.projects-carousel .swiper-slide > .swiper-slide-inner {
-  height: 100%;
+  width: 1.75rem;
+  background: linear-gradient(90deg, var(--neon), var(--cyan));
 }

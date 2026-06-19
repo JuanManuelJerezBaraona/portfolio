@@ -1,112 +1,245 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05070f;
-  --foreground: #e6f4ff;
+  --ink: #07060d;
+  --ink-2: #0c0a16;
+  --ink-3: #131022;
+  --neon: #ff2e88;
+  --neon-soft: #ff66a8;
+  --cyan: #35e6ff;
+  --lime: #c6ff4a;
+  --text: #ece8ff;
+  --muted: #8d88a8;
+  --line: rgba(150, 140, 205, 0.14);
+
+  --background: var(--ink);
+  --foreground: var(--text);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-space-grotesk), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-heading: var(--font-orbitron), "Orbitron", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-background: var(--ink);
+  --color-foreground: var(--text);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-neon: var(--neon);
+  --color-neon-soft: var(--neon-soft);
+  --color-cyan: var(--cyan);
+  --color-lime: var(--lime);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+
+  --font-display: var(--font-chakra), "Chakra Petch", system-ui, sans-serif;
+  --font-sans: var(--font-space-grotesk), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--ink);
+  color: var(--text);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-orbitron), "Orbitron", system-ui, sans-serif;
-  letter-spacing: 0.04em;
-}
-
-/* Main page atmosphere inspired by futuristic UI */
-.page-background {
-  background:
-    radial-gradient(circle at 10% 18%, rgba(34, 211, 238, 0.2), transparent 34%),
-    radial-gradient(circle at 88% 12%, rgba(99, 102, 241, 0.24), transparent 38%),
-    radial-gradient(circle at 50% 80%, rgba(14, 165, 233, 0.18), transparent 40%),
-    linear-gradient(145deg, #05070f 0%, #060a18 48%, #070d1f 100%);
-}
-
-.grid-overlay {
-  background-image:
-    linear-gradient(rgba(71, 85, 126, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(71, 85, 126, 0.1) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: radial-gradient(circle at center, black 35%, transparent 95%);
-  opacity: 0.75;
-  pointer-events: none;
-}
-
-.circuit-overlay {
-  background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 54px,
-      rgba(34, 211, 238, 0.09) 54px 56px,
-      transparent 56px 118px
-    ),
-    repeating-linear-gradient(
-      180deg,
-      transparent 0 42px,
-      rgba(129, 140, 248, 0.08) 42px 44px,
-      transparent 44px 98px
-    );
-  background-size: 220px 220px, 260px 260px, 200px 200px, 240px 240px, 100% 100%, 100% 100%;
-  background-position: center;
-  mask-image: radial-gradient(circle at center, black 26%, transparent 92%);
-  opacity: 0.52;
-  pointer-events: none;
-}
-
-@keyframes circuit-sweep {
-  0% {
-    background-position: -40% 0;
-    opacity: 0.2;
-  }
-  50% {
-    background-position: 55% 0;
-    opacity: 0.45;
-  }
-  100% {
-    background-position: 120% 0;
-    opacity: 0.2;
-  }
+  font-family: var(--font-chakra), "Chakra Petch", system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
+/* ============================================================
+   ATMOSPHERE  —  deep ink base + restrained neon glows + grid
+   ============================================================ */
+.app-bg {
+  background:
+    radial-gradient(820px 560px at 8% -8%, rgba(255, 46, 136, 0.16), transparent 62%),
+    radial-gradient(760px 600px at 96% 4%, rgba(53, 230, 255, 0.11), transparent 60%),
+    radial-gradient(900px 760px at 50% 118%, rgba(124, 58, 237, 0.16), transparent 60%),
+    var(--ink);
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(150, 140, 210, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 140, 210, 0.055) 1px, transparent 1px);
+  background-size: 58px 58px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 22%, black 0%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 22%, black 0%, transparent 78%);
 }
 
+/* ============================================================
+   HUD PANELS
+   ============================================================ */
+.hud {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(19, 16, 34, 0.72), rgba(11, 9, 21, 0.86));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hud-hover {
+  transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s ease;
+}
+.hud-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 46, 136, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(255, 46, 136, 0.18),
+    0 26px 60px -28px rgba(255, 46, 136, 0.5);
+}
+
+/* scanline veneer for HUD surfaces (host needs position + overflow-hidden) */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(180, 200, 255, 0.04) 0 1px,
+    transparent 1px 3px
+  );
+  opacity: 0.6;
+}
+
+/* ============================================================
+   STATUS DOTS
+   ============================================================ */
+.dot {
+  position: relative;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  flex: none;
+}
+.dot-live {
+  background: var(--lime);
+  box-shadow: 0 0 10px rgba(198, 255, 74, 0.9);
+}
+.dot-live::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 9999px;
+  border: 1px solid var(--lime);
+  animation: dot-ping 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.dot-idle {
+  background: var(--cyan);
+  box-shadow: 0 0 9px rgba(53, 230, 255, 0.75);
+}
+@keyframes dot-ping {
+  0% { transform: scale(0.5); opacity: 0.85; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* ============================================================
+   FUNNEL SPINE  —  signature connector
+   ============================================================ */
+.spine-x {
+  background: linear-gradient(
+    90deg,
+    rgba(53, 230, 255, 0.05),
+    rgba(255, 46, 136, 0.55) 50%,
+    rgba(198, 255, 74, 0.05)
+  );
+}
+.spine-y {
+  background: linear-gradient(
+    180deg,
+    rgba(53, 230, 255, 0.45),
+    rgba(255, 46, 136, 0.5) 55%,
+    rgba(198, 255, 74, 0.18)
+  );
+}
+
+/* ============================================================
+   TELEMETRY TICKER  —  marquee strip
+   ============================================================ */
+.ticker {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 38s linear infinite;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   TYPE HELPERS
+   ============================================================ */
+.text-grad {
+  background: linear-gradient(102deg, var(--neon) 6%, var(--cyan) 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.label {
+  font-family: var(--font-jetbrains), "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.66rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   LOAD REVEAL
+   ============================================================ */
+.rise {
+  animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   CHROME  —  scrollbar / focus / selection
+   ============================================================ */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--ink); }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(255, 46, 136, 0.6), rgba(53, 230, 255, 0.5));
+  border-radius: 9px;
+  border: 2px solid var(--ink);
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(180deg, rgba(255, 46, 136, 0.85), rgba(53, 230, 255, 0.7));
 }
 
 *:focus-visible {
-  outline: 2px solid #22d3ee;
+  outline: 2px solid var(--cyan);
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.3);
-  color: white;
+  background: rgba(255, 46, 136, 0.32);
+  color: #fff;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
