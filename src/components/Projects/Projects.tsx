@@ -1,4 +1,5 @@
 import { PROJECTS } from '@/constants/data';
+import Reveal from '@/components/ui/Reveal';
 
 import FunnelNode from './FunnelNode';
 import ProjectsCarousel from './ProjectsCarousel';
@@ -11,7 +12,7 @@ const Projects = () => {
       aria-labelledby="projects-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="label text-neon">// El sistema</p>
           <h2
             id="projects-heading"
@@ -20,9 +21,9 @@ const Projects = () => {
             El recorrido del cliente, <span className="text-grad">de punta a punta.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
-            No son cinco proyectos sueltos: es una sola plataforma de seguros que construí
-            etapa por etapa. Recórrela como lo hace un cliente real —y abre cualquier nodo
-            para ver qué hay detrás.
+            No son cinco proyectos sueltos: es una misma plataforma de seguros, construida
+            etapa por etapa. Recórrela igual que un cliente real —y abre cualquier nodo para
+            ver qué hay por dentro.
           </p>
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
             <span className="inline-flex items-center gap-2">
@@ -34,7 +35,7 @@ const Projects = () => {
               <span className="label text-muted">Acceso interno</span>
             </span>
           </div>
-        </div>
+        </Reveal>
 
         {PROJECTS.length === 0 ? (
           <div className="hud mt-12 p-8 text-center text-muted">
@@ -74,17 +75,17 @@ const Projects = () => {
 
                     {onLeft ? (
                       <>
-                        <div className="col-start-1 pr-16">
+                        <Reveal className="col-start-1 pr-16" amount={0.3}>
                           <FunnelNode project={project} />
-                        </div>
+                        </Reveal>
                         <div className="col-start-2" />
                       </>
                     ) : (
                       <>
                         <div className="col-start-1" />
-                        <div className="col-start-2 pl-16">
+                        <Reveal className="col-start-2 pl-16" amount={0.3}>
                           <FunnelNode project={project} />
-                        </div>
+                        </Reveal>
                       </>
                     )}
                   </li>
@@ -93,9 +94,9 @@ const Projects = () => {
             </ol>
 
             {/* Mobile · swiper */}
-            <div className="mt-12 lg:hidden">
+            <Reveal className="mt-12 lg:hidden">
               <ProjectsCarousel projects={PROJECTS} />
-            </div>
+            </Reveal>
           </>
         )}
       </div>

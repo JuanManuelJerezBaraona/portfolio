@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { PERSONAL_INFO } from '@/constants/data';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,8 +21,8 @@ const Header = () => {
     >
       <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         {/* LEFT · thesis */}
-        <div className="rise">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <div>
+          <div className="rise flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="inline-flex items-center gap-2">
               <span className="dot dot-live" />
               <span className="label text-lime">Disponible</span>
@@ -30,21 +31,31 @@ const Header = () => {
             <span className="label text-muted">Full-Stack Developer</span>
           </div>
 
-          <h1 className="mt-7 text-[2.7rem] font-bold leading-[0.97] sm:text-6xl lg:text-[4.6rem]">
+          <h1
+            className="rise mt-7 text-[2.7rem] font-bold leading-[0.97] sm:text-6xl lg:text-[4.6rem]"
+            style={{ '--rise-delay': '90ms' } as CSSProperties}
+          >
             <span className="block text-text">Construyo el</span>
             <span className="block text-grad">funnel completo.</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-            Full-Stack Developer especializado en plataformas de seguros 100% online.
-            Cotización, aceptación digital, pago y postventa —{' '}
-            <span className="text-text">en producción para CL · PE · CO.</span>
+          <p
+            className="rise mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
+            style={{ '--rise-delay': '180ms' } as CSSProperties}
+          >
+            Soy Juan, desarrollador full-stack. Construí buena parte del flujo de seguros de
+            Falabella —cotizar, aceptar, pagar y resolver postventa, de la primera pantalla al
+            último endpoint—.{' '}
+            <span className="text-text">Todo en producción para Chile, Perú y Colombia.</span>
           </p>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div
+            className="rise mt-9 flex flex-col gap-3 sm:flex-row"
+            style={{ '--rise-delay': '270ms' } as CSSProperties}
+          >
             <Link
               href="#projects"
-              className="group inline-flex items-center justify-center gap-2 rounded-lg border border-neon/50 bg-neon/10 px-6 py-3.5 font-mono text-sm font-medium tracking-wide text-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-neon/20 hover:shadow-[0_14px_44px_-14px_rgba(255,46,136,0.8)]"
+              className="sheen group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg border border-neon/50 bg-neon/10 px-6 py-3.5 font-mono text-sm font-medium tracking-wide text-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-neon/20 hover:shadow-[0_14px_44px_-14px_rgba(255,46,136,0.8)]"
             >
               Ver el sistema
               <svg
@@ -80,8 +91,8 @@ const Header = () => {
         </div>
 
         {/* RIGHT · operator HUD */}
-        <div className="rise" style={{ animationDelay: '130ms' }}>
-          <div className="hud scanlines relative overflow-hidden p-5 sm:p-6">
+        <div className="rise" style={{ animationDelay: '360ms' }}>
+          <div className="hud scanlines boot-sweep relative overflow-hidden p-5 sm:p-6">
             <Corners tone="neon" />
 
             <div className="flex items-center justify-between border-b border-line pb-4">

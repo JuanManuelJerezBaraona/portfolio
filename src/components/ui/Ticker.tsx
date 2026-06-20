@@ -4,7 +4,8 @@ const ITEMS = [
   '05 flujos en producción',
   'Cotización → Aceptación → Pago → Acceso → Postventa',
   'Full-Stack · React · Next.js · NestJS',
-  'Arquitectura limpia · UX de alto estándar',
+  'Código que aguanta el viernes a las seis',
+  'Hecho a mano en Santiago de Chile',
 ];
 
 const Ticker = () => {

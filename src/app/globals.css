@@ -168,7 +168,20 @@ html.is-scrolling .circuit-pulse {
   transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
     box-shadow 0.35s ease;
 }
-.hud-hover:hover {
+/* The lift only fires on devices with a real pointer. On touch screens a
+   tapped `:hover` sticks until you tap elsewhere — which made the project
+   cards feel broken on mobile — so it's gated behind `hover: hover`. */
+@media (hover: hover) {
+  .hud-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 46, 136, 0.5);
+    box-shadow:
+      0 0 0 1px rgba(255, 46, 136, 0.18),
+      0 26px 60px -28px rgba(255, 46, 136, 0.5);
+  }
+}
+/* Keyboard users get the same affordance on every device. */
+.hud-hover:focus-visible {
   transform: translateY(-4px);
   border-color: rgba(255, 46, 136, 0.5);
   box-shadow:
@@ -277,10 +290,112 @@ html.is-scrolling .circuit-pulse {
    ============================================================ */
 .rise {
   animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--rise-delay, 0ms);
 }
 @keyframes rise {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: none; }
+}
+
+/* ============================================================
+   SCROLL REVEAL  —  content settles in as you read down the page.
+   The hidden state is gated behind `.reveal-ready` (set by an inline
+   script before first paint) so the page degrades to fully visible
+   if JavaScript never runs.
+   ============================================================ */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-ready .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ============================================================
+   BOOT SEQUENCE  —  the operator panel powers on, once, on load.
+   A single soft light bar sweeps down the HUD as it "comes online".
+   ============================================================ */
+.boot-sweep::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(53, 230, 255, 0.12) 48%,
+    rgba(255, 46, 136, 0.06) 52%,
+    transparent 100%
+  );
+  transform: translateY(-130%);
+  animation: boot-scan 1.15s ease-out 0.35s 1 both;
+}
+@keyframes boot-scan {
+  to { transform: translateY(130%); }
+}
+
+/* ============================================================
+   SHEEN  —  a light band sweeps across on hover (primary actions)
+   ============================================================ */
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.16) 48%,
+    transparent 58%
+  );
+  background-size: 250% 100%;
+  background-position: 160% 0;
+  transition: background-position 0.7s ease;
+}
+@media (hover: hover) {
+  .sheen:hover::after {
+    background-position: -60% 0;
+  }
+}
+
+/* ============================================================
+   FUNNEL SPINE FLOW  —  a data pulse travels down the pipeline
+   (desktop spine only). Pauses while scrolling, like the circuit.
+   ============================================================ */
+.spine-y::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 20%;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--cyan) 40%,
+    var(--neon) 70%,
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(53, 230, 255, 0.45);
+  animation: spine-flow 5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes spine-flow {
+  0% { top: -20%; opacity: 0; }
+  14% { opacity: 1; }
+  86% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+html.is-scrolling .spine-y::after {
+  animation-play-state: paused;
 }
 
 /* ============================================================
@@ -319,5 +434,16 @@ html.is-scrolling .circuit-pulse {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Content must never depend on motion to become visible. */
+  .reveal-ready .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .boot-sweep::before,
+  .sheen::after,
+  .spine-y::after {
+    display: none !important;
   }
 }

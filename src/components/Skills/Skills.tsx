@@ -1,5 +1,6 @@
 import { SKILLS } from '@/constants/data';
 import { Skill } from '@/types';
+import Reveal from '@/components/ui/Reveal';
 import SkillCard from './SkillCard';
 
 const CATEGORIES: { key: Skill['category']; label: string }[] = [
@@ -13,7 +14,7 @@ const Skills = () => {
   return (
     <section id="skills" className="px-4 py-24 sm:px-6 lg:px-8" aria-labelledby="skills-heading">
       <div className="mx-auto max-w-7xl">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="label text-neon">// Stack</p>
           <h2
             id="skills-heading"
@@ -22,18 +23,19 @@ const Skills = () => {
             El arsenal <span className="text-grad">técnico.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
-            Las herramientas con las que construyo interfaces robustas, accesibles y escalables
-            —de la base de datos al pixel.
+            No las colecciono por moda. Son las herramientas con las que de verdad construyo
+            —de la base de datos hasta el último pixel— cuando algo tiene que salir bien, rápido
+            y para durar.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 space-y-10">
-          {CATEGORIES.map((category) => {
+          {CATEGORIES.map((category, index) => {
             const skills = SKILLS.filter((skill) => skill.category === category.key);
             if (skills.length === 0) return null;
 
             return (
-              <div key={category.key}>
+              <Reveal key={category.key} delay={index * 70}>
                 <div className="flex items-center gap-4">
                   <p className="label text-cyan">{category.label}</p>
                   <span className="h-px flex-1 bg-line" />
@@ -48,7 +50,7 @@ const Skills = () => {
                     <SkillCard key={skill.id} skill={skill} />
                   ))}
                 </div>
-              </div>
+              </Reveal>
             );
           })}
         </div>

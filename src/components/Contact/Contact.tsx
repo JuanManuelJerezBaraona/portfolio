@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Corners } from '@/components/ui/Hud';
+import Reveal from '@/components/ui/Reveal';
 
 const CONTACT_CHANNELS = [
   {
@@ -7,21 +8,21 @@ const CONTACT_CHANNELS = [
     title: 'Email',
     value: 'jjerezbaraona@gmail.com',
     href: 'mailto:jjerezbaraona@gmail.com',
-    description: 'El canal directo. Escríbeme y te respondo antes de que enfríe el café.',
+    description: 'El canal directo. Escríbeme y te respondo antes de que se enfríe el café.',
   },
   {
     id: 'linkedin',
     title: 'LinkedIn',
     value: 'juan-manuel-jerez-baraona',
     href: 'https://www.linkedin.com/in/juan-manuel-jerez-baraona-b54486274/',
-    description: 'Donde vive mi trayectoria profesional. Conectemos y hablemos de lo que viene.',
+    description: 'Mi trayectoria, con nombres y fechas. Conectemos y veamos qué se nos ocurre.',
   },
   {
     id: 'github',
     title: 'GitHub',
     value: 'JuanManuelJerezBaraona',
     href: 'https://github.com/JuanManuelJerezBaraona',
-    description: 'Código abierto, commits reales. Aquí se ve cómo construyo, no solo qué construyo.',
+    description: 'Commits de verdad. Acá se ve cómo construyo, no solo qué construyo.',
   },
 ];
 
@@ -54,7 +55,7 @@ const Contact = () => {
   return (
     <section id="contact" className="px-4 py-24 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
       <div className="mx-auto max-w-5xl">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="label text-neon">// Contacto</p>
           <h2
             id="contact-heading"
@@ -63,41 +64,42 @@ const Contact = () => {
             Abramos <span className="text-grad">un canal.</span>
           </h2>
           <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
-            ¿Una oportunidad, un proyecto o solo conectar? Estos son mis canales directos —elige
-            el tuyo.
+            ¿Tienes algo entre manos —una oportunidad, un proyecto o pura curiosidad? Estos son
+            mis canales directos. Elige el que prefieras; los leo todos.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {CONTACT_CHANNELS.map((channel) => {
+          {CONTACT_CHANNELS.map((channel, index) => {
             const isExternal = channel.href.startsWith('http');
             return (
-              <Link
-                key={channel.id}
-                href={channel.href}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noopener noreferrer' : undefined}
-                className="hud hud-hover scanlines group relative overflow-hidden p-6"
-                aria-label={`Abrir ${channel.title}`}
-              >
-                <Corners tone="cyan" />
-                <div className="flex items-center gap-3">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-white/[0.03] text-cyan transition-colors group-hover:text-neon">
-                    <ContactIcon channelId={channel.id} />
+              <Reveal key={channel.id} delay={index * 90}>
+                <Link
+                  href={channel.href}
+                  target={isExternal ? '_blank' : undefined}
+                  rel={isExternal ? 'noopener noreferrer' : undefined}
+                  className="hud hud-hover scanlines group relative flex h-full flex-col overflow-hidden p-6"
+                  aria-label={`Abrir ${channel.title}`}
+                >
+                  <Corners tone="cyan" />
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-white/[0.03] text-cyan transition-colors group-hover:text-neon">
+                      <ContactIcon channelId={channel.id} />
+                    </span>
+                    <p className="label text-muted">{channel.title}</p>
+                  </div>
+                  <p className="mt-4 break-words font-mono text-sm text-text sm:text-base">
+                    {channel.value}
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-muted">{channel.description}</p>
+                  <span className="label mt-5 inline-flex items-center gap-1.5 text-muted transition-colors group-hover:text-neon">
+                    Abrir
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
+                    </svg>
                   </span>
-                  <p className="label text-muted">{channel.title}</p>
-                </div>
-                <p className="mt-4 break-words font-mono text-sm text-text sm:text-base">
-                  {channel.value}
-                </p>
-                <p className="mt-3 text-sm leading-6 text-muted">{channel.description}</p>
-                <span className="label mt-5 inline-flex items-center gap-1.5 text-muted transition-colors group-hover:text-neon">
-                  Abrir
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m0 0-6-6m6 6-6 6" />
-                  </svg>
-                </span>
-              </Link>
+                </Link>
+              </Reveal>
             );
           })}
         </div>

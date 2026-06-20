@@ -3,6 +3,7 @@ import { Project } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Corners, Deploy, StatusDot } from '@/components/ui/Hud';
+import Reveal from '@/components/ui/Reveal';
 
 interface CaseFileProps {
   project: Project;
@@ -74,7 +75,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-lg border border-neon/50 bg-neon/10 px-5 py-3 font-mono text-sm tracking-wide text-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-neon/20 hover:shadow-[0_14px_44px_-14px_rgba(255,46,136,0.8)]"
+                className="sheen group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-neon/50 bg-neon/10 px-5 py-3 font-mono text-sm tracking-wide text-text transition-all duration-300 hover:-translate-y-0.5 hover:bg-neon/20 hover:shadow-[0_14px_44px_-14px_rgba(255,46,136,0.8)]"
               >
                 Visitar sitio
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true">
@@ -88,18 +89,22 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
 
         {/* highlights */}
         <dl className="mt-12 grid grid-cols-3 gap-3 sm:gap-4">
-          {project.highlights.map((highlight) => (
-            <div key={highlight.label} className="hud scanlines relative overflow-hidden p-4 text-center sm:p-5">
+          {project.highlights.map((highlight, index) => (
+            <Reveal
+              key={highlight.label}
+              className="hud scanlines relative overflow-hidden p-4 text-center sm:p-5"
+              delay={index * 90}
+            >
               <Corners tone="cyan" />
               <dd className="text-grad font-display text-3xl font-bold sm:text-4xl">{highlight.value}</dd>
               <dt className="label mt-2 text-muted">{highlight.label}</dt>
-            </div>
+            </Reveal>
           ))}
         </dl>
 
         {/* desktop screenshot · browser frame */}
         {project.screenshots?.desktop && (
-          <figure className="hud mt-12 overflow-hidden">
+          <Reveal as="figure" className="hud mt-12 overflow-hidden">
             <div className="flex items-center gap-2 border-b border-line px-4 py-3">
               <span className="h-3 w-3 rounded-full bg-neon/70" />
               <span className="h-3 w-3 rounded-full bg-lime/70" />
@@ -116,18 +121,18 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
               className="w-full"
               priority
             />
-          </figure>
+          </Reveal>
         )}
 
         {/* narrative + aside */}
         <div className="mt-16 grid gap-12 lg:grid-cols-[1.5fr_1fr]">
           <div className="space-y-12">
-            <section>
+            <Reveal as="section">
               <h2 className="label text-neon">// El reto</h2>
               <p className="mt-4 text-lg leading-relaxed text-text/90">{project.challenge}</p>
-            </section>
+            </Reveal>
 
-            <section>
+            <Reveal as="section">
               <h2 className="label text-neon">// Lo que construí</h2>
               <ul className="mt-5 space-y-3">
                 {project.contributions.map((item, index) => (
@@ -139,10 +144,10 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
                   </li>
                 ))}
               </ul>
-            </section>
+            </Reveal>
 
             {hasMobileShot && (
-              <section>
+              <Reveal as="section">
                 <h2 className="label text-neon">// En el bolsillo</h2>
                 <figure className="mt-5 mx-auto w-[248px]">
                   <div className="hud relative rounded-[2rem] p-2.5">
@@ -157,12 +162,12 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
                     />
                   </div>
                 </figure>
-              </section>
+              </Reveal>
             )}
           </div>
 
           {/* aside · the spec sheet */}
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+          <Reveal as="aside" className="lg:sticky lg:top-28 lg:self-start">
             <div className="hud scanlines relative overflow-hidden p-6">
               <Corners tone="neon" />
               <p className="label text-muted">Ficha técnica</p>
@@ -200,7 +205,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
                 ))}
               </div>
             </div>
-          </aside>
+          </Reveal>
         </div>
 
         {/* prev / next */}
