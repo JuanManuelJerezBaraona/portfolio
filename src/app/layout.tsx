@@ -70,6 +70,13 @@ const RootLayout = ({
       lang="es"
       className={`${chakraPetch.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('scrollRestoration' in history){history.scrollRestoration='manual';}if(window.location.hash){history.replaceState(null,'',window.location.pathname+window.location.search);}window.scrollTo(0,0);`,
+          }}
+        />
+      </head>
       <body className="antialiased">
         <div className="app-bg relative min-h-screen overflow-x-hidden">
           <ScrollReset />
