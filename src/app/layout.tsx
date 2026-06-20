@@ -3,6 +3,7 @@ import { Chakra_Petch, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { Footer, Navbar } from '@/components';
 import ScrollReset from '@/components/ui/ScrollReset';
 import CircuitBackground from '@/components/ui/CircuitBackground';
+import ScrollMotionGuard from '@/components/ui/ScrollMotionGuard';
 import './globals.css';
 
 const siteUrl =
@@ -83,6 +84,7 @@ const RootLayout = ({
           <ScrollReset />
           <div className="grid-bg" aria-hidden="true" />
           <CircuitBackground />
+          <ScrollMotionGuard />
           <Navbar />
           <div className="relative z-10">
             <main>{children}</main>

@@ -106,6 +106,12 @@ html {
   );
 }
 
+/* The animated pulses live on their own layer so their per-frame motion never
+   re-rasterises the static circuit field beneath them. */
+.circuit-bg--pulses {
+  contain: strict;
+}
+
 .circuit-pulse {
   offset-distance: 0%;
   offset-rotate: 0deg;
@@ -113,6 +119,12 @@ html {
   animation-name: circuit-flow;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+}
+
+/* Stop the per-frame animation while scrolling — keeps the main thread free
+   for smooth scrolling on mobile; pulses resume the moment scrolling stops. */
+html.is-scrolling .circuit-pulse {
+  animation-play-state: paused;
 }
 
 @keyframes circuit-flow {

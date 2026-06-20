@@ -141,61 +141,70 @@ const FIELD = buildField();
 /**
  * Full-bleed generative circuit field. Sits behind all content, fades at the
  * edges via a CSS mask, and stays subtle on the deep-ink background.
+ *
+ * Rendered as two layers for mobile scroll performance:
+ *  - A STATIC svg (traces, soft glow, vias) — rasterised once, never repaints
+ *    while scrolling.
+ *  - A separate PULSES svg holding only the animated dots, so their per-frame
+ *    motion never re-rasterises the big masked field underneath.
  */
 const CircuitBackground = () => (
-  <svg
-    className="circuit-bg"
-    viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-    preserveAspectRatio="xMidYMid slice"
-    aria-hidden="true"
-    focusable="false"
-  >
-    <defs>
-      <filter id="circuit-glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="2.4" />
-      </filter>
-    </defs>
+  <>
+    <svg
+      className="circuit-bg"
+      viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* Soft glow under the pulse traces — a wide, faint static stroke that
+          fakes a bloom without the cost of an SVG blur filter. */}
+      <g fill="none" strokeLinecap="round">
+        {FIELD.pulses.map((p, i) => (
+          <path key={i} d={p.d} stroke={`rgba(${HUE[p.hue]}, 0.08)`} strokeWidth={5} />
+        ))}
+      </g>
 
-    {/* Traces */}
-    <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-      {FIELD.traces.map((t, i) => (
-        <path
-          key={i}
-          d={t.d}
-          stroke={`rgba(${HUE[t.hue]}, ${t.opacity})`}
-          strokeWidth={t.width}
-        />
-      ))}
-    </g>
-
-    {/* Soft bloom under the pulse traces */}
-    <g fill="none" strokeLinecap="round" filter="url(#circuit-glow)">
-      {FIELD.pulses.map((p, i) => (
-        <path key={i} d={p.d} stroke={`rgba(${HUE[p.hue]}, 0.16)`} strokeWidth={1.5} />
-      ))}
-    </g>
-
-    {/* Vias, pads & junction dots */}
-    <g>
-      {FIELD.markers.map((m, i) =>
-        m.ring ? (
-          <circle
+      {/* Traces */}
+      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+        {FIELD.traces.map((t, i) => (
+          <path
             key={i}
-            cx={m.x}
-            cy={m.y}
-            r={m.r}
-            fill="none"
-            stroke={`rgba(${HUE[m.hue]}, ${m.opacity})`}
-            strokeWidth={1}
+            d={t.d}
+            stroke={`rgba(${HUE[t.hue]}, ${t.opacity})`}
+            strokeWidth={t.width}
           />
-        ) : (
-          <circle key={i} cx={m.x} cy={m.y} r={m.r} fill={`rgba(${HUE[m.hue]}, ${m.opacity})`} />
-        ),
-      )}
-    </g>
+        ))}
+      </g>
 
-    {/* Travelling data pulses */}
-    <g>
+      {/* Vias, pads & junction dots */}
+      <g>
+        {FIELD.markers.map((m, i) =>
+          m.ring ? (
+            <circle
+              key={i}
+              cx={m.x}
+              cy={m.y}
+              r={m.r}
+              fill="none"
+              stroke={`rgba(${HUE[m.hue]}, ${m.opacity})`}
+              strokeWidth={1}
+            />
+          ) : (
+            <circle key={i} cx={m.x} cy={m.y} r={m.r} fill={`rgba(${HUE[m.hue]}, ${m.opacity})`} />
+          ),
+        )}
+      </g>
+    </svg>
+
+    {/* Travelling data pulses — isolated layer, paused during scroll via CSS. */}
+    <svg
+      className="circuit-bg circuit-bg--pulses"
+      viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
       {FIELD.pulses.map((p, i) => (
         <circle
           key={i}
@@ -209,8 +218,8 @@ const CircuitBackground = () => (
           }}
         />
       ))}
-    </g>
-  </svg>
+    </svg>
+  </>
 );
 
 export default CircuitBackground;
