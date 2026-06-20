@@ -81,7 +81,7 @@ const RootLayout = ({
       <body className="antialiased">
         <div className="app-bg relative min-h-screen overflow-x-hidden">
           <ScrollReset />
-          <div className="grid-bg pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+          <div className="grid-bg" aria-hidden="true" />
           <CircuitBackground />
           <Navbar />
           <div className="relative z-10">

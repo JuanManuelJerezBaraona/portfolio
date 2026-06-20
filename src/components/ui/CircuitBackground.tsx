@@ -144,7 +144,7 @@ const FIELD = buildField();
  */
 const CircuitBackground = () => (
   <svg
-    className="circuit-bg pointer-events-none fixed inset-0 z-0 h-full w-full"
+    className="circuit-bg"
     viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
     preserveAspectRatio="xMidYMid slice"
     aria-hidden="true"
