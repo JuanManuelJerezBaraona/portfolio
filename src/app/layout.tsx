@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Chakra_Petch, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { Footer, Navbar } from '@/components';
 import ScrollReset from '@/components/ui/ScrollReset';
+import CircuitBackground from '@/components/ui/CircuitBackground';
 import './globals.css';
 
 const siteUrl =
@@ -81,6 +82,7 @@ const RootLayout = ({
         <div className="app-bg relative min-h-screen overflow-x-hidden">
           <ScrollReset />
           <div className="grid-bg pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
+          <CircuitBackground />
           <Navbar />
           <div className="relative z-10">
             <main>{children}</main>

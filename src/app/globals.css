@@ -66,11 +66,60 @@ html {
 
 .grid-bg {
   background-image:
-    linear-gradient(rgba(150, 140, 210, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(150, 140, 210, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(150, 140, 210, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 140, 210, 0.04) 1px, transparent 1px);
   background-size: 58px 58px;
   -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 22%, black 0%, transparent 78%);
   mask-image: radial-gradient(ellipse 90% 70% at 50% 22%, black 0%, transparent 78%);
+}
+
+/* ----------  Generative circuit field  ---------- */
+.circuit-bg {
+  -webkit-mask-image: radial-gradient(
+    ellipse 96% 82% at 50% 28%,
+    #000 0%,
+    #000 48%,
+    transparent 90%
+  );
+  mask-image: radial-gradient(
+    ellipse 96% 82% at 50% 28%,
+    #000 0%,
+    #000 48%,
+    transparent 90%
+  );
+}
+
+.circuit-pulse {
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  will-change: offset-distance;
+  animation-name: circuit-flow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes circuit-flow {
+  from {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  to {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circuit-pulse {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* ============================================================
