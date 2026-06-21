@@ -43,7 +43,7 @@ const Header = () => {
             className="rise mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg"
             style={{ '--rise-delay': '180ms' } as CSSProperties}
           >
-            Soy Juan, desarrollador full-stack. Construí buena parte del flujo de seguros de
+            Soy Juanma, desarrollador full-stack. Construí buena parte del flujo de seguros de
             Falabella —cotizar, aceptar, pagar y resolver postventa, de la primera pantalla al
             último endpoint—.{' '}
             <span className="text-text">Todo en producción para Chile, Perú y Colombia.</span>
