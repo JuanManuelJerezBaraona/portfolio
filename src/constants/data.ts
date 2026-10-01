@@ -24,7 +24,7 @@ export const PERSONAL_INFO: PersonalInfo = {
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',
   cv: '/CV-Juan-Manuel-Jerez-Baraona.pdf',
-  profileImage: '/profile-image.jpg',
+  profileImage: '/juan-manuel-jerez.jpg',
 };
 
 /** Chronological, taken from the CV. */

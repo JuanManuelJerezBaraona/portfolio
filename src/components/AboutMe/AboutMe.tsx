@@ -22,7 +22,7 @@ const AboutMe = () => {
           </SectionHeading>
 
           <Reveal delay={120} className="mt-12 flex items-end gap-5">
-            <div className="relative h-40 w-32 flex-none overflow-hidden border border-line sm:h-48 sm:w-40">
+            <div className="relative aspect-[3/4] w-32 flex-none overflow-hidden border border-line sm:w-40">
               <Image
                 src={PERSONAL_INFO.profileImage}
                 alt={`Retrato de ${PERSONAL_INFO.name}`}
