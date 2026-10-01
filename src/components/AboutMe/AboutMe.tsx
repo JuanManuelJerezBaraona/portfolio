@@ -1,65 +1,65 @@
-import { Corners } from '@/components/ui/Hud';
+import Image from 'next/image';
+import { PERSONAL_INFO, TIMELINE } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
-
-const STATS = [
-  { value: '2+', label: 'Años en producción' },
-  { value: '3', label: 'Países · CL·PE·CO' },
-  { value: '05', label: 'Flujos end-to-end' },
-  { value: '16', label: 'Tecnologías' },
-];
+import SectionHeading from '@/components/ui/SectionHeading';
 
 const AboutMe = () => {
   return (
-    <section id="about" className="px-4 py-24 sm:px-6 lg:px-8" aria-labelledby="about-heading">
-      <div className="mx-auto max-w-7xl">
-        <Reveal className="max-w-2xl">
-          <p className="label text-neon">// Perfil</p>
-          <h2
-            id="about-heading"
-            className="mt-4 text-3xl font-bold leading-[1.05] text-text sm:text-4xl lg:text-5xl"
-          >
-            Quién está <span className="text-grad">detrás del sistema.</span>
-          </h2>
-        </Reveal>
+    <section id="about" className="px-4 py-24 sm:px-6 lg:px-8 lg:py-32" aria-labelledby="about-heading">
+      <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div>
+          <SectionHeading id="about-heading" eyebrow="Trayectoria" title="Del laboratorio al desarrollo web.">
+            <p>
+              Estudié Ingeniería en Biotecnología y pasé tres años en un laboratorio de
+              neurobiología haciendo estadística, análisis de datos y bioinformática. Ahí aprendí
+              a no creerle a un resultado hasta poder reproducirlo.
+            </p>
+            <p className="mt-4">
+              En 2016 empecé a programar tiendas online y desde 2022 trabajo como full-stack. La
+              costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo
+              por terminado.
+            </p>
+          </SectionHeading>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          <Reveal
-            as="article"
-            className="hud scanlines relative overflow-hidden p-7 sm:p-9 lg:col-span-2"
-            delay={80}
-          >
-            <Corners tone="neon" />
-            <p className="label text-muted">Perfil profesional</p>
-            <div className="mt-6 space-y-5 text-lg leading-relaxed text-text/90">
-              <p>
-                Me obsesiona una sola cosa: que un producto se sienta rápido, claro y sin
-                fricción. No me conformo con que funcione —busco que la persona del otro lado no
-                tenga que pensar para usarlo, y que eso se note en los números.
-              </p>
-              <p>
-                En Seguros Falabella me tocó meter mano en casi todo el viaje del cliente
-                —cotización, contratación, aceptación digital, pago y postventa— para Chile, Perú
-                y Colombia. Ahí aprendí que el código limpio y la buena UX no son un lujo: son lo
-                que hace que una plataforma aguante, crezca y no se caiga justo el viernes a las
-                seis.
-              </p>
+          <Reveal delay={120} className="mt-12 flex items-end gap-5">
+            <div className="relative h-40 w-32 flex-none overflow-hidden border border-line sm:h-48 sm:w-40">
+              <Image
+                src={PERSONAL_INFO.profileImage}
+                alt={`Retrato de ${PERSONAL_INFO.name}`}
+                fill
+                sizes="160px"
+                className="object-cover"
+              />
             </div>
+            <p className="meta pb-1 text-muted">
+              {PERSONAL_INFO.name}
+              <br />
+              {PERSONAL_INFO.location}
+            </p>
           </Reveal>
-
-          <div className="grid grid-cols-2 gap-4">
-            {STATS.map((stat, index) => (
-              <Reveal
-                key={stat.label}
-                className="hud scanlines relative overflow-hidden p-5"
-                delay={140 + index * 80}
-              >
-                <Corners tone="cyan" />
-                <p className="text-grad font-display text-3xl font-bold sm:text-4xl">{stat.value}</p>
-                <p className="label mt-2 text-muted">{stat.label}</p>
-              </Reveal>
-            ))}
-          </div>
         </div>
+
+        <Reveal delay={80}>
+          <ol className="border-t border-line" aria-label="Trayectoria">
+            {TIMELINE.map((entry) => (
+              <li
+                key={`${entry.period}-${entry.place}`}
+                className="grid gap-1 border-b border-line py-5 sm:grid-cols-[8.5rem_1fr] sm:gap-6"
+              >
+                <p className={`meta pt-1 ${entry.current ? 'text-gfp' : 'text-muted'}`}>
+                  {entry.period}
+                </p>
+                <div>
+                  <p className="text-lg font-medium leading-snug">
+                    {entry.role}
+                    <span className="text-muted"> · {entry.place}</span>
+                  </p>
+                  {entry.detail && <p className="mt-1 text-[0.95rem] text-muted">{entry.detail}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
       </div>
     </section>
   );

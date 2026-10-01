@@ -1,102 +1,64 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { PROJECTS } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
-
-import FunnelNode from './FunnelNode';
-import ProjectsCarousel from './ProjectsCarousel';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { Countries, Status } from '@/components/ui/ProjectMeta';
+import ProjectViewer from './ProjectViewer';
 
 const Projects = () => {
   return (
     <section
       id="projects"
-      className="relative px-4 py-24 sm:px-6 lg:px-8"
+      className="border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
       aria-labelledby="projects-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <Reveal className="max-w-2xl">
-          <p className="label text-neon">// El sistema</p>
-          <h2
-            id="projects-heading"
-            className="mt-4 text-3xl font-bold leading-[1.05] text-text sm:text-4xl lg:text-5xl"
-          >
-            El recorrido del cliente, <span className="text-grad">de punta a punta.</span>
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted sm:text-lg">
-            No son cinco proyectos sueltos: es una misma plataforma de seguros, construida
-            etapa por etapa. Recórrela igual que un cliente real —y abre cualquier nodo para
-            ver qué hay por dentro.
+        <SectionHeading id="projects-heading" eyebrow="Proyectos · Seguros Falabella" title="Cinco etapas del mismo cliente.">
+          <p>
+            Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo
+            cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites.
           </p>
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-            <span className="inline-flex items-center gap-2">
-              <span className="dot dot-live" />
-              <span className="label text-muted">En línea · público</span>
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="dot dot-idle" />
-              <span className="label text-muted">Acceso interno</span>
-            </span>
-          </div>
-        </Reveal>
+        </SectionHeading>
 
         {PROJECTS.length === 0 ? (
-          <div className="hud mt-12 p-8 text-center text-muted">
-            No hay flujos para mostrar por ahora.
-          </div>
+          <p className="mt-14 text-muted">Todavía no hay proyectos publicados.</p>
         ) : (
           <>
-            {/* Desktop · vertical funnel spine */}
-            <ol className="relative mx-auto mt-16 hidden max-w-5xl lg:block">
-              <span
-                aria-hidden
-                className="spine-y absolute bottom-6 left-1/2 top-6 w-px -translate-x-1/2"
-              />
-              {PROJECTS.map((project, index) => {
-                const onLeft = index % 2 === 0;
-                const stage = String(project.stage).padStart(2, '0');
-
-                return (
-                  <li
-                    key={project.id}
-                    className="relative grid grid-cols-2 items-center [&:not(:first-child)]:mt-12"
-                  >
-                    {/* spine marker */}
-                    <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
-                      <div className="hud flex h-14 w-14 items-center justify-center rounded-xl border-line shadow-[0_0_30px_-6px_rgba(255,46,136,0.4)]">
-                        <span className="text-grad font-display text-lg font-bold">{stage}</span>
-                      </div>
-                    </div>
-
-                    {/* branch connector */}
-                    <span
-                      aria-hidden
-                      className={`spine-x absolute top-1/2 z-0 h-px w-14 -translate-y-1/2 ${
-                        onLeft ? 'right-1/2' : 'left-1/2'
-                      }`}
-                    />
-
-                    {onLeft ? (
-                      <>
-                        <Reveal className="col-start-1 pr-16" amount={0.3}>
-                          <FunnelNode project={project} />
-                        </Reveal>
-                        <div className="col-start-2" />
-                      </>
-                    ) : (
-                      <>
-                        <div className="col-start-1" />
-                        <Reveal className="col-start-2 pl-16" amount={0.3}>
-                          <FunnelNode project={project} />
-                        </Reveal>
-                      </>
-                    )}
-                  </li>
-                );
-              })}
-            </ol>
-
-            {/* Mobile · swiper */}
-            <Reveal className="mt-12 lg:hidden">
-              <ProjectsCarousel projects={PROJECTS} />
+            <Reveal className="mt-16 hidden lg:block">
+              <ProjectViewer projects={PROJECTS} />
             </Reveal>
+
+            <ol className="mt-12 space-y-16 lg:hidden">
+              {PROJECTS.map((project) => (
+                <Reveal as="li" key={project.id}>
+                  <div className="flex items-baseline justify-between gap-4 border-t border-line pt-4">
+                    <span className="meta text-gfp">
+                      {String(project.stage).padStart(2, '0')} · {project.flow}
+                    </span>
+                    <Countries countries={project.countries} />
+                  </div>
+                  <h3 className="mt-3 text-2xl">{project.title}</h3>
+                  {project.screenshots?.desktop && (
+                    <Image
+                      src={project.screenshots.desktop}
+                      alt={`Captura de ${project.title}`}
+                      width={2530}
+                      height={1140}
+                      sizes="100vw"
+                      className="mt-5 h-auto w-full border border-line"
+                    />
+                  )}
+                  <p className="mt-5 leading-relaxed text-muted">{project.summary}</p>
+                  <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+                    <Link href={`/proyectos/${project.id}`} className="link-underline font-medium">
+                      Ver caso completo →
+                    </Link>
+                    <Status status={project.status} />
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
           </>
         )}
       </div>

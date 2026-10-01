@@ -1,64 +1,60 @@
 import type { Metadata } from 'next';
-import { Chakra_Petch, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import { Archivo, Martian_Mono } from 'next/font/google';
 import { Footer, Navbar } from '@/components';
 import ScrollReset from '@/components/ui/ScrollReset';
-import CircuitBackground from '@/components/ui/CircuitBackground';
-import ScrollMotionGuard from '@/components/ui/ScrollMotionGuard';
 import './globals.css';
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   'https://juanmanueljerezportfolio.vercel.app';
 
-const chakraPetch = Chakra_Petch({
+// Both are variable fonts; the width axis drives the headline treatment.
+const archivo = Archivo({
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-chakra',
+  axes: ['wdth'],
+  variable: '--font-archivo',
   display: 'swap',
 });
 
-const spaceGrotesk = Space_Grotesk({
+const martianMono = Martian_Mono({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  axes: ['wdth'],
+  variable: '--font-martian',
   display: 'swap',
 });
 
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-jetbrains',
-  display: 'swap',
-});
+const description =
+  'Desarrollador full-stack en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js y NestJS, y trabaja a diario con agentes de IA.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
-  description:
-    'Construyo plataformas de seguros 100% online de punta a punta — cotización, aceptación digital, pago y postventa — en producción para Chile, Perú y Colombia.',
+  title: 'Juan Manuel Jerez Baraona · Desarrollador full-stack',
+  description,
   keywords: [
-    'desarrollador web',
-    'full stack',
+    'desarrollador full stack',
     'react',
-    'nextjs',
+    'next.js',
     'typescript',
     'nestjs',
-    'portfolio',
+    'claude code',
+    'github copilot',
+    'mcp',
+    'ia',
+    'santiago de chile',
   ],
   authors: [{ name: 'Juan Manuel Jerez Baraona' }],
   openGraph: {
-    title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
-    description:
-      'El funnel completo, de punta a punta. Plataformas de seguros en producción para CL · PE · CO.',
+    title: 'Juan Manuel Jerez Baraona · Desarrollador full-stack',
+    description,
     type: 'website',
-    locale: 'es_ES',
+    locale: 'es_CL',
     url: siteUrl,
     siteName: 'Portfolio — Juan Manuel Jerez Baraona',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Juan Manuel Jerez Baraona — Full-Stack Developer',
-    description:
-      'El funnel completo, de punta a punta. Plataformas de seguros en producción para CL · PE · CO.',
+    title: 'Juan Manuel Jerez Baraona · Desarrollador full-stack',
+    description,
   },
 };
 
@@ -70,7 +66,7 @@ const RootLayout = ({
   return (
     <html
       lang="es"
-      className={`reveal-ready ${chakraPetch.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
+      className={`reveal-ready ${archivo.variable} ${martianMono.variable}`}
     >
       <head>
         <script
@@ -81,21 +77,16 @@ const RootLayout = ({
         {/* Without JS the reveal elements would stay hidden, so force them visible. */}
         <noscript
           dangerouslySetInnerHTML={{
-            __html: `<style>.reveal{opacity:1!important;transform:none!important}</style>`,
+            __html: `<style>.reveal{opacity:1!important;filter:none!important;transform:none!important}</style>`,
           }}
         />
       </head>
       <body className="antialiased">
-        <div className="app-bg relative min-h-screen overflow-x-hidden">
+        <div className="relative min-h-screen overflow-x-clip">
           <ScrollReset />
-          <div className="grid-bg" aria-hidden="true" />
-          <CircuitBackground />
-          <ScrollMotionGuard />
           <Navbar />
-          <div className="relative z-10">
-            <main>{children}</main>
-            <Footer />
-          </div>
+          <main>{children}</main>
+          <Footer />
         </div>
       </body>
     </html>

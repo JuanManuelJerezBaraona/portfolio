@@ -20,11 +20,11 @@ Tests
 High-level architecture
 - Framework: Next.js (app router) under src/app. Pages and route handlers live in src/app.
 - UI layer: All visual components live in src/components and are re-exported from src/components/index.ts for centralized imports.
-- Static/seed data: src/constants/data.ts contains the portfolio content (NAV_LINKS, PERSONAL_INFO, PROJECTS, SOCIAL_LINKS). PROJECTS drives case-file pages and includes stage/flow/techStack metadata.
+- Static/seed data: src/constants/data.ts contains the portfolio content (NAV_LINKS, PERSONAL_INFO, TIMELINE, SKILLS, AI_PRACTICES, PROJECTS, SOCIAL_LINKS). PROJECTS drives case-file pages and includes stage/flow/techStack metadata.
 - Types: src/types defines shared TypeScript interfaces used across the app (Project, Skill, NavLink, etc.).
 - State: Lightweight client state uses Zustand. See src/store/uiStore.ts (useUIStore).
 - Assets: Static images and icons are served from the public/ directory (standard Next.js public folder).
-- Styling: Tailwind CSS (v4) plus some Bootstrap/Tomaco mentions — Tailwind config and PostCSS are present in package.json devDependencies.
+- Styling: Tailwind CSS v4 with a CSS-first theme in src/app/globals.css (fluorescence-microscope palette: void/stage surfaces, dapi/gfp/mcherry channels). Base and component styles live in @layer base/components so utilities can override them. See CLAUDE.md for the design rules.
 - Deployment: README references Vercel; the app follows the default Next.js deployment model.
 
 Important repo-specific conventions

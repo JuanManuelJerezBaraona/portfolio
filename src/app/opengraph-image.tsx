@@ -1,54 +1,54 @@
 import { ImageResponse } from 'next/og';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
-import { OgShareImage } from '@/components/og/OgShareImage';
+import { micrographSvg } from '@/components/Header/Micrograph';
+import {
+  OG_DETAIL,
+  OG_FOOTER,
+  OG_NAME,
+  OG_TITLE,
+  OgShareImage,
+} from '@/components/og/OgShareImage';
 
-export const alt =
-  'Juan Manuel Jerez Baraona — Full-Stack Developer · El funnel completo, de punta a punta';
+export const alt = 'Juan Manuel Jerez Baraona · Desarrollador full-stack. Pasé del microscopio al código.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-/** Lee el JPEG local; requiere Node (fs) en tiempo de build. */
-export const runtime = 'nodejs';
+/**
+ * Fetches a static TTF instance of a Google font, subset to `text`.
+ * Without a browser User-Agent the CSS API answers with TrueType, which is
+ * what ImageResponse can read (it can't use woff2 or variable fonts).
+ */
+const loadGoogleFont = async (query: string, text: string) => {
+  const css = await (
+    await fetch(`https://fonts.googleapis.com/css2?family=${query}&text=${encodeURIComponent(text)}`)
+  ).text();
+  const url = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/)?.[1];
+  if (!url) throw new Error(`No TTF found for ${query}`);
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Font fetch failed: ${response.status}`);
+  return response.arrayBuffer();
+};
 
-const PROFILE_IMAGE_PATH = join(process.cwd(), 'public', 'profile-image.jpg');
-
-const CHAKRA_FONTS: { url: string; weight: 600 | 700 }[] = [
-  {
-    url: 'https://raw.githubusercontent.com/google/fonts/main/ofl/chakrapetch/ChakraPetch-SemiBold.ttf',
-    weight: 600,
-  },
-  {
-    url: 'https://raw.githubusercontent.com/google/fonts/main/ofl/chakrapetch/ChakraPetch-Bold.ttf',
-    weight: 700,
-  },
-];
-
-/** Carga Chakra Petch para el OG; si la red falla, cae al sans por defecto. */
+/** Archivo for the card; if the network fails it falls back to the default sans. */
 const loadFonts = async () => {
   try {
-    return await Promise.all(
-      CHAKRA_FONTS.map(async (font) => {
-        const response = await fetch(font.url);
-        if (!response.ok) throw new Error(`Font fetch failed: ${response.status}`);
-        return {
-          name: 'Chakra Petch',
-          data: await response.arrayBuffer(),
-          weight: font.weight,
-          style: 'normal' as const,
-        };
-      })
-    );
+    const [expanded, regular] = await Promise.all([
+      loadGoogleFont('Archivo:wdth,wght@125,800', OG_TITLE),
+      loadGoogleFont('Archivo:wght@400', OG_NAME + OG_DETAIL + OG_FOOTER),
+    ]);
+    return [
+      { name: 'Archivo Expanded', data: expanded, weight: 800 as const, style: 'normal' as const },
+      { name: 'Archivo', data: regular, weight: 400 as const, style: 'normal' as const },
+    ];
   } catch {
     return [];
   }
 };
 
 const OgImage = async () => {
-  const [buffer, fonts] = await Promise.all([readFile(PROFILE_IMAGE_PATH), loadFonts()]);
-  const profileImageSrc = `data:image/jpeg;base64,${buffer.toString('base64')}`;
+  const fonts = await loadFonts();
+  const micrographSrc = `data:image/svg+xml;base64,${Buffer.from(micrographSvg()).toString('base64')}`;
 
-  return new ImageResponse(<OgShareImage profileImageSrc={profileImageSrc} />, {
+  return new ImageResponse(<OgShareImage micrographSrc={micrographSrc} />, {
     ...size,
     fonts: fonts.length ? fonts : undefined,
   });
