@@ -9,7 +9,10 @@ npm run dev      # Next.js dev server at http://localhost:3000
 npm run build    # production build (also runs generateStaticParams for /proyectos/[id])
 npm run start    # serve the production build
 npm run lint     # ESLint (eslint-config-next, flat config)
+npm run cv       # prints cv/cv.html to public/CV-Juan-Manuel-Jerez-Baraona.pdf with headless Chrome
 ```
+
+The CV is ATS-oriented on purpose (one column, real text, standard section names, ligatures off). Edit `cv/cv.html`, run `npm run cv`, and check it still fits on one A4 page.
 
 There is no test suite. `npm run lint` is the only static check.
 
