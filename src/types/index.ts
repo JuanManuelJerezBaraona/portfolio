@@ -1,18 +1,14 @@
+export type SkillCategory = 'frontend' | 'backend' | 'database' | 'ai' | 'tools';
+
 export interface Skill {
   id: string;
   name: string;
-  icon: string;
-  category: 'frontend' | 'backend' | 'database' | 'tools';
+  category: SkillCategory;
+  /** Part of the day-to-day stack at Seguros Falabella. */
+  current?: boolean;
 }
 
 export type CountryCode = 'CL' | 'PE' | 'CO';
-
-export interface ProjectHighlight {
-  /** monospace value, e.g. "03" or "100%" */
-  value: string;
-  /** short label below the value */
-  label: string;
-}
 
 export interface Project {
   id: string;
@@ -20,16 +16,15 @@ export interface Project {
   category: string;
   description: string;
   techStack: string[];
-  filters: string[];
   url?: string;
   screenshots?: {
     desktop: string;
     mobile: string;
   };
 
-  /** Position in the customer journey funnel (1 = entry). */
+  /** Position in the customer journey (1 = entry). */
   stage: number;
-  /** Funnel stage name, e.g. "Cotización". */
+  /** Journey stage name, e.g. "Cotización". */
   flow: string;
   /** Countries where the flow runs in production. */
   countries: CountryCode[];
@@ -43,8 +38,23 @@ export interface Project {
   challenge: string;
   /** Concrete contributions, grounded in the real stack. */
   contributions: string[];
-  /** Honest, derivable stats for the case file. */
-  highlights: ProjectHighlight[];
+}
+
+export interface TimelineEntry {
+  /** e.g. "2016 – 2022" */
+  period: string;
+  role: string;
+  place: string;
+  detail?: string;
+  /** The role he holds today. */
+  current?: boolean;
+}
+
+export interface AiPractice {
+  id: string;
+  title: string;
+  body: string;
+  tools: string[];
 }
 
 export interface NavLink {
@@ -62,16 +72,12 @@ export interface SocialLink {
 
 export interface PersonalInfo {
   name: string;
+  shortName: string;
   title: string;
-  age: number;
-  experience: string[];
-  bio: string[];
+  location: string;
+  /** Year he started working as a full-stack developer. */
+  fullStackSince: number;
+  email: string;
+  cv: string;
   profileImage: string;
 }
-
-export interface AccordionItem {
-  id: string;
-  title: string;
-  content: React.ReactNode;
-}
-

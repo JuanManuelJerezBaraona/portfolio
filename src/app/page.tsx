@@ -1,13 +1,12 @@
-import { AboutMe, Contact, Header, Projects, Skills } from '@/components';
-import Ticker from '@/components/ui/Ticker';
+import { AboutMe, AiProfile, Contact, Header, Projects, Skills } from '@/components';
 
 const HomePage = () => {
   return (
     <>
       <Header />
-      <Ticker />
       <AboutMe />
       <Projects />
+      <AiProfile />
       <Skills />
       <Contact />
     </>

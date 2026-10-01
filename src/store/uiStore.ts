@@ -12,7 +12,7 @@ interface UIState {
 
 export const useUIStore = create<UIState>((set) => ({
   isMobileMenuOpen: false,
-  activeSection: 'about',
+  activeSection: '',
   expandedAccordion: 'about',
 
   toggleMobileMenu: () =>

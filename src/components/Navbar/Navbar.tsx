@@ -1,6 +1,6 @@
 'use client';
 
-import { NAV_LINKS } from '@/constants/data';
+import { NAV_LINKS, PERSONAL_INFO } from '@/constants/data';
 import { useUIStore } from '@/store/uiStore';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -60,7 +60,7 @@ const Navbar = () => {
 
     const updateActiveSection = () => {
       const viewportMarker = window.scrollY + window.innerHeight * 0.35;
-      let currentSectionId = sectionIds[0];
+      let currentSectionId = '';
 
       for (const section of sections) {
         if (section.offsetTop <= viewportMarker) {
@@ -130,110 +130,92 @@ const Navbar = () => {
   }, [isMobileMenuOpen, closeMobileMenu]);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-      <div className="relative z-50 mx-auto flex h-16 w-full max-w-7xl items-center justify-between rounded-xl border border-line bg-ink-2/80 px-3 backdrop-blur-xl">
-        <Link
-          href="/"
-          className="group flex items-center gap-3 transition-opacity hover:opacity-90"
-          aria-label="Ir al inicio"
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-neon/40 bg-linear-to-br from-neon/20 to-cyan/20 font-display text-sm font-bold text-text shadow-[0_0_18px_-4px_rgba(255,46,136,0.6)]">
-            JJ
-          </div>
-          <div className="leading-tight">
-            <span className="label block text-muted">Full-Stack Dev</span>
-            <span className="block font-display text-sm font-semibold text-text group-hover:text-grad">
-              Juan Manuel Jerez
+    <nav className="fixed inset-x-0 top-0 z-50">
+      {/* The blur lives on this wrapper, not on <nav>: backdrop-filter would
+          otherwise become the containing block of the fixed overlay below. */}
+      <div className="relative z-50 border-b border-line bg-void/80 backdrop-blur-md">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
+            <span className="channel-mark" aria-hidden="true">
+              <span />
+              <span />
+              <span />
             </span>
-          </div>
-        </Link>
+            <span className="wide text-[0.95rem]">{PERSONAL_INFO.shortName}</span>
+          </Link>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-1 rounded-full border border-line bg-ink/60 p-1">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.href, link.id)}
-                onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
-                className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none ${
-                  isHome && activeSection === link.id
-                    ? 'bg-neon/15 text-text shadow-[0_0_18px_-6px_rgba(255,46,136,0.8)]'
-                    : 'text-muted hover:bg-white/5 hover:text-text'
-                }`}
-                tabIndex={0}
-                aria-label={`Ir a ${link.label}`}
-                aria-current={isHome && activeSection === link.id ? 'page' : undefined}
-              >
-                {link.label}
-              </button>
-            ))}
+          <div className="hidden items-center gap-7 md:flex">
+            {NAV_LINKS.map((link) => {
+              const isActive = isHome && activeSection === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.href, link.id)}
+                  onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
+                  className={`meta cursor-pointer py-2 transition-colors ${
+                    isActive ? 'text-text' : 'text-muted hover:text-text'
+                  }`}
+                  tabIndex={0}
+                  aria-label={`Ir a ${link.label}`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span
+                    className={`mr-2 inline-block h-1.5 w-1.5 align-middle transition-opacity ${
+                      link.id === 'ia' ? 'bg-mcherry' : 'bg-text'
+                    } ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                    aria-hidden="true"
+                  />
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
-        </div>
 
-        <button
-          ref={mobileMenuButtonRef}
-          onClick={toggleMobileMenu}
-          className="rounded-lg border border-line p-2 text-text transition-colors hover:bg-white/5 md:hidden"
-          aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-          aria-expanded={isMobileMenuOpen}
-        >
-          <svg
-            className={`h-6 w-6 transition-transform duration-300 ${
-              isMobileMenuOpen ? 'rotate-90' : 'rotate-0'
-            }`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          <button
+            ref={mobileMenuButtonRef}
+            onClick={toggleMobileMenu}
+            className="meta -mr-2 p-2 text-text md:hidden"
+            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18 18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
+            {isMobileMenuOpen ? 'Cerrar' : 'Menú'}
+          </button>
+        </div>
       </div>
 
       <button
         type="button"
         onClick={closeMobileMenu}
         aria-label="Cerrar menú móvil"
-        className={`fixed inset-x-0 bottom-0 top-24 bg-ink/60 backdrop-blur-[3px] transition-opacity duration-300 md:hidden ${
+        tabIndex={isMobileMenuOpen ? 0 : -1}
+        className={`fixed inset-x-0 bottom-0 top-16 bg-void/70 transition-opacity duration-300 md:hidden ${
           isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       />
 
       <div
         ref={mobileMenuRef}
-        className={`relative z-50 mx-auto w-full max-w-7xl overflow-hidden transition-all duration-300 ease-out md:hidden ${
-          isMobileMenuOpen
-            ? 'mt-3 max-h-80 opacity-100'
-            : 'pointer-events-none mt-0 max-h-0 opacity-0'
+        className={`relative z-50 overflow-hidden border-line bg-void transition-all duration-300 ease-out md:hidden ${
+          isMobileMenuOpen ? 'max-h-96 border-t opacity-100' : 'pointer-events-none max-h-0 opacity-0'
         }`}
         aria-hidden={!isMobileMenuOpen}
       >
-        <div
-          className={`rounded-xl border border-line bg-ink-2/95 p-3 backdrop-blur-xl transition-transform duration-300 ${
-            isMobileMenuOpen ? 'translate-y-0' : '-translate-y-2'
-          }`}
-        >
-          <div className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.href, link.id)}
-                onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
-                className={`rounded-lg px-4 py-2.5 text-left transition-all hover:bg-white/5 hover:text-text ${
-                  isHome && activeSection === link.id ? 'bg-neon/10 text-text' : 'text-muted'
-                }`}
-                tabIndex={0}
-                aria-label={`Ir a ${link.label}`}
-                aria-current={isHome && activeSection === link.id ? 'page' : undefined}
-              >
-                {link.label}
-              </button>
-            ))}
-          </div>
+        <div className="flex flex-col px-4 py-3 sm:px-6">
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => handleNavClick(link.href, link.id)}
+              onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
+              className={`wide border-b border-line py-4 text-left text-2xl last:border-b-0 ${
+                isHome && activeSection === link.id ? 'text-text' : 'text-muted'
+              }`}
+              tabIndex={isMobileMenuOpen ? 0 : -1}
+              aria-label={`Ir a ${link.label}`}
+              aria-current={isHome && activeSection === link.id ? 'page' : undefined}
+            >
+              {link.label}
+            </button>
+          ))}
         </div>
       </div>
     </nav>

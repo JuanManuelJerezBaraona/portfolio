@@ -8,8 +8,7 @@ const ScrollReset = () => {
       window.history.scrollRestoration = 'manual';
     }
 
-    // Beat any late scroll on initial load: hydration, font-driven layout
-    // shift, or the mobile Swiper measuring/initialising its slides.
+    // Beat any late scroll on initial load: hydration or font-driven layout shift.
     window.scrollTo(0, 0);
     const raf = requestAnimationFrame(() => window.scrollTo(0, 0));
 
