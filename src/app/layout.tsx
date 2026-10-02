@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo, Martian_Mono } from 'next/font/google';
 import { Footer, Navbar } from '@/components';
 import ScrollReset from '@/components/ui/ScrollReset';
+import { MODE_INIT_SCRIPT } from '@/components/ui/scopeMode';
 import './globals.css';
 
 const siteUrl =
@@ -66,12 +67,13 @@ const RootLayout = ({
   return (
     <html
       lang="es"
+      suppressHydrationWarning
       className={`reveal-ready ${archivo.variable} ${martianMono.variable}`}
     >
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `if('scrollRestoration' in history){history.scrollRestoration='manual';}if(window.location.hash){history.replaceState(null,'',window.location.pathname+window.location.search);}window.scrollTo(0,0);`,
+            __html: `${MODE_INIT_SCRIPT}if('scrollRestoration' in history){history.scrollRestoration='manual';}if(window.location.hash){history.replaceState(null,'',window.location.pathname+window.location.search);}window.scrollTo(0,0);`,
           }}
         />
         {/* Without JS the reveal elements would stay hidden, so force them visible. */}

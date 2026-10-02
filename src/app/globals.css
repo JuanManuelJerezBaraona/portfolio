@@ -2,12 +2,20 @@
 
 /* ============================================================
    TOKENS
-   The palette is a fluorescence microscope: a black field and
-   three emission channels that add up where they overlap.
+   The site has two looks, both real microscopy techniques, and
+   the switch between them only redefines these variables.
+
+   FLUORESCENCE (default): a black field and emission channels
+   that ADD light where they overlap (blend: plus-lighter).
      C1 · DAPI     (blue)   → frontend
      C2 · GFP      (green)  → backend
      C3 · mCherry  (red)    → IA
      C4 · YFP      (yellow) → datos
+
+   BRIGHTFIELD: a stained slide under white light, where dyes
+   SUBTRACT light (blend: multiply). Each channel becomes a stain:
+     C1 · hematoxylin  · C2 · fast green
+     C3 · eosin        · C4 · DAB (immunohistochemistry brown)
    ============================================================ */
 :root {
   --void: #030508;
@@ -23,11 +31,71 @@
   --mcherry: #ff4f73;
   --yfp: #ffc93c;
 
+  /* How overlapping channels combine, and how much things glow. */
+  --blend: plus-lighter;
+  --glow: 10px;
+  --scope-bg: #000;
+  --scope-vignette: rgba(0, 0, 0, 0.9);
+  --shade: rgba(0, 0, 0, 0.85);
+  --plate-top: #0c1119;
+  --plate-bottom: #080b11;
+  --well-top: #0d131c;
+  --well-bottom: #04070b;
+
   --background: var(--void);
   --foreground: var(--text);
 
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  color-scheme: dark;
+  transition:
+    --void 0.7s ease, --stage 0.7s ease, --stage-2 0.7s ease, --text 0.7s ease,
+    --muted 0.7s ease, --line 0.7s ease, --line-strong 0.7s ease, --dapi 0.7s ease,
+    --gfp 0.7s ease, --mcherry 0.7s ease, --yfp 0.7s ease;
 }
+
+/* Brightfield. `:has()` makes the navbar switch work with CSS alone;
+   `data-mode` (set before first paint from localStorage) remembers it. */
+:root:has(#mode-brightfield:checked),
+:root[data-mode="brightfield"] {
+  --void: #f7f4f8;
+  --stage: #ffffff;
+  --stage-2: #efe9f2;
+  --line: rgba(60, 30, 90, 0.13);
+  --line-strong: rgba(60, 30, 90, 0.3);
+  --text: #241a3d;
+  --muted: #6c6180;
+
+  --dapi: #3d3aa8;
+  --gfp: #1d8a5f;
+  --mcherry: #d0346c;
+  --yfp: #9a6326;
+
+  --blend: multiply;
+  --glow: 0px;
+  --scope-bg: #f6eff5;
+  --scope-vignette: rgba(70, 40, 90, 0.38);
+  --shade: rgba(60, 30, 90, 0.16);
+  --plate-top: #ffffff;
+  --plate-bottom: #f1ecf4;
+  --well-top: #fdfcfe;
+  --well-bottom: #e6dfeb;
+
+  color-scheme: light;
+}
+
+/* Registered so the colors cross-fade when the lamp is switched. */
+@property --void { syntax: "<color>"; inherits: true; initial-value: #030508; }
+@property --stage { syntax: "<color>"; inherits: true; initial-value: #0a0e14; }
+@property --stage-2 { syntax: "<color>"; inherits: true; initial-value: #111822; }
+@property --line { syntax: "<color>"; inherits: true; initial-value: rgba(150, 175, 205, 0.13); }
+@property --line-strong { syntax: "<color>"; inherits: true; initial-value: rgba(150, 175, 205, 0.3); }
+@property --text { syntax: "<color>"; inherits: true; initial-value: #e6ecf2; }
+@property --muted { syntax: "<color>"; inherits: true; initial-value: #8593a3; }
+@property --dapi { syntax: "<color>"; inherits: true; initial-value: #6f8cff; }
+@property --gfp { syntax: "<color>"; inherits: true; initial-value: #4ef08f; }
+@property --mcherry { syntax: "<color>"; inherits: true; initial-value: #ff4f73; }
+@property --yfp { syntax: "<color>"; inherits: true; initial-value: #ffc93c; }
 
 @theme inline {
   --color-background: var(--void);
@@ -115,7 +183,7 @@
     height: 0.55rem;
     flex: none;
     background: currentColor;
-    box-shadow: 0 0 10px currentColor;
+    box-shadow: 0 0 var(--glow) currentColor;
   }
 
   /* ============================================================
@@ -182,13 +250,13 @@
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
-    background: #000;
+    background: var(--scope-bg);
     isolation: isolate;
     box-shadow:
       0 0 0 1px var(--line-strong),
       0 0 0 12px var(--stage),
       0 0 0 13px var(--line),
-      0 40px 120px -40px rgba(78, 240, 143, 0.25);
+      0 40px 120px -40px color-mix(in srgb, var(--gfp) 25%, transparent);
   }
 
   .scope-field {
@@ -202,8 +270,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    mix-blend-mode: screen;
-    mix-blend-mode: plus-lighter;
+    mix-blend-mode: var(--blend);
     transition: opacity 0.6s var(--ease-out);
   }
 
@@ -215,7 +282,7 @@
     z-index: 2;
     pointer-events: none;
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.9) 100%);
+    background: radial-gradient(circle at 50% 50%, transparent 58%, var(--scope-vignette) 100%);
   }
 
   .scope-reticle {
@@ -228,7 +295,7 @@
   .scope-reticle::after {
     content: "";
     position: absolute;
-    background: rgba(230, 236, 242, 0.12);
+    background: color-mix(in srgb, var(--text) 14%, transparent);
   }
   .scope-reticle::before {
     left: 50%;
@@ -340,15 +407,15 @@
     transform: translate(-50%, -50%);
     box-shadow:
       0 0 0 1px var(--line-strong),
-      0 0 0 7px rgba(3, 5, 8, 0.82),
+      0 0 0 7px color-mix(in srgb, var(--void) 82%, transparent),
       0 0 0 8px var(--line),
-      0 24px 50px -10px rgba(0, 0, 0, 0.7);
+      0 24px 50px -10px var(--shade);
   }
   .loupe-lens::before,
   .loupe-lens::after {
     content: "";
     position: absolute;
-    background: rgba(255, 79, 115, 0.7);
+    background: color-mix(in srgb, var(--mcherry) 70%, transparent);
   }
   .loupe-lens::before {
     left: 50%;
@@ -386,20 +453,20 @@
     bottom: 0;
     width: 2px;
     background: var(--gfp);
-    box-shadow: 0 0 12px var(--gfp);
+    box-shadow: 0 0 calc(var(--glow) * 1.2) var(--gfp);
     transform: scaleY(0);
     transform-origin: top;
     transition: transform 0.35s var(--ease-out);
   }
   .sample-row[aria-selected="true"] {
-    background: linear-gradient(90deg, rgba(78, 240, 143, 0.06), transparent 70%);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--gfp) 7%, transparent), transparent 70%);
   }
   .sample-row[aria-selected="true"]::before {
     transform: scaleY(1);
   }
   @media (hover: hover) {
     .sample-row:hover {
-      background-color: rgba(230, 236, 242, 0.025);
+      background-color: color-mix(in srgb, var(--text) 3%, transparent);
     }
   }
 
@@ -473,7 +540,7 @@
     border: 2px solid var(--void);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #1c2633;
+    background: var(--line-strong);
   }
 
   *:focus-visible {
@@ -482,8 +549,8 @@
   }
 
   ::selection {
-    background: rgba(78, 240, 143, 0.28);
-    color: #fff;
+    background: color-mix(in srgb, var(--gfp) 30%, transparent);
+    color: var(--text);
   }
 }
 
@@ -527,8 +594,7 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    mix-blend-mode: screen;
-    mix-blend-mode: plus-lighter;
+    mix-blend-mode: var(--blend);
   }
   .channel-mark span:nth-child(1) {
     left: 0;
@@ -561,8 +627,8 @@
     border: 1px solid var(--line-strong);
     border-radius: 1.25rem;
     background:
-      radial-gradient(120% 80% at 50% 0%, rgba(150, 175, 205, 0.05), transparent 60%),
-      linear-gradient(180deg, #0c1119, #080b11);
+      radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--text) 4%, transparent), transparent 60%),
+      linear-gradient(180deg, var(--plate-top), var(--plate-bottom));
     /* The A1 corner is chamfered, like a real plate. */
     clip-path: polygon(2.25rem 0, 100% 0, 100% 100%, 0 100%, 0 2.25rem);
   }
@@ -650,11 +716,11 @@
     aspect-ratio: 1;
     border-radius: 50%;
     color: color-mix(in srgb, var(--ch) 45%, transparent);
-    background: radial-gradient(circle at 50% 38%, #0d131c, #04070b 72%);
+    background: radial-gradient(circle at 50% 38%, var(--well-top), var(--well-bottom) 72%);
     box-shadow:
-      inset 0 3px 7px rgba(0, 0, 0, 0.85),
-      inset 0 0 0 1px rgba(150, 175, 205, 0.14),
-      0 1px 0 rgba(150, 175, 205, 0.06);
+      inset 0 3px 7px var(--shade),
+      inset 0 0 0 1px var(--line),
+      0 1px 0 color-mix(in srgb, var(--line) 50%, transparent);
     transition: box-shadow 0.3s ease, background 0.3s ease;
   }
 
@@ -663,7 +729,7 @@
     color: var(--ch);
     background:
       radial-gradient(circle, color-mix(in srgb, var(--ch) 20%, transparent), color-mix(in srgb, var(--ch) 5%, transparent) 55%, transparent 72%),
-      radial-gradient(circle at 50% 38%, #0d131c, #04070b 72%);
+      radial-gradient(circle at 50% 38%, var(--well-top), var(--well-bottom) 72%);
   }
 
   .well-mark {
@@ -671,7 +737,7 @@
     height: 44%;
   }
   .well-cell:not(.is-empty) .well-mark {
-    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--ch) 75%, transparent));
+    filter: drop-shadow(0 0 calc(var(--glow) * 0.5) color-mix(in srgb, var(--ch) 75%, transparent));
   }
   .well-monogram {
     display: grid;
@@ -704,9 +770,9 @@
     .well-cell:not(.is-empty):hover .well {
       color: var(--ch);
       box-shadow:
-        inset 0 3px 7px rgba(0, 0, 0, 0.85),
+        inset 0 3px 7px var(--shade),
         inset 0 0 0 1px var(--ch),
-        0 0 26px -6px var(--ch);
+        0 0 calc(var(--glow) * 2.6) -6px var(--ch);
     }
     .well-cell:not(.is-empty):hover .well-name {
       color: var(--text);
@@ -784,9 +850,9 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(230, 236, 242, 0.07) 45%,
-      rgba(230, 236, 242, 0.14) 50%,
-      rgba(230, 236, 242, 0.07) 55%,
+      color-mix(in srgb, var(--text) 7%, transparent) 45%,
+      color-mix(in srgb, var(--text) 14%, transparent) 50%,
+      color-mix(in srgb, var(--text) 7%, transparent) 55%,
       transparent
     );
   }
@@ -840,5 +906,82 @@
   }
   .plate::after {
     display: none;
+  }
+}
+
+/* ============================================================
+   MODE SWITCH  —  fluorescence ⇄ brightfield. The knob is the
+   light source: three emission colors when it's off, a stained
+   dot under white light when it's on.
+   ============================================================ */
+@layer components {
+  .mode-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .mode-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+
+  .mode-track {
+    position: relative;
+    width: 2.6rem;
+    height: 1.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--stage);
+    transition: background-color 0.4s ease, border-color 0.4s ease;
+  }
+  .mode-knob {
+    position: absolute;
+    top: 50%;
+    left: 0.2rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: conic-gradient(var(--dapi) 0 33%, var(--gfp) 0 66%, var(--mcherry) 0);
+    box-shadow: 0 0 calc(var(--glow) * 0.8) color-mix(in srgb, var(--gfp) 60%, transparent);
+    transition: transform 0.45s var(--ease-out), background 0.45s ease;
+  }
+  .mode-toggle:has(input:checked) .mode-knob {
+    transform: translate(1.2rem, -50%);
+    background: radial-gradient(circle at 40% 40%, var(--mcherry), var(--dapi));
+  }
+  .mode-toggle:has(input:focus-visible) .mode-track {
+    outline: 2px solid var(--text);
+    outline-offset: 3px;
+  }
+  @media (hover: hover) {
+    .mode-toggle:hover .mode-track {
+      border-color: var(--text);
+    }
+  }
+
+  .mode-label {
+    display: none;
+    color: var(--muted);
+  }
+  .mode-label-on {
+    display: none;
+  }
+  .mode-toggle:has(input:checked) .mode-label-on {
+    display: inline;
+  }
+  .mode-toggle:has(input:checked) .mode-label-off {
+    display: none;
+  }
+  @media (min-width: 1100px) {
+    .mode-label {
+      display: inline;
+    }
   }
 }

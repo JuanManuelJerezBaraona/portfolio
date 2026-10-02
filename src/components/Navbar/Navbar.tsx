@@ -1,6 +1,7 @@
 'use client';
 
 import { NAV_LINKS, PERSONAL_INFO } from '@/constants/data';
+import ModeToggle from '@/components/ui/ModeToggle';
 import { useUIStore } from '@/store/uiStore';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -144,42 +145,46 @@ const Navbar = () => {
             <span className="wide text-[0.95rem]">{PERSONAL_INFO.shortName}</span>
           </Link>
 
-          <div className="hidden items-center gap-7 md:flex">
-            {NAV_LINKS.map((link) => {
-              const isActive = isHome && activeSection === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link.href, link.id)}
-                  onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
-                  className={`meta cursor-pointer py-2 transition-colors ${
-                    isActive ? 'text-text' : 'text-muted hover:text-text'
-                  }`}
-                  tabIndex={0}
-                  aria-label={`Ir a ${link.label}`}
-                  aria-current={isActive ? 'page' : undefined}
-                >
-                  <span
-                    className={`mr-2 inline-block h-1.5 w-1.5 align-middle transition-opacity ${
-                      link.id === 'ia' ? 'bg-mcherry' : 'bg-text'
-                    } ${isActive ? 'opacity-100' : 'opacity-0'}`}
-                    aria-hidden="true"
-                  />
-                  {link.label}
-                </button>
-              );
-            })}
-          </div>
+          <div className="flex items-center gap-5 md:gap-8">
+            <div className="hidden items-center gap-7 md:flex">
+              {NAV_LINKS.map((link) => {
+                const isActive = isHome && activeSection === link.id;
+                return (
+                  <button
+                    key={link.id}
+                    onClick={() => handleNavClick(link.href, link.id)}
+                    onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
+                    className={`meta cursor-pointer py-2 transition-colors ${
+                      isActive ? 'text-text' : 'text-muted hover:text-text'
+                    }`}
+                    tabIndex={0}
+                    aria-label={`Ir a ${link.label}`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span
+                      className={`mr-2 inline-block h-1.5 w-1.5 align-middle transition-opacity ${
+                        link.id === 'ia' ? 'bg-mcherry' : 'bg-text'
+                      } ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                      aria-hidden="true"
+                    />
+                    {link.label}
+                  </button>
+                );
+              })}
+            </div>
 
-          <button
-            ref={mobileMenuButtonRef}
-            onClick={toggleMobileMenu}
-            className="meta -mr-2 p-2 text-text md:hidden"
-            aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            aria-expanded={isMobileMenuOpen}
-          >
-            {isMobileMenuOpen ? 'Cerrar' : 'Menú'}
-          </button>
+            <ModeToggle />
+
+            <button
+              ref={mobileMenuButtonRef}
+              onClick={toggleMobileMenu}
+              className="meta -mr-2 p-2 text-text md:hidden"
+              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? 'Cerrar' : 'Menú'}
+            </button>
+          </div>
         </div>
       </div>
 
