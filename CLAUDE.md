@@ -31,6 +31,7 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Zustand.
 **Sections** (`src/app/page.tsx`): `Header → AboutMe (Trayectoria) → Projects → AiProfile → Skills → Contact`.
 
 - `Projects` renders `ProjectViewer` (client; tablist of the five journey stages + the selected screenshot under a `Loupe`) on `lg+`, and a plain stacked list below `lg`. `PROJECTS` order is the customer journey (Cotización → Aceptación → Pago → Acceso → Postventa); numbering and prev/next rely on it.
+- `Skills` draws the stack as a well plate: one 12-well row per category, each technology a well that fluoresces in its channel color. Logos come from `simple-icons` (CC0), mapped by skill id in `Skills.tsx`; skills without a logo get a monogram. `current: true` makes a well glow bright.
 - `src/app/proyectos/[id]/page.tsx` statically generates one case file per project via `generateStaticParams`, rendered by `src/components/case/CaseFile.tsx`.
 
 **Layout (`src/app/layout.tsx`)** is just `Navbar`, `main` and `Footer` on a flat black background. It also injects an inline `<head>` script that forces `scrollRestoration='manual'` and scrolls to top on load (the `ScrollReset` component reinforces this), plus a `<noscript>` fallback that un-hides `.reveal` elements.

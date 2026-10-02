@@ -79,31 +79,37 @@ export const SKILLS: Skill[] = [
   { id: 'next', name: 'Next.js', category: 'frontend', current: true },
   { id: 'zustand', name: 'Zustand', category: 'frontend', current: true },
   { id: 'tailwind', name: 'Tailwind CSS', category: 'frontend', current: true },
-  { id: 'sass', name: 'Sass', category: 'frontend' },
   { id: 'bootstrap', name: 'Bootstrap', category: 'frontend', current: true },
+  { id: 'mui', name: 'Material UI', category: 'frontend', current: true },
+  { id: 'html', name: 'HTML5', category: 'frontend', current: true },
+  { id: 'css', name: 'CSS', category: 'frontend', current: true },
+  { id: 'sass', name: 'Sass', category: 'frontend' },
+  { id: 'vite', name: 'Vite', category: 'frontend' },
   { id: 'vue', name: 'Vue', category: 'frontend' },
   { id: 'angular', name: 'Angular', category: 'frontend' },
 
   { id: 'nest', name: 'NestJS', category: 'backend', current: true },
   { id: 'node', name: 'Node.js', category: 'backend', current: true },
-  { id: 'express', name: 'Express', category: 'backend' },
   { id: 'strapi', name: 'Strapi', category: 'backend', current: true },
+  { id: 'express', name: 'Express', category: 'backend' },
 
   { id: 'mongodb', name: 'MongoDB', category: 'database', current: true },
   { id: 'postgresql', name: 'PostgreSQL', category: 'database' },
 
   { id: 'claude-code', name: 'Claude Code', category: 'ai', current: true },
   { id: 'copilot', name: 'GitHub Copilot', category: 'ai', current: true },
+  { id: 'mcp', name: 'MCP', category: 'ai', current: true },
   { id: 'skills', name: 'Agent Skills', category: 'ai', current: true },
-  { id: 'mcp', name: 'MCP (Model Context Protocol)', category: 'ai', current: true },
-  { id: 'llm-apis', name: 'APIs de LLM', category: 'ai' },
   { id: 'context-eng', name: 'Context engineering', category: 'ai', current: true },
+  { id: 'llm-apis', name: 'APIs de LLM', category: 'ai' },
 
-  { id: 'git', name: 'Git · GitHub · GitLab', category: 'tools', current: true },
+  { id: 'git', name: 'Git', category: 'tools', current: true },
+  { id: 'github', name: 'GitHub', category: 'tools', current: true },
+  { id: 'gitlab', name: 'GitLab', category: 'tools', current: true },
   { id: 'storybook', name: 'Storybook', category: 'tools', current: true },
   { id: 'figma', name: 'Figma', category: 'tools', current: true },
-  { id: 'docker', name: 'Docker', category: 'tools' },
   { id: 'postman', name: 'Postman', category: 'tools', current: true },
+  { id: 'docker', name: 'Docker', category: 'tools' },
 ];
 
 /**
