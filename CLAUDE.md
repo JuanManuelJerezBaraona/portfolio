@@ -28,7 +28,9 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Zustand.
 
 **Truthfulness matters — recruiters will ask about everything on the page.** `TIMELINE` and project countries come from the CV in `public/`. `AI_PRACTICES` and the `ai` skills list only tools he confirmed using (Claude Code, GitHub Copilot, his own skills, MCP servers, LLM API integration). The project fields `role`, `summary`, `challenge` and `contributions` were seeded from descriptions and stacks and are **not independently verified**. Don't add metrics, tools or claims that aren't backed by him.
 
-**Sections** (`src/app/page.tsx`): `Header → AboutMe (Trayectoria) → Projects → AiProfile → Skills → Contact`.
+**Sections** (`src/app/page.tsx`): `Header → AboutMe (Trayectoria) → CodeLab → Projects → AiProfile → Skills → Contact`.
+
+- `CodeLab` ("La neurona del inicio es código") shows the real `grow()` function from `Header/Micrograph.tsx`, read at build time between the `// #region grow` / `// #endregion grow` markers — keep those markers if you edit the generator. `CodeLab/sequence.ts` tokenizes it and maps token kinds to Sanger sequencing bases (A keyword · C variable · G number · T call), which CSS draws as chromatogram peaks. Next to it, the hero's main neuron (`MAIN_NEURON`) grows one recursion order at a time. The "Secuenciar de nuevo" button is a checkbox that swaps every `animation-name` between two identical keyframe sets to restart them.
 
 - `Projects` renders `ProjectViewer` (client; tablist of the five journey stages + the selected screenshot under a `Loupe`) on `lg+`, and a plain stacked list below `lg`. `PROJECTS` order is the customer journey (Cotización → Aceptación → Pago → Acceso → Postventa); numbering and prev/next rely on it.
 - `Skills` draws the stack as a well plate: one 12-well row per category, each technology a well that fluoresces in its channel color. Logos come from `simple-icons` (CC0), mapped by skill id in `Skills.tsx`; skills without a logo get a monogram.

@@ -32,6 +32,13 @@ interface Point {
   y: number;
 }
 
+interface Segment {
+  neuron: number;
+  /** Branch order: 0 for primary dendrites, +1 per recursive call. */
+  order: number;
+  d: string;
+}
+
 interface NeuronSpec {
   x: number;
   y: number;
@@ -54,12 +61,17 @@ const NEURONS: NeuronSpec[] = [
 const BRANCH_WIDTH = [3.4, 2.1, 1.3, 0.8];
 const BRANCH_OPACITY = [0.95, 0.85, 0.7, 0.55];
 
+/** Fixed seed: the neuron grows the same way on every visit. */
+export const SEED = 20131126;
+
 const generate = () => {
-  const random = createRandom(20131126);
+  const random = createRandom(SEED);
   const range = (min: number, max: number) => min + random() * (max - min);
 
-  // One path string per branch order keeps the markup small.
-  const branches: string[] = BRANCH_WIDTH.map(() => '');
+  // Every dendrite segment, tagged with its neuron and branch order
+  // (= recursion depth). The section "La neurona es código" grows them.
+  const segments: Segment[] = [];
+  let neuron = 0;
   const axons: string[] = [];
   const somas: { x: number; y: number; r: number; rot: number }[] = [];
   const puncta: Point[] = [];
@@ -81,9 +93,10 @@ const generate = () => {
   const toPath = (points: Point[]) =>
     points.map((p, i) => `${i === 0 ? 'M' : 'L'}${round(p.x)} ${round(p.y)}`).join('');
 
+  // #region grow
   const grow = (start: Point, angle: number, length: number, order: number, maxOrder: number) => {
     const { points, heading } = walk(start, angle, length, 5, 0.28);
-    branches[order] += toPath(points);
+    segments.push({ neuron, order, d: toPath(points) });
 
     // Synapses sit along the dendrite, slightly off the shaft.
     for (const p of points.slice(1)) {
@@ -100,31 +113,38 @@ const generate = () => {
       grow(tip, heading + spread, length * range(0.6, 0.8), order + 1, maxOrder);
     }
   };
+  // #endregion grow
 
-  for (const neuron of NEURONS) {
+  NEURONS.forEach((spec, index) => {
+    neuron = index;
     const offset = random() * Math.PI * 2;
-    for (let i = 0; i < neuron.dendrites; i += 1) {
-      const angle = offset + (i / neuron.dendrites) * Math.PI * 2 + range(-0.3, 0.3);
+    for (let i = 0; i < spec.dendrites; i += 1) {
+      const angle = offset + (i / spec.dendrites) * Math.PI * 2 + range(-0.3, 0.3);
       const start = {
-        x: neuron.x + Math.cos(angle) * neuron.soma * 0.7,
-        y: neuron.y + Math.sin(angle) * neuron.soma * 0.7,
+        x: spec.x + Math.cos(angle) * spec.soma * 0.7,
+        y: spec.y + Math.sin(angle) * spec.soma * 0.7,
       };
-      grow(start, angle, neuron.reach * range(0.8, 1.25), 0, neuron.depth);
+      grow(start, angle, spec.reach * range(0.8, 1.25), 0, spec.depth);
     }
 
-    if (neuron.axon) {
+    if (spec.axon) {
       const { points } = walk(
-        { x: neuron.x, y: neuron.y },
+        { x: spec.x, y: spec.y },
         offset + range(0, Math.PI * 2),
-        neuron.axon,
+        spec.axon,
         28,
         0.16,
       );
       axons.push(toPath(points));
     }
 
-    somas.push({ x: neuron.x, y: neuron.y, r: neuron.soma, rot: range(-40, 40) });
-  }
+    somas.push({ x: spec.x, y: spec.y, r: spec.soma, rot: range(-40, 40) });
+  });
+
+  // One path string per branch order keeps the hero's markup small.
+  const branches = BRANCH_WIDTH.map((_, order) =>
+    segments.filter((segment) => segment.order === order).map((segment) => segment.d).join(''),
+  );
 
   // Glia and out-of-plane cells: nuclei with no visible processes.
   const nuclei = somas.map((s) => ({ x: s.x, y: s.y, rx: s.r * 0.78, ry: s.r * 0.66, rot: s.rot }));
@@ -152,10 +172,17 @@ const generate = () => {
     punctaBySize[bucket] += `M${round(p.x)} ${round(p.y)}h0`;
   }
 
-  return { branches, axons, somas, nuclei, punctaBySize };
+  return { segments, branches, axons, somas, nuclei, punctaBySize };
 };
 
 const IMAGE = generate();
+
+/** The main neuron (the one in the middle of the hero), for the growth demo. */
+export const MAIN_NEURON = {
+  ...NEURONS[0],
+  segments: IMAGE.segments.filter((segment) => segment.neuron === 0),
+  branchWidth: BRANCH_WIDTH,
+};
 
 const Glow = ({ id, amount }: { id: string; amount: number }) => (
   <filter id={id} x="-10%" y="-10%" width="120%" height="120%">

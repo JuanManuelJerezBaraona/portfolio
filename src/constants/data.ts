@@ -10,6 +10,7 @@ import {
 
 export const NAV_LINKS: NavLink[] = [
   { id: 'about', label: 'Trayectoria', href: '#about' },
+  { id: 'codigo', label: 'Código', href: '#codigo' },
   { id: 'projects', label: 'Proyectos', href: '#projects' },
   { id: 'ia', label: 'IA', href: '#ia' },
   { id: 'skills', label: 'Stack', href: '#skills' },
