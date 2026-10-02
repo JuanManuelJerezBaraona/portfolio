@@ -68,15 +68,18 @@ const CodeLab = () => {
   return (
     <section
       id="codigo"
-      className="border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
+      className="sec-codigo border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
       aria-labelledby="codigo-heading"
     >
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           id="codigo-heading"
           eyebrow="Biología × código"
-          tone="text-gfp"
-          title="La neurona del inicio es código."
+          title={
+            <>
+              La neurona del inicio es <em className="hl">código</em>.
+            </>
+          }
         >
           <p>
             No es una imagen. Es una función recursiva: cada dendrita avanza unos pasos, se divide

@@ -5,7 +5,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 
 const AboutMe = () => {
   return (
-    <section id="about" className="px-4 py-24 sm:px-6 lg:px-8 lg:py-32" aria-labelledby="about-heading">
+    <section id="about" className="sec-about px-4 py-24 sm:px-6 lg:px-8 lg:py-32" aria-labelledby="about-heading">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>
           <SectionHeading id="about-heading" eyebrow="Trayectoria" title="Del laboratorio al desarrollo web.">
@@ -46,7 +46,7 @@ const AboutMe = () => {
                 key={`${entry.period}-${entry.place}`}
                 className="grid gap-1 border-b border-line py-5 sm:grid-cols-[8.5rem_1fr] sm:gap-6"
               >
-                <p className={`meta pt-1 ${entry.current ? 'text-gfp' : 'text-muted'}`}>
+                <p className={`meta pt-1 ${entry.current ? 'text-accent' : 'text-muted'}`}>
                   {entry.period}
                 </p>
                 <div>

@@ -156,7 +156,7 @@ const Skills = () => {
   return (
     <section
       id="skills"
-      className="border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
+      className="sec-skills border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
       aria-labelledby="skills-heading"
     >
       <div className="mx-auto max-w-7xl">

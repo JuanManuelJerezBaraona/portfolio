@@ -63,7 +63,7 @@ const Header = () => {
             <div>
               <dt className="meta text-muted">Perfil</dt>
               <dd className="mt-1 font-medium">
-                <Link href="#ia" className="link-underline text-mcherry">
+                <Link href="#ia" className="sec-ia link-underline text-accent">
                   IA-ready
                 </Link>
               </dd>

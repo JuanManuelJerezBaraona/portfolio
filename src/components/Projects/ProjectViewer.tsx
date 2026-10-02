@@ -60,7 +60,7 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
               onKeyDown={(event) => handleKeyDown(event, index)}
               className="sample-row grid w-full cursor-pointer grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 border-b border-line px-4 py-6 text-left"
             >
-              <span className={`meta ${isSelected ? 'text-gfp' : 'text-muted'}`}>{stageLabel(item)}</span>
+              <span className={`meta ${isSelected ? 'text-accent' : 'text-muted'}`}>{stageLabel(item)}</span>
               <span>
                 <span
                   className={`wide block text-[1.7rem] leading-none transition-colors ${

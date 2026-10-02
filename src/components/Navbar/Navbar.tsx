@@ -162,9 +162,7 @@ const Navbar = () => {
                     aria-current={isActive ? 'page' : undefined}
                   >
                     <span
-                      className={`mr-2 inline-block h-1.5 w-1.5 align-middle transition-opacity ${
-                        link.id === 'ia' ? 'bg-mcherry' : 'bg-text'
-                      } ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                      className={`sec-${link.id} nav-dot ${isActive ? 'is-active' : ''}`}
                       aria-hidden="true"
                     />
                     {link.label}
@@ -218,6 +216,10 @@ const Navbar = () => {
               aria-label={`Ir a ${link.label}`}
               aria-current={isHome && activeSection === link.id ? 'page' : undefined}
             >
+              <span
+                className={`sec-${link.id} nav-dot ${isHome && activeSection === link.id ? 'is-active' : ''}`}
+                aria-hidden="true"
+              />
               {link.label}
             </button>
           ))}

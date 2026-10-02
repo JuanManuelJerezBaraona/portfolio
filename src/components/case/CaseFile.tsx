@@ -19,7 +19,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
   const mobileShot = project.screenshots?.mobile;
 
   return (
-    <article className="px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-32">
+    <article className="sec-projects px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-32">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Link href="/#projects" className="meta link-underline text-muted hover:text-text">
@@ -34,7 +34,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
                   <Link
                     href={`/proyectos/${node.id}`}
                     aria-current={isCurrent ? 'page' : undefined}
-                    className={`meta transition-colors ${isCurrent ? 'text-gfp' : 'text-muted hover:text-text'}`}
+                    className={`meta transition-colors ${isCurrent ? 'text-accent' : 'text-muted hover:text-text'}`}
                   >
                     {pad(node.stage)}
                     <span className="sr-only"> · {node.flow}</span>
@@ -47,7 +47,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
 
         <header className="mt-14">
           <p className="rise meta text-muted">
-            <span className="text-gfp">{pad(project.stage)} · {project.flow}</span> · {project.category}
+            <span className="text-accent">{pad(project.stage)} · {project.flow}</span> · {project.category}
           </p>
           <h1 className="rise display mt-5 text-[2.6rem] sm:text-6xl lg:text-7xl" style={{ animationDelay: '80ms' }}>
             {project.title}
@@ -160,7 +160,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
           {prev ? (
             <Link href={`/proyectos/${prev.id}`} className="group py-8 sm:pr-8">
               <span className="meta text-muted">← {pad(prev.stage)} · {prev.flow}</span>
-              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-gfp">{prev.title}</span>
+              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-accent">{prev.title}</span>
             </Link>
           ) : (
             <span className="hidden sm:block" />
@@ -171,7 +171,7 @@ const CaseFile = ({ project, prev, next }: CaseFileProps) => {
               className="group border-t border-line py-8 text-right sm:border-l sm:border-t-0 sm:pl-8"
             >
               <span className="meta text-muted">{pad(next.stage)} · {next.flow} →</span>
-              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-gfp">{next.title}</span>
+              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-accent">{next.title}</span>
             </Link>
           ) : (
             <span className="hidden sm:block" />

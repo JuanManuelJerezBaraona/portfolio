@@ -10,11 +10,15 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
+      className="sec-projects border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
       aria-labelledby="projects-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <SectionHeading id="projects-heading" eyebrow="Proyectos · Seguros Falabella" title="Cinco etapas del mismo cliente.">
+        <SectionHeading id="projects-heading" eyebrow="Proyectos · Seguros Falabella" title={
+            <>
+              Cinco etapas del <em className="hl">mismo cliente</em>.
+            </>
+          }>
           <p>
             Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo
             cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites.
@@ -33,7 +37,7 @@ const Projects = () => {
               {PROJECTS.map((project) => (
                 <Reveal as="li" key={project.id}>
                   <div className="flex items-baseline justify-between gap-4 border-t border-line pt-4">
-                    <span className="meta text-gfp">
+                    <span className="meta text-accent">
                       {String(project.stage).padStart(2, '0')} · {project.flow}
                     </span>
                     <Countries countries={project.countries} />

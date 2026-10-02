@@ -7,7 +7,7 @@ export const Status = ({ status }: { status: Project['status'] }) => {
     <span className="meta inline-flex items-center gap-2 text-muted">
       <span
         aria-hidden="true"
-        className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-gfp' : 'bg-muted'}`}
+        className={`h-1.5 w-1.5 rounded-full ${live ? 'bg-accent' : 'bg-muted'}`}
       />
       {live ? 'Público' : 'Acceso interno'}
     </span>
