@@ -1,17 +1,22 @@
 import type { CSSProperties } from 'react';
 import {
   siAngular,
+  siAxios,
   siBootstrap,
   siClaude,
   siCss,
+  siDatadog,
   siDocker,
   siExpress,
+  siFastify,
   siFigma,
   siGit,
   siGithub,
   siGithubcopilot,
   siGitlab,
   siHtml5,
+  siJest,
+  siKibana,
   siModelcontextprotocol,
   siMongodb,
   siMui,
@@ -20,10 +25,12 @@ import {
   siNodedotjs,
   siPostgresql,
   siPostman,
+  siReactivex,
   siReact,
   siSass,
   siStorybook,
   siStrapi,
+  siSwagger,
   siTailwindcss,
   siTypescript,
   siJavascript,
@@ -55,6 +62,11 @@ const ICONS: Record<string, SimpleIcon> = {
   node: siNodedotjs,
   strapi: siStrapi,
   express: siExpress,
+  fastify: siFastify,
+  jest: siJest,
+  rxjs: siReactivex,
+  axios: siAxios,
+  swagger: siSwagger,
   mongodb: siMongodb,
   postgresql: siPostgresql,
   'claude-code': siClaude,
@@ -67,14 +79,21 @@ const ICONS: Record<string, SimpleIcon> = {
   figma: siFigma,
   postman: siPostman,
   docker: siDocker,
+  datadog: siDatadog,
+  kibana: siKibana,
 };
 
-/** Practices and libraries without a brand mark get a monogram instead. */
+/** Practices, services and libraries without a brand mark get a monogram instead. */
 const MONOGRAMS: Record<string, string> = {
   zustand: 'Zu',
   skills: 'SK',
   'context-eng': 'CTX',
   'llm-apis': 'API',
+  rest: 'REST',
+  hexagonal: 'HEX',
+  apigee: 'APG',
+  oauth: 'OA2',
+  sse: 'SSE',
 };
 
 /** Frontend, backend and IA keep the hero's channel colors. */
@@ -118,10 +137,7 @@ const ROWS = buildRows();
 const Well = ({ skill, column }: { skill: Skill; column: number }) => {
   const icon = ICONS[skill.id];
   return (
-    <li
-      className={`well-cell ${skill.current ? 'is-current' : ''}`}
-      style={{ '--col': column } as CSSProperties}
-    >
+    <li className="well-cell" style={{ '--col': column } as CSSProperties}>
       <span className="well" aria-hidden="true">
         {icon ? (
           <svg viewBox="0 0 24 24" className="well-mark">
@@ -146,8 +162,8 @@ const Skills = () => {
       <div className="mx-auto max-w-7xl">
         <SectionHeading id="skills-heading" eyebrow="Stack" title="Con qué trabajo.">
           <p>
-            Cada pocillo es una tecnología. Las que brillan fuerte las uso hoy en Seguros
-            Falabella; las tenues, en proyectos anteriores.
+            Cada pocillo es una tecnología con la que trabajo, ordenada por canal: frontend,
+            backend, IA, datos y herramientas.
           </p>
         </SectionHeading>
 
@@ -199,16 +215,6 @@ const Skills = () => {
             ))}
           </div>
 
-          <div className="meta mt-5 flex flex-wrap gap-x-8 gap-y-2 text-muted">
-            <span className="flex items-center gap-2">
-              <span className="legend-dot is-current" aria-hidden="true" />
-              En uso hoy
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="legend-dot" aria-hidden="true" />
-              Usado en proyectos anteriores
-            </span>
-          </div>
         </Reveal>
       </div>
     </section>

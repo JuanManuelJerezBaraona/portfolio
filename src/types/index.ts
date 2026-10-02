@@ -4,8 +4,6 @@ export interface Skill {
   id: string;
   name: string;
   category: SkillCategory;
-  /** Part of the day-to-day stack at Seguros Falabella. */
-  current?: boolean;
 }
 
 export type CountryCode = 'CL' | 'PE' | 'CO';

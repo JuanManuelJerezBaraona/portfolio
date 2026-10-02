@@ -655,16 +655,11 @@
     transition: box-shadow 0.3s ease, background 0.3s ease;
   }
 
-  /* Wells in use hold brighter medium and a glowing mark. */
-  .well-cell.is-current .well {
+  /* Filled wells hold fluorescent medium and a glowing mark. */
+  .well-cell:not(.is-empty) .well {
     color: var(--ch);
     background:
       radial-gradient(circle, color-mix(in srgb, var(--ch) 20%, transparent), color-mix(in srgb, var(--ch) 5%, transparent) 55%, transparent 72%),
-      radial-gradient(circle at 50% 38%, #0d131c, #04070b 72%);
-  }
-  .well-cell:not(.is-empty):not(.is-current) .well {
-    background:
-      radial-gradient(circle, color-mix(in srgb, var(--ch) 7%, transparent), transparent 65%),
       radial-gradient(circle at 50% 38%, #0d131c, #04070b 72%);
   }
 
@@ -672,7 +667,7 @@
     width: 44%;
     height: 44%;
   }
-  .well-cell.is-current .well-mark {
+  .well-cell:not(.is-empty) .well-mark {
     filter: drop-shadow(0 0 5px color-mix(in srgb, var(--ch) 75%, transparent));
   }
   .well-monogram {
@@ -698,7 +693,7 @@
     overflow-wrap: anywhere;
     transition: color 0.3s ease;
   }
-  .well-cell.is-current .well-name {
+  .well-cell:not(.is-empty) .well-name {
     color: var(--text);
   }
 
@@ -713,18 +708,6 @@
     .well-cell:not(.is-empty):hover .well-name {
       color: var(--text);
     }
-  }
-
-  .legend-dot {
-    width: 0.8rem;
-    height: 0.8rem;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px var(--line-strong);
-    background: rgba(230, 236, 242, 0.12);
-  }
-  .legend-dot.is-current {
-    background: var(--text);
-    box-shadow: 0 0 8px rgba(230, 236, 242, 0.6);
   }
 
   @media (min-width: 640px) {
