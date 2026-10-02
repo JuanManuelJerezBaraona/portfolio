@@ -292,6 +292,16 @@ const Micrograph = () => (
         {IMAGE.axons.map((d, i) => (
           <path key={i} d={d} strokeWidth={0.9} strokeOpacity={0.6} />
         ))}
+      </g>
+    </svg>
+
+    {/* C2 · GFP · somas, on their own layer: their calcium flashes then only
+        repaint these five cells, not the blurred dendrite tree above. */}
+    <svg {...layerProps} className="scope-layer scope-layer--c2 text-gfp">
+      <defs>
+        <Glow id="glow-soma" amount={2.4} />
+      </defs>
+      <g filter="url(#glow-soma)">
         {IMAGE.somas.map((s, i) => (
           <ellipse
             key={i}

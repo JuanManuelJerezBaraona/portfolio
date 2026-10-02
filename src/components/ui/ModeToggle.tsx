@@ -1,6 +1,7 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useRef, useSyncExternalStore, type MouseEvent } from 'react';
+import { flushSync } from 'react-dom';
 import { MODE_STORAGE_KEY } from './scopeMode';
 
 /**
@@ -10,6 +11,10 @@ import { MODE_STORAGE_KEY } from './scopeMode';
  * `:root:has(#mode-brightfield:checked)`. JavaScript only remembers the
  * choice: it mirrors it to `<html data-mode>` and localStorage, and an
  * inline script in the layout restores it before the first paint.
+ *
+ * With JavaScript, the change runs inside a View Transition so it animates
+ * as two GPU snapshots (a circle of light spreading from the knob) instead
+ * of repainting the page frame by frame.
  */
 
 const EVENT = 'scope-mode-change';
@@ -37,8 +42,56 @@ const setBrightfield = (on: boolean) => {
   window.dispatchEvent(new Event(EVENT));
 };
 
+/**
+ * Every element with a color transition would otherwise start its own
+ * animation when the palette flips (~200 at once), all on the main thread.
+ * They're switched off for the instant of the change.
+ */
+const withoutTransitions = (update: () => void) => {
+  const root = document.documentElement;
+  root.classList.add('mode-switching');
+  update();
+  return () => root.classList.remove('mode-switching');
+};
+
+const switchLamp = (on: boolean, origin: HTMLElement | null) => {
+  const update = () => flushSync(() => setBrightfield(on));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!document.startViewTransition || reduceMotion) {
+    // Deferred: the browser restores the cancelled checkbox right after the
+    // click handler, which would undo a synchronous update.
+    setTimeout(() => {
+      const restore = withoutTransitions(update);
+      requestAnimationFrame(() => requestAnimationFrame(restore));
+    }, 0);
+    return;
+  }
+
+  if (origin) {
+    const rect = origin.getBoundingClientRect();
+    const root = document.documentElement;
+    root.style.setProperty('--vt-x', `${rect.left + rect.width / 2}px`);
+    root.style.setProperty('--vt-y', `${rect.top + rect.height / 2}px`);
+  }
+  let restore = () => {};
+  const transition = document.startViewTransition(() => {
+    restore = withoutTransitions(update);
+  });
+  transition.finished.finally(() => restore());
+};
+
 const ModeToggle = () => {
   const brightfield = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  const knob = useRef<HTMLSpanElement>(null);
+
+  // The click is cancelled so the checkbox (and the `:has()` rule) only flips
+  // inside the transition; otherwise the "before" snapshot would already be
+  // in the new mode.
+  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    switchLamp(!brightfield, knob.current);
+  };
 
   return (
     <label className="mode-toggle" htmlFor="mode-brightfield">
@@ -47,11 +100,12 @@ const ModeToggle = () => {
         type="checkbox"
         role="switch"
         checked={brightfield}
-        onChange={(event) => setBrightfield(event.target.checked)}
+        onClick={handleClick}
+        onChange={() => {}}
         aria-label="Ver el sitio en campo claro"
       />
       <span className="mode-track" aria-hidden="true">
-        <span className="mode-knob" />
+        <span ref={knob} className="mode-knob" />
       </span>
       <span className="meta mode-label" aria-hidden="true">
         <span className="mode-label-off">Fluorescencia</span>

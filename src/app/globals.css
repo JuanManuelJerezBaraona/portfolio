@@ -59,11 +59,6 @@
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
   color-scheme: dark;
-  transition:
-    --void 0.7s ease, --stage 0.7s ease, --stage-2 0.7s ease, --text 0.7s ease,
-    --muted 0.7s ease, --line 0.7s ease, --line-strong 0.7s ease, --dapi 0.7s ease,
-    --gfp 0.7s ease, --mcherry 0.7s ease, --yfp 0.7s ease,
-    --sec-about 0.7s ease, --sec-codigo 0.7s ease, --sec-projects 0.7s ease, --sec-ia 0.7s ease, --sec-skills 0.7s ease, --sec-contact 0.7s ease;
 }
 
 /* Brightfield. `:has()` makes the navbar switch work with CSS alone;
@@ -103,24 +98,9 @@
   color-scheme: light;
 }
 
-/* Registered so the colors cross-fade when the lamp is switched. */
-@property --void { syntax: "<color>"; inherits: true; initial-value: #030508; }
-@property --stage { syntax: "<color>"; inherits: true; initial-value: #0a0e14; }
-@property --stage-2 { syntax: "<color>"; inherits: true; initial-value: #111822; }
-@property --line { syntax: "<color>"; inherits: true; initial-value: rgba(150, 175, 205, 0.13); }
-@property --line-strong { syntax: "<color>"; inherits: true; initial-value: rgba(150, 175, 205, 0.3); }
-@property --text { syntax: "<color>"; inherits: true; initial-value: #e6ecf2; }
-@property --muted { syntax: "<color>"; inherits: true; initial-value: #8593a3; }
-@property --dapi { syntax: "<color>"; inherits: true; initial-value: #6f8cff; }
-@property --gfp { syntax: "<color>"; inherits: true; initial-value: #4ef08f; }
-@property --mcherry { syntax: "<color>"; inherits: true; initial-value: #ff4f73; }
-@property --yfp { syntax: "<color>"; inherits: true; initial-value: #ffc93c; }
-@property --sec-about { syntax: "<color>"; inherits: true; initial-value: #fe9b61; }
-@property --sec-codigo { syntax: "<color>"; inherits: true; initial-value: #21d1ca; }
-@property --sec-projects { syntax: "<color>"; inherits: true; initial-value: #abc63e; }
-@property --sec-ia { syntax: "<color>"; inherits: true; initial-value: #d59bff; }
-@property --sec-skills { syntax: "<color>"; inherits: true; initial-value: #7dbdfe; }
-@property --sec-contact { syntax: "<color>"; inherits: true; initial-value: #ff8fb4; }
+/* Switching modes is animated with a View Transition (see the end of
+   this file), not by transitioning these variables: animating them on
+   :root repaints the whole page every frame, which stutters on iOS. */
 
 @theme inline {
   --color-background: var(--void);
@@ -1328,5 +1308,35 @@
     button:hover > .nav-dot {
       opacity: 1;
     }
+  }
+}
+
+/* ============================================================
+   LAMP SWITCH  —  the mode change as a View Transition. The
+   browser snapshots the page before and after and only animates
+   those two images on the GPU: the new light spreads in a circle
+   from the switch (--vt-x / --vt-y, set by ModeToggle).
+   ============================================================ */
+/* While the palette flips, nothing transitions on its own. */
+.mode-switching *,
+.mode-switching *::before,
+.mode-switching *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: lamp-on 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+@keyframes lamp-on {
+  from {
+    clip-path: circle(0 at var(--vt-x, 100%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 100%) var(--vt-y, 0));
   }
 }
