@@ -5,16 +5,11 @@ import Link from 'next/link';
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { Project } from '@/types';
 import Loupe from '@/components/ui/Loupe';
-import { Countries, Status } from '@/components/ui/ProjectMeta';
+import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
 
 interface ProjectViewerProps {
   projects: Project[];
 }
-
-const stageLabel = (project: Project) => String(project.stage).padStart(2, '0');
-
-const hostname = (project: Project) =>
-  project.url ? project.url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'acceso interno';
 
 /**
  * Desktop projects view: the journey as a list of tabs on the left and the

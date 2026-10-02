@@ -1,5 +1,12 @@
 import { CountryCode, Project } from '@/types';
 
+/** Position in the journey as two digits, e.g. 02. */
+export const stageLabel = (project: Project) => String(project.stage).padStart(2, '0');
+
+/** The site's address without the protocol, or a note when it isn't public. */
+export const hostname = (project: Project) =>
+  project.url ? project.url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'acceso interno';
+
 /** Public in production vs. restricted access. */
 export const Status = ({ status }: { status: Project['status'] }) => {
   const live = status === 'live';

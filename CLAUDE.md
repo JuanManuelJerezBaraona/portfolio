@@ -32,13 +32,13 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Zustand.
 
 - `CodeLab` ("La neurona del inicio es código") shows the real `grow()` function from `Header/Micrograph.tsx`, read at build time between the `// #region grow` / `// #endregion grow` markers — keep those markers if you edit the generator. `CodeLab/sequence.ts` tokenizes it and maps token kinds to Sanger sequencing bases (A keyword · C variable · G number · T call), which CSS draws as chromatogram peaks. Next to it, the hero's main neuron (`MAIN_NEURON`) grows one recursion order at a time. The "Secuenciar de nuevo" button is a checkbox that swaps every `animation-name` between two identical keyframe sets to restart them.
 
-- `Projects` renders `ProjectViewer` (client; tablist of the five journey stages + the selected screenshot under a `Loupe`) on `lg+`, and a plain stacked list below `lg`. `PROJECTS` order is the customer journey (Cotización → Aceptación → Pago → Acceso → Postventa); numbering and prev/next rely on it.
+- `Projects` renders `ProjectViewer` (client; tablist of the five journey stages + the selected screenshot under a `Loupe`) on `lg+`, and `ProjectCarousel` below `lg` (client; each project is a glass slide on the microscope stage: native scroll-snap, only the centred slide is in focus, a vernier scale underneath tracks the stage through `--p`, and tapping a blurred neighbour centres it instead of following its links). `PROJECTS` order is the customer journey (Cotización → Aceptación → Pago → Acceso → Postventa); numbering and prev/next rely on it.
 - `Skills` draws the stack as a well plate: one 12-well row per category, each technology a well that fluoresces in its channel color. Logos come from `simple-icons` (CC0), mapped by skill id in `Skills.tsx`; skills without a logo get a monogram.
 - `src/app/proyectos/[id]/page.tsx` statically generates one case file per project via `generateStaticParams`, rendered by `src/components/case/CaseFile.tsx`.
 
 **Layout (`src/app/layout.tsx`)** is just `Navbar`, `main` and `Footer` on a flat black background. It also injects an inline `<head>` script that forces `scrollRestoration='manual'` and scrolls to top on load (the `ScrollReset` component reinforces this), plus a `<noscript>` fallback that un-hides `.reveal` elements.
 
-**Components** are organized one folder per section under `src/components/`, each with a barrel `index.ts`; the top-level `src/components/index.ts` re-exports the page sections. Shared pieces live in `src/components/ui/` (`Reveal`, `SectionHeading`, `Loupe`, `ProjectMeta`, `ScrollReset`). Most components are server components; only `Navbar`, `ProjectViewer`, `Loupe` and `Reveal` use `'use client'`. The micrograph is server-rendered from a seeded PRNG and ships no JS; its channel toggles are checkboxes wired with CSS `:has()`.
+**Components** are organized one folder per section under `src/components/`, each with a barrel `index.ts`; the top-level `src/components/index.ts` re-exports the page sections. Shared pieces live in `src/components/ui/` (`Reveal`, `SectionHeading`, `Loupe`, `ProjectMeta`, `ScrollReset`). Most components are server components; only `Navbar`, `ModeToggle`, `ProjectViewer`, `ProjectCarousel`, `Loupe`, `Reveal` and `ScrollReset` use `'use client'`. The micrograph is server-rendered from a seeded PRNG and ships no JS; its channel toggles are checkboxes wired with CSS `:has()`.
 
 **State:** `src/store/uiStore.ts` (Zustand) holds only UI state — mobile menu open, active section. No data fetching anywhere; everything is static.
 
@@ -55,7 +55,7 @@ Tailwind v4 with a CSS-first theme in `src/app/globals.css` — no `tailwind.con
 
 Base and component styles in `globals.css` live inside `@layer base` / `@layer components` so Tailwind utilities can override them — keep new rules inside a layer, since unlayered CSS beats every utility in Tailwind v4.
 
-Avoid the generic "AI portfolio" look the redesign moved away from: no gradient text, glassmorphism cards, corner brackets, scanlines, marquees, pinging status dots or `// eyebrow` comments. Motion is deliberately limited to the hero's focus pull, content coming into focus on scroll (`.reveal`), the loupe and the calcium flashes in the micrograph.
+Avoid the generic "AI portfolio" look the redesign moved away from: no gradient text, glassmorphism cards, corner brackets, scanlines, marquees, pinging status dots or `// eyebrow` comments. Motion is deliberately limited to the hero's focus pull, content coming into focus on scroll (`.reveal`), the loupe, the calcium flashes in the micrograph and the mobile carousel (slides refocusing, the phone shot drifting on a scroll-driven timeline).
 
 ## SEO / OG
 
