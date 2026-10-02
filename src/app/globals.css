@@ -7,6 +7,7 @@
      C1 · DAPI     (blue)   → frontend
      C2 · GFP      (green)  → backend
      C3 · mCherry  (red)    → IA
+     C4 · YFP      (yellow) → datos
    ============================================================ */
 :root {
   --void: #030508;
@@ -20,6 +21,7 @@
   --dapi: #6f8cff;
   --gfp: #4ef08f;
   --mcherry: #ff4f73;
+  --yfp: #ffc93c;
 
   --background: var(--void);
   --foreground: var(--text);
@@ -40,6 +42,7 @@
   --color-dapi: var(--dapi);
   --color-gfp: var(--gfp);
   --color-mcherry: var(--mcherry);
+  --color-yfp: var(--yfp);
 
   --font-sans: var(--font-archivo), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-display: var(--font-archivo), system-ui, sans-serif;

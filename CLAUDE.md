@@ -45,7 +45,7 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Zustand.
 Tailwind v4 with a CSS-first theme in `src/app/globals.css` — no `tailwind.config`. The `@theme inline` block maps design tokens to utility colors. Use the semantic token names rather than raw hex:
 - Surfaces: `void` (page), `stage`, `stage-2`; borders: `line`, `line-strong`
 - Text: `text`, `muted`
-- Channels: `dapi` (blue, frontend), `gfp` (green, backend and "live/selected"), `mcherry` (red, IA)
+- Channels: `dapi` (blue, frontend), `gfp` (green, backend and "live/selected"), `mcherry` (red, IA), `yfp` (yellow, datos)
 - Fonts: Archivo (variable, `font-sans`/`font-display`) and Martian Mono (`font-mono`). Headlines use Archivo's width axis: `h1–h3` and `.wide` run at `wdth 118`, `.display` at `wdth 125`. `.meta` is the small mono readout used for labels and metadata.
 
 Base and component styles in `globals.css` live inside `@layer base` / `@layer components` so Tailwind utilities can override them — keep new rules inside a layer, since unlayered CSS beats every utility in Tailwind v4.

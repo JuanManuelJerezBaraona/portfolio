@@ -96,12 +96,12 @@ const MONOGRAMS: Record<string, string> = {
   sse: 'SSE',
 };
 
-/** Frontend, backend and IA keep the hero's channel colors. */
+/** Frontend, backend and IA keep the hero's channel colors; datos gets a fourth (YFP). */
 const CATEGORIES: { key: SkillCategory; label: string; channel: string }[] = [
   { key: 'frontend', label: 'Frontend', channel: 'var(--dapi)' },
   { key: 'backend', label: 'Backend', channel: 'var(--gfp)' },
   { key: 'ai', label: 'IA', channel: 'var(--mcherry)' },
-  { key: 'database', label: 'Datos', channel: 'var(--text)' },
+  { key: 'database', label: 'Datos', channel: 'var(--yfp)' },
   { key: 'tools', label: 'Herramientas', channel: 'var(--text)' },
 ];
 
