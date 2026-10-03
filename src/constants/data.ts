@@ -69,6 +69,12 @@ export const TIMELINE: TimelineEntry[] = [
     role: 'Desarrollador full-stack',
     place: 'Tsoft · Seguros Falabella',
     detail: 'Cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia.',
+    highlights: [
+      'Migración de aplicaciones Nuxt y Vue a Next.js con TypeScript.',
+      'Mejora de rendimiento en aplicaciones legacy.',
+      'Pruebas end-to-end automatizadas con Playwright.',
+      'Participación en decisiones de arquitectura.',
+    ],
     current: true,
   },
 ];
@@ -87,6 +93,7 @@ export const SKILLS: Skill[] = [
   { id: 'sass', name: 'Sass', category: 'frontend' },
   { id: 'vite', name: 'Vite', category: 'frontend' },
   { id: 'vue', name: 'Vue', category: 'frontend' },
+  { id: 'nuxt', name: 'Nuxt', category: 'frontend' },
   { id: 'angular', name: 'Angular', category: 'frontend' },
 
   { id: 'nest', name: 'NestJS', category: 'backend' },
@@ -108,11 +115,15 @@ export const SKILLS: Skill[] = [
   { id: 'postgresql', name: 'PostgreSQL', category: 'database' },
 
   { id: 'claude-code', name: 'Claude Code', category: 'ai' },
+  { id: 'codex', name: 'Codex', category: 'ai' },
+  { id: 'opencode', name: 'OpenCode', category: 'ai' },
   { id: 'copilot', name: 'GitHub Copilot', category: 'ai' },
+  { id: 'sdd', name: 'Spec-Driven Development', category: 'ai' },
   { id: 'mcp', name: 'MCP', category: 'ai' },
   { id: 'skills', name: 'Agent Skills', category: 'ai' },
   { id: 'context-eng', name: 'Context engineering', category: 'ai' },
   { id: 'llm-apis', name: 'APIs de LLM', category: 'ai' },
+  { id: 'n8n', name: 'n8n', category: 'ai' },
 
   { id: 'git', name: 'Git', category: 'tools' },
   { id: 'github', name: 'GitHub', category: 'tools' },
@@ -120,6 +131,7 @@ export const SKILLS: Skill[] = [
   { id: 'storybook', name: 'Storybook', category: 'tools' },
   { id: 'figma', name: 'Figma', category: 'tools' },
   { id: 'postman', name: 'Postman', category: 'tools' },
+  { id: 'playwright', name: 'Playwright', category: 'tools' },
   { id: 'docker', name: 'Docker', category: 'tools' },
   { id: 'datadog', name: 'Datadog', category: 'tools' },
   { id: 'kibana', name: 'Kibana', category: 'tools' },
@@ -127,8 +139,9 @@ export const SKILLS: Skill[] = [
 
 /**
  * How he works with AI. Only tools and practices he confirmed using:
- * Claude Code, GitHub Copilot, writing his own skills, configuring MCP
- * servers and integrating LLM APIs.
+ * Claude Code, Codex, OpenCode, GitHub Copilot, writing his own skills,
+ * configuring MCP servers, Spec-Driven Development, n8n and integrating
+ * LLM APIs.
  */
 export const AI_PRACTICES: AiPractice[] = [
   {
@@ -144,6 +157,12 @@ export const AI_PRACTICES: AiPractice[] = [
     tools: ['Agent Skills', 'NestJS'],
   },
   {
+    id: 'sdd',
+    title: 'Primero la especificación',
+    body: 'Trabajo con Spec-Driven Development: antes de que el agente escriba una línea, queda escrito qué tiene que hacer y cómo se valida. El agente implementa a partir de esa especificación y yo reviso el resultado contra ella.',
+    tools: ['Spec-Driven Development'],
+  },
+  {
     id: 'mcp',
     title: 'Lo conecto a herramientas reales',
     body: 'Configuro servidores MCP para que el agente lea diseños de Figma, colecciones de Postman, documentación actualizada y el design system, en lugar de trabajar con supuestos.',
@@ -151,9 +170,9 @@ export const AI_PRACTICES: AiPractice[] = [
   },
   {
     id: 'llm',
-    title: 'Integro modelos en productos',
-    body: 'Además de usar IA para programar, he integrado APIs de modelos de lenguaje dentro de aplicaciones.',
-    tools: ['APIs de LLM'],
+    title: 'Integro modelos y automatizo flujos',
+    body: 'Además de usar IA para programar, he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n.',
+    tools: ['APIs de LLM', 'n8n'],
   },
   {
     id: 'review',

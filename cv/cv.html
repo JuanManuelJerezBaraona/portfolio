@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Juan Manuel Jerez Baraona · Desarrollador Full Stack · CV</title>
 <meta name="author" content="Juan Manuel Jerez Baraona">
-<meta name="keywords" content="Desarrollador Full Stack, React, Next.js, NestJS, TypeScript, Node.js, MongoDB, Claude Code, GitHub Copilot, MCP">
+<meta name="keywords" content="Desarrollador Full Stack, React, Next.js, NestJS, TypeScript, Node.js, Strapi, MongoDB, Vue, Nuxt, Playwright, Spec-Driven Development, Claude Code, Codex, OpenCode, GitHub Copilot, MCP, n8n">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block">
 <!--
@@ -41,7 +41,7 @@
     print-color-adjust: exact;
   }
 
-  body { padding: 11.5mm 16mm 6mm; }
+  body { padding: 10.5mm 16mm 3mm; }
 
   a { color: inherit; text-decoration: none; }
 
@@ -83,7 +83,7 @@
   .contact span + span::before { content: "·"; margin: 0 1.6mm; color: var(--faint); }
 
   /* ---------- sections ---------- */
-  section { margin-top: 3.6mm; }
+  section { margin-top: 3.2mm; }
 
   h2 {
     font-size: 8.4pt;
@@ -92,14 +92,14 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding-bottom: 1.2mm;
-    margin-bottom: 2mm;
+    margin-bottom: 1.8mm;
     border-bottom: 0.6pt solid var(--rule);
   }
 
   p { text-wrap: pretty; }
   .summary { color: #262b33; }
 
-  .entry + .entry { margin-top: 2.4mm; }
+  .entry + .entry { margin-top: 2.1mm; }
   .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
   h3 { font-size: 10.2pt; font-weight: 700; }
   h3 .org { font-weight: 400; color: var(--soft); }
@@ -146,11 +146,11 @@
 <section>
   <h2>Perfil</h2>
   <p class="summary">
-    Desarrollador Full Stack desde 2022. En Seguros Falabella desarrollo los flujos de cotización,
-    aceptación digital, pago y postventa para Chile, Perú y Colombia con React, Next.js, NestJS y
-    TypeScript. Ingeniero en Biotecnología con experiencia en análisis de datos y estadística. Trabajo
-    a diario con agentes de IA (Claude Code, GitHub Copilot): escribo skills propias, configuro
-    servidores MCP y reviso todo el código que generan.
+    Desarrollador Full Stack desde 2022 e Ingeniero en Biotecnología. En Seguros Falabella desarrollo
+    los flujos de cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia con React,
+    Next.js, NestJS, Strapi y TypeScript; he migrado aplicaciones de Nuxt/Vue a Next.js, optimizado
+    aplicaciones legacy y participo en decisiones de arquitectura. Uso agentes de IA (Claude Code,
+    Codex, OpenCode, Copilot) con Spec-Driven Development y reviso todo lo que generan.
   </p>
 </section>
 
@@ -164,9 +164,11 @@
     </div>
     <ul>
       <li>Desarrollo de cinco aplicaciones del recorrido del cliente de seguros: sitio regional de cotización y contratación, aceptación digital en tiendas, botón de pago, inicio de sesión de clientes y plataforma postventa.</li>
-      <li>Frontend con Next.js, React, TypeScript y Zustand; componentes con el design system Tomaco, documentados en Storybook a partir de diseños en Figma.</li>
-      <li>Servicios backend con NestJS y arquitectura hexagonal, persistencia en MongoDB y contenido administrable por el negocio con Strapi 5.</li>
-      <li>Desarrollo asistido por IA: skills para Claude Code que aplican la arquitectura del equipo, servidores MCP (Figma, Postman) e instrucciones de contexto por repositorio.</li>
+      <li>Migración de aplicaciones Nuxt/Vue a Next.js con TypeScript y mejora del rendimiento de aplicaciones legacy.</li>
+      <li>Frontend con Next.js, React, TypeScript y Zustand; design system Tomaco documentado en Storybook desde Figma.</li>
+      <li>Backend con NestJS y arquitectura hexagonal, MongoDB y contenido administrable con Strapi 5 (CMS headless).</li>
+      <li>Participación en decisiones de arquitectura y automatización de pruebas end-to-end con Playwright.</li>
+      <li>Desarrollo asistido por IA: skills propias para Claude Code, servidores MCP (Figma, Postman) y contexto por repositorio.</li>
     </ul>
   </div>
 
@@ -215,8 +217,8 @@
   <h2>Proyectos en producción · Seguros Falabella</h2>
   <ul>
     <li><b>Sitio regional de cotización ·</b><span class="meta"> Chile, Perú y Colombia · Next.js, NestJS, Strapi 5, MongoDB · segurosfalabella.com</span></li>
-    <li><b>Aceptación Digital ·</b><span class="meta"> Chile · Next.js, NestJS, Tomaco, MongoDB · aceptacion.segurosfalabella.com</span></li>
-    <li><b>Botón de Pago ·</b><span class="meta"> Chile · Next.js, NestJS, Zustand, MongoDB · pago.segurosfalabella.com</span></li>
+    <li><b>Aceptación Digital ·</b><span class="meta"> Chile · Next.js, NestJS, Tomaco, Strapi 5, MongoDB · aceptacion.segurosfalabella.com</span></li>
+    <li><b>Botón de Pago ·</b><span class="meta"> Chile · Next.js, NestJS, Zustand, Strapi 5, MongoDB · pago.segurosfalabella.com</span></li>
     <li><b>Postventa e inicio de sesión ·</b><span class="meta"> Chile, Perú y Colombia · React, NestJS · clientes.segurosfalabella.com</span></li>
   </ul>
 </section>
@@ -225,15 +227,17 @@
   <h2>Habilidades e idiomas</h2>
   <dl class="skills">
     <dt>Frontend</dt>
-    <dd>TypeScript, JavaScript, React, Next.js, Zustand, HTML5, CSS3, Sass, Tailwind CSS, Bootstrap, Material UI, Storybook, Vite</dd>
+    <dd>TypeScript, JavaScript, React, Next.js, Vue, Nuxt, Zustand, HTML5, CSS3, Sass, Tailwind CSS, Bootstrap, Material UI, Storybook, Vite</dd>
     <dt>Backend</dt>
-    <dd>Node.js, NestJS, Express, Strapi, APIs REST, arquitectura hexagonal</dd>
+    <dd>Node.js, NestJS, Express, Fastify, Strapi (CMS headless), APIs REST, OAuth 2.0, Server-Sent Events, Swagger, arquitectura hexagonal</dd>
     <dt>Bases de datos</dt>
     <dd>MongoDB, PostgreSQL</dd>
+    <dt>Testing</dt>
+    <dd>Playwright (end-to-end), Jest</dd>
     <dt>IA para desarrollo</dt>
-    <dd>Claude Code, GitHub Copilot, Agent Skills, MCP (Model Context Protocol), integración de APIs de LLM, context engineering</dd>
+    <dd>Claude Code, Codex, OpenCode, GitHub Copilot, Spec-Driven Development (SDD), Agent Skills, MCP (Model Context Protocol), n8n, integración de APIs de LLM, context engineering</dd>
     <dt>Herramientas</dt>
-    <dd>Git, GitHub, GitLab, Figma, Postman, Docker</dd>
+    <dd>Git, GitHub, GitLab, Figma, Postman, Docker, Datadog, Kibana</dd>
     <dt>Idiomas</dt>
     <dd>Español nativo, inglés intermedio (B2) con clases continuas desde 2023</dd>
   </dl>

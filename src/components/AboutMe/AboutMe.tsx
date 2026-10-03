@@ -55,6 +55,16 @@ const AboutMe = () => {
                     <span className="text-muted"> · {entry.place}</span>
                   </p>
                   {entry.detail && <p className="mt-1 text-[0.95rem] text-muted">{entry.detail}</p>}
+                  {entry.highlights && (
+                    <ul className="mt-3 space-y-1.5 text-[0.95rem] text-muted">
+                      {entry.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-3">
+                          <span aria-hidden="true" className="mt-[0.6em] h-1 w-1 flex-none bg-accent" />
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </li>
             ))}

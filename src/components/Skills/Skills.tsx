@@ -20,9 +20,12 @@ import {
   siModelcontextprotocol,
   siMongodb,
   siMui,
+  siN8n,
   siNestjs,
   siNextdotjs,
   siNodedotjs,
+  siNuxt,
+  siOpencode,
   siPostgresql,
   siPostman,
   siReactivex,
@@ -57,6 +60,7 @@ const ICONS: Record<string, SimpleIcon> = {
   sass: siSass,
   vite: siVite,
   vue: siVuedotjs,
+  nuxt: siNuxt,
   angular: siAngular,
   nest: siNestjs,
   node: siNodedotjs,
@@ -70,8 +74,10 @@ const ICONS: Record<string, SimpleIcon> = {
   mongodb: siMongodb,
   postgresql: siPostgresql,
   'claude-code': siClaude,
+  opencode: siOpencode,
   copilot: siGithubcopilot,
   mcp: siModelcontextprotocol,
+  n8n: siN8n,
   git: siGit,
   github: siGithub,
   gitlab: siGitlab,
@@ -86,6 +92,8 @@ const ICONS: Record<string, SimpleIcon> = {
 /** Practices, services and libraries without a brand mark get a monogram instead. */
 const MONOGRAMS: Record<string, string> = {
   zustand: 'Zu',
+  codex: 'CDX',
+  sdd: 'SDD',
   skills: 'SK',
   'context-eng': 'CTX',
   'llm-apis': 'API',
@@ -94,6 +102,7 @@ const MONOGRAMS: Record<string, string> = {
   apigee: 'APG',
   oauth: 'OA2',
   sse: 'SSE',
+  playwright: 'PW',
 };
 
 /** Frontend, backend and IA keep the hero's channel colors; datos gets a fourth (YFP). */

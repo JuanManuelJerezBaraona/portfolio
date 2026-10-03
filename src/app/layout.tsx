@@ -25,7 +25,7 @@ const martianMono = Martian_Mono({
 });
 
 const description =
-  'Desarrollador full-stack en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js y NestJS, y trabaja a diario con agentes de IA.';
+  'Desarrollador full-stack en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -37,8 +37,16 @@ export const metadata: Metadata = {
     'next.js',
     'typescript',
     'nestjs',
+    'strapi',
+    'nuxt',
+    'vue',
+    'playwright',
     'claude code',
+    'codex',
+    'opencode',
     'github copilot',
+    'spec-driven development',
+    'n8n',
     'mcp',
     'ia',
     'santiago de chile',

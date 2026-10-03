@@ -44,6 +44,8 @@ export interface TimelineEntry {
   role: string;
   place: string;
   detail?: string;
+  /** Concrete things he did in this role, confirmed by him. */
+  highlights?: string[];
   /** The role he holds today. */
   current?: boolean;
 }
