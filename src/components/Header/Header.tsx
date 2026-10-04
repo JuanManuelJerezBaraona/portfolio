@@ -22,9 +22,10 @@ const Header = () => {
     <header id="home" className="px-4 pb-20 pt-28 sm:px-6 lg:px-8 lg:pb-28 lg:pt-36">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
         <div>
-          <p className="rise meta text-muted">
-            {info.title} · {info.location}
-          </p>
+          {/* Who he is before the hook: role and level, readable at a glance. */}
+          {/* Plain wrapping, not balanced: balancing would split "full-stack" at its hyphen. */}
+          <p className="rise wide text-wrap text-xl leading-snug sm:text-2xl">{info.title}</p>
+          <p className="rise meta mt-2 text-muted">{info.location}</p>
 
           <h1 className="rise display mt-6 text-[2.75rem] sm:text-6xl lg:text-[5.4rem]" style={delay(80)}>
             {t('title')}
@@ -54,9 +55,13 @@ const Header = () => {
           </div>
 
           <dl
-            className="rise mt-12 grid max-w-xl grid-cols-3 border-t border-line pt-5"
+            className="rise mt-12 grid max-w-xl grid-cols-2 gap-y-5 border-t border-line pt-5 sm:grid-cols-4"
             style={delay(320)}
           >
+            <div>
+              <dt className="meta text-muted">{t('level')}</dt>
+              <dd className="mt-1 font-medium">{info.level}</dd>
+            </div>
             <div>
               <dt className="meta text-muted">{t('fullStackSince')}</dt>
               <dd className="mt-1 font-medium">{info.fullStackSince}</dd>

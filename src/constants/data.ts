@@ -33,7 +33,9 @@ export const PERSONAL_INFO: PersonalInfoData = {
   name: 'Juan Manuel Jerez Baraona',
   shortName: 'Juan Manuel Jerez',
   // "Semi senior" is the Latin American level; "mid-level" is how the US and Europe say it.
-  title: { es: 'Desarrollador full-stack semi senior', en: 'Mid-level full-stack developer' },
+  // The non-breaking space keeps "semi senior" on one line in the hero.
+  title: { es: 'Desarrollador full-stack semi\u00a0senior', en: 'Mid-level full-stack developer' },
+  level: { es: 'Semi senior', en: 'Mid-level' },
   location: { es: 'Santiago de Chile', en: 'Santiago, Chile' },
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',

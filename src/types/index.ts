@@ -116,7 +116,10 @@ export interface SocialLink {
 export interface PersonalInfoData {
   name: string;
   shortName: string;
+  /** Role with level, the first thing the hero says about him. */
   title: Text;
+  /** Seniority on its own, for the fact rows. */
+  level: Text;
   location: Text;
   /** Year he started working as a full-stack developer. */
   fullStackSince: number;

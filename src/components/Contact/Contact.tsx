@@ -7,6 +7,7 @@ const Contact = () => {
   const tCv = useTranslations('Cv');
   const info = getPersonalInfo(useLocale());
   const facts = [
+    { label: t('level'), value: info.level },
     { label: t('location'), value: info.location },
     { label: t('languages'), value: t('languagesValue') },
     { label: t('fullStackSince'), value: String(info.fullStackSince) },
