@@ -8,6 +8,14 @@ export interface Skill {
 
 export type CountryCode = 'CL' | 'PE' | 'CO';
 
+/** One figure in a case's result, read as a sentence: value + label. */
+export interface Metric {
+  /** Short enough to read at a glance, e.g. "54 → 90" or "~3 min". */
+  value: string;
+  /** Continues the value, e.g. "de las contrataciones en tienda…". */
+  label: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -36,6 +44,10 @@ export interface Project {
   challenge: string;
   /** Concrete contributions, grounded in the real stack. */
   contributions: string[];
+  /** What changed after the work, in one sentence. */
+  outcome: string;
+  /** The figures behind the outcome. */
+  metrics: Metric[];
 }
 
 export interface TimelineEntry {

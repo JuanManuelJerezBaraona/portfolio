@@ -187,7 +187,10 @@ export const AI_PRACTICES: AiPractice[] = [
  * Cotización → Aceptación → Pago → Acceso → Postventa.
  * Countries follow the CV. `role`, `summary`, `challenge` and
  * `contributions` were seeded from the descriptions and real stacks;
- * review before treating them as verified.
+ * review before treating them as verified. `outcome` and `metrics` are
+ * plausible estimates written as placeholders, not measured figures:
+ * replace each one with his real number (or his best estimate) before
+ * relying on it.
  */
 export const PROJECTS: Project[] = [
   {
@@ -210,6 +213,13 @@ export const PROJECTS: Project[] = [
       'Estado del flujo de cotización con Zustand.',
       'Servicios con NestJS y persistencia en MongoDB.',
       'Contenido y campañas administrables desde Strapi 5.',
+    ],
+    outcome:
+      'Desde la migración a Next.js el sitio carga bastante más rápido en móvil, y las campañas ya no esperan a un desarrollador: el equipo de negocio las publica por su cuenta.',
+    metrics: [
+      { value: '54 → 90', label: 'en Lighthouse móvil, antes y después de pasar de Nuxt a Next.js' },
+      { value: '~1 h', label: 'para publicar una campaña desde Strapi; antes dependía de un despliegue de ~3 días' },
+      { value: '3 países', label: 'servidos desde una sola base de código' },
     ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Strapi 5', 'MongoDB'],
     url: 'https://www.segurosfalabella.com',
@@ -239,6 +249,13 @@ export const PROJECTS: Project[] = [
       'Servicios de validación y orquestación con NestJS.',
       'Textos legales y contenido administrables con Strapi.',
     ],
+    outcome:
+      'El papel prácticamente desapareció del mesón, cada venta toma menos tiempo y un corte a mitad de camino ya no obliga a empezar de cero.',
+    metrics: [
+      { value: '85%', label: 'de las contrataciones en tienda se cierran en digital' },
+      { value: '−40%', label: 'en el tiempo por venta: de unos 20 minutos a unos 12' },
+      { value: '7 de 10', label: 'procesos interrumpidos se retoman en el paso donde quedaron' },
+    ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://aceptacion.segurosfalabella.com/',
     screenshots: {
@@ -266,6 +283,13 @@ export const PROJECTS: Project[] = [
       'Estado con Zustand y componentes Tomaco.',
       'Integración de servicios de pago con NestJS.',
       'Manejo de la intención de pago y su confirmación.',
+    ],
+    outcome:
+      'Ponerse al día con una cuota dejó de depender del horario de cobranza: se resuelve en minutos desde el teléfono, y casi ningún pago queda en un estado dudoso.',
+    metrics: [
+      { value: '~3 min', label: 'entre consultar la deuda y ver el pago confirmado' },
+      { value: '−30%', label: 'en llamadas al call center por cuotas atrasadas' },
+      { value: '<1%', label: 'de los pagos termina en revisión manual por quedar sin confirmar' },
     ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://pago.segurosfalabella.com/',
@@ -295,6 +319,13 @@ export const PROJECTS: Project[] = [
       'Componentes Tomaco y documentación en Storybook.',
       'Servicios de sesión con NestJS.',
     ],
+    outcome:
+      'Chile, Perú y Colombia entran por la misma puerta, y cada cambio al login se prueba de punta a punta antes de llegar a QA.',
+    metrics: [
+      { value: '3 → 1', label: 'accesos: el de cada país quedó en un solo inicio de sesión' },
+      { value: '45', label: 'escenarios end-to-end en Playwright, que corren en cada pull request' },
+      { value: '−40%', label: 'en bugs de acceso reportados por QA desde que existe la suite' },
+    ],
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
@@ -322,6 +353,13 @@ export const PROJECTS: Project[] = [
       'Front-end multi-país con React.',
       'Servicios de dominio con NestJS.',
       'Configuración por país.',
+    ],
+    outcome:
+      'Llevar un trámite a otro país ya no es un desarrollo nuevo, es configuración. Y el panel, que arrastraba código heredado, carga en menos de la mitad del tiempo.',
+    metrics: [
+      { value: '2,5×', label: 'más rápida la carga inicial del panel tras optimizar el código heredado' },
+      { value: '~20', label: 'trámites en autogestión, compartidos por los tres países' },
+      { value: '~2 días', label: 'para habilitar en otro país un trámite que ya existe, sin código nuevo' },
     ],
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
