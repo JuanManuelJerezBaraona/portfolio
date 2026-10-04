@@ -41,7 +41,8 @@ import {
   siVuedotjs,
   type SimpleIcon,
 } from 'simple-icons';
-import { SKILLS } from '@/constants/data';
+import { useLocale, useTranslations } from 'next-intl';
+import { getSkills } from '@/constants/data';
 import { Skill, SkillCategory } from '@/types';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -106,12 +107,12 @@ const MONOGRAMS: Record<string, string> = {
 };
 
 /** Frontend, backend and IA keep the hero's channel colors; datos gets a fourth (YFP). */
-const CATEGORIES: { key: SkillCategory; label: string; channel: string }[] = [
-  { key: 'frontend', label: 'Frontend', channel: 'var(--dapi)' },
-  { key: 'backend', label: 'Backend', channel: 'var(--gfp)' },
-  { key: 'ai', label: 'IA', channel: 'var(--mcherry)' },
-  { key: 'database', label: 'Datos', channel: 'var(--yfp)' },
-  { key: 'tools', label: 'Herramientas', channel: 'var(--text)' },
+const CATEGORIES: { key: SkillCategory; channel: string }[] = [
+  { key: 'frontend', channel: 'var(--dapi)' },
+  { key: 'backend', channel: 'var(--gfp)' },
+  { key: 'ai', channel: 'var(--mcherry)' },
+  { key: 'database', channel: 'var(--yfp)' },
+  { key: 'tools', channel: 'var(--text)' },
 ];
 
 const COLUMNS = 12;
@@ -119,20 +120,21 @@ const ROW_LETTERS = 'ABCDEFGH';
 
 interface PlateRow {
   letter: string;
-  label?: string;
+  /** Set on a category's first row only. */
+  category?: SkillCategory;
   channel: string;
   skills: Skill[];
 }
 
 /** Lays the stack out like a well plate: one or more 12-well rows per category. */
-const buildRows = (): PlateRow[] => {
+const buildRows = (all: Skill[]): PlateRow[] => {
   const rows: PlateRow[] = [];
   for (const category of CATEGORIES) {
-    const skills = SKILLS.filter((skill) => skill.category === category.key);
+    const skills = all.filter((skill) => skill.category === category.key);
     for (let i = 0; i < skills.length; i += COLUMNS) {
       rows.push({
         letter: ROW_LETTERS[rows.length],
-        label: i === 0 ? category.label : undefined,
+        category: i === 0 ? category.key : undefined,
         channel: category.channel,
         skills: skills.slice(i, i + COLUMNS),
       });
@@ -140,8 +142,6 @@ const buildRows = (): PlateRow[] => {
   }
   return rows;
 };
-
-const ROWS = buildRows();
 
 const Well = ({ skill, column }: { skill: Skill; column: number }) => {
   const icon = ICONS[skill.id];
@@ -162,6 +162,10 @@ const Well = ({ skill, column }: { skill: Skill; column: number }) => {
 };
 
 const Skills = () => {
+  const t = useTranslations('Skills');
+  const tStack = useTranslations('Stack');
+  const rows = buildRows(getSkills(useLocale()));
+
   return (
     <section
       id="skills"
@@ -169,11 +173,8 @@ const Skills = () => {
       aria-labelledby="skills-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <SectionHeading id="skills-heading" eyebrow="Stack" title="Con qué trabajo.">
-          <p>
-            Cada pocillo es una tecnología que uso, ordenada por canal: frontend,
-            backend, IA, datos y herramientas.
-          </p>
+        <SectionHeading id="skills-heading" eyebrow="Stack" title={t('title')}>
+          <p>{t('body')}</p>
         </SectionHeading>
 
         <Reveal className="mt-14" amount={0.12}>
@@ -193,35 +194,38 @@ const Skills = () => {
               </div>
             </div>
 
-            {ROWS.map((row) => (
-              <div
-                key={row.letter}
-                className="plate-grid plate-row"
-                style={{ '--ch': row.channel } as CSSProperties}
-              >
-                <span className="plate-letter meta" aria-hidden="true">
-                  {row.letter}
-                </span>
+            {rows.map((row) => {
+              const label = row.category && tStack(row.category);
+              return (
+                <div
+                  key={row.letter}
+                  className="plate-grid plate-row"
+                  style={{ '--ch': row.channel } as CSSProperties}
+                >
+                  <span className="plate-letter meta" aria-hidden="true">
+                    {row.letter}
+                  </span>
 
-                {row.label && (
-                  <h3 className="plate-label meta">
-                    <span className="swatch" aria-hidden="true" />
-                    {row.label}
-                  </h3>
-                )}
+                  {label && (
+                    <h3 className="plate-label meta">
+                      <span className="swatch" aria-hidden="true" />
+                      {label}
+                    </h3>
+                  )}
 
-                <ul className="plate-wells" aria-label={row.label}>
-                  {row.skills.map((skill, i) => (
-                    <Well key={skill.id} skill={skill} column={i} />
-                  ))}
-                  {Array.from({ length: COLUMNS - row.skills.length }, (_, i) => (
-                    <li key={`empty-${i}`} className="well-cell is-empty" aria-hidden="true">
-                      <span className="well" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                  <ul className="plate-wells" aria-label={label}>
+                    {row.skills.map((skill, i) => (
+                      <Well key={skill.id} skill={skill} column={i} />
+                    ))}
+                    {Array.from({ length: COLUMNS - row.skills.length }, (_, i) => (
+                      <li key={`empty-${i}`} className="well-cell is-empty" aria-hidden="true">
+                        <span className="well" />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
 
         </Reveal>

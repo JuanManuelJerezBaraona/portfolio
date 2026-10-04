@@ -1,85 +1,120 @@
+import type { Locale } from 'next-intl';
+import { inLocale } from '@/i18n/inLocale';
 import {
-  AiPractice,
-  NavLink,
-  PersonalInfo,
-  Project,
-  Skill,
+  AiPracticeData,
+  NavLinkData,
+  PersonalInfoData,
+  ProjectData,
+  SkillCategory,
+  SkillData,
   SocialLink,
-  TimelineEntry,
+  TimelineEntryData,
 } from '@/types';
 
-export const NAV_LINKS: NavLink[] = [
-  { id: 'about', label: 'Trayectoria', href: '#about' },
-  { id: 'codigo', label: 'Código', href: '#codigo' },
-  { id: 'projects', label: 'Proyectos', href: '#projects' },
-  { id: 'ia', label: 'IA', href: '#ia' },
+/*
+ * Every piece of copy is either a plain string (it reads the same in both
+ * languages) or an `{ es, en }` pair. Components never read these arrays
+ * directly: they go through the `get*` helpers at the bottom, which resolve
+ * each pair to the visitor's language. When a Spanish text changes, change
+ * its English twin right next to it.
+ */
+
+export const NAV_LINKS: NavLinkData[] = [
+  { id: 'about', label: { es: 'Trayectoria', en: 'Background' }, href: '#about' },
+  { id: 'codigo', label: { es: 'Código', en: 'Code' }, href: '#codigo' },
+  { id: 'projects', label: { es: 'Proyectos', en: 'Projects' }, href: '#projects' },
+  { id: 'ia', label: { es: 'IA', en: 'AI' }, href: '#ia' },
   { id: 'skills', label: 'Stack', href: '#skills' },
-  { id: 'contact', label: 'Contacto', href: '#contact' },
+  { id: 'contact', label: { es: 'Contacto', en: 'Contact' }, href: '#contact' },
 ];
 
-export const PERSONAL_INFO: PersonalInfo = {
+export const PERSONAL_INFO: PersonalInfoData = {
   name: 'Juan Manuel Jerez Baraona',
   shortName: 'Juan Manuel Jerez',
-  title: 'Desarrollador full-stack',
-  location: 'Santiago de Chile',
+  title: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
+  location: { es: 'Santiago de Chile', en: 'Santiago, Chile' },
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',
-  cv: '/CV-Juan-Manuel-Jerez-Baraona.pdf',
+  cv: { es: '/CV-Juan-Manuel-Jerez-Baraona.pdf', en: '/CV-Juan-Manuel-Jerez-Baraona-EN.pdf' },
   profileImage: '/juan-manuel-jerez.jpg',
 };
 
 /** Chronological, taken from the CV. */
-export const TIMELINE: TimelineEntry[] = [
+export const TIMELINE: TimelineEntryData[] = [
   {
     period: '2009 – 2015',
-    role: 'Ingeniería en Biotecnología',
+    role: { es: 'Ingeniería en Biotecnología', en: 'Biotechnology Engineering' },
     place: 'Universidad Andrés Bello',
   },
   {
     period: '2013 – 2016',
-    role: 'Asistente de investigación',
-    place: 'Laboratorio de Neurobiología',
-    detail: 'Ciencia de datos, estadística y bioinformática.',
+    role: { es: 'Asistente de investigación', en: 'Research assistant' },
+    place: { es: 'Laboratorio de Neurobiología', en: 'Neurobiology Laboratory' },
+    detail: {
+      es: 'Ciencia de datos, estadística y bioinformática.',
+      en: 'Data science, statistics and bioinformatics.',
+    },
   },
   {
     period: '2016 – 2022',
-    role: 'Desarrollador front-end',
+    role: { es: 'Desarrollador front-end', en: 'Front-end developer' },
     place: 'Farmacia Veterinaria Los Pingos',
-    detail: 'E-commerce con JavaScript y React.',
+    detail: { es: 'E-commerce con JavaScript y React.', en: 'E-commerce with JavaScript and React.' },
   },
   {
     period: '2022 – 2024',
-    role: 'Desarrollador full-stack',
+    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
     place: 'SUPER CBD',
-    detail: 'E-commerce con React, Node.js, Express y PostgreSQL.',
+    detail: {
+      es: 'E-commerce con React, Node.js, Express y PostgreSQL.',
+      en: 'E-commerce with React, Node.js, Express and PostgreSQL.',
+    },
   },
   {
     period: '2023 – 2024',
-    role: 'Bootcamp Full-Stack JavaScript',
+    role: { es: 'Bootcamp Full-Stack JavaScript', en: 'Full-Stack JavaScript Bootcamp' },
     place: 'Academia Desafío Latam',
   },
   {
     period: '2024',
-    role: 'Desarrollador full-stack',
+    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
     place: 'ABO Consultores',
-    detail: 'React, TypeScript, Node.js y MongoDB.',
+    detail: {
+      es: 'React, TypeScript, Node.js y MongoDB.',
+      en: 'React, TypeScript, Node.js and MongoDB.',
+    },
   },
   {
-    period: '2024 – hoy',
-    role: 'Desarrollador full-stack',
+    period: { es: '2024 – hoy', en: '2024 – present' },
+    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
     place: 'Tsoft · Seguros Falabella',
-    detail: 'Cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia.',
+    detail: {
+      es: 'Cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia.',
+      en: 'Quotes, digital acceptance, payments and after-sales for Chile, Peru and Colombia.',
+    },
     highlights: [
-      'Migración de aplicaciones Nuxt y Vue a Next.js con TypeScript.',
-      'Mejora de rendimiento en aplicaciones legacy.',
-      'Pruebas end-to-end automatizadas con Playwright.',
-      'Participación en decisiones de arquitectura.',
+      {
+        es: 'Migración de aplicaciones Nuxt y Vue a Next.js con TypeScript.',
+        en: 'Migrated Nuxt and Vue applications to Next.js with TypeScript.',
+      },
+      {
+        es: 'Mejora de rendimiento en aplicaciones legacy.',
+        en: 'Improved performance in legacy applications.',
+      },
+      {
+        es: 'Pruebas end-to-end automatizadas con Playwright.',
+        en: 'Automated end-to-end tests with Playwright.',
+      },
+      {
+        es: 'Participación en decisiones de arquitectura.',
+        en: 'Took part in architecture decisions.',
+      },
     ],
     current: true,
   },
 ];
 
-export const SKILLS: Skill[] = [
+export const SKILLS: SkillData[] = [
   { id: 'ts', name: 'TypeScript', category: 'frontend' },
   { id: 'js', name: 'JavaScript', category: 'frontend' },
   { id: 'react', name: 'React', category: 'frontend' },
@@ -101,8 +136,8 @@ export const SKILLS: Skill[] = [
   { id: 'express', name: 'Express', category: 'backend' },
   { id: 'fastify', name: 'Fastify', category: 'backend' },
   { id: 'strapi', name: 'Strapi', category: 'backend' },
-  { id: 'rest', name: 'APIs REST', category: 'backend' },
-  { id: 'hexagonal', name: 'Arq. hexagonal', category: 'backend' },
+  { id: 'rest', name: { es: 'APIs REST', en: 'REST APIs' }, category: 'backend' },
+  { id: 'hexagonal', name: { es: 'Arq. hexagonal', en: 'Hexagonal arch.' }, category: 'backend' },
   { id: 'jest', name: 'Jest', category: 'backend' },
   { id: 'rxjs', name: 'RxJS', category: 'backend' },
   { id: 'axios', name: 'Axios', category: 'backend' },
@@ -122,7 +157,7 @@ export const SKILLS: Skill[] = [
   { id: 'mcp', name: 'MCP', category: 'ai' },
   { id: 'skills', name: 'Agent Skills', category: 'ai' },
   { id: 'context-eng', name: 'Context engineering', category: 'ai' },
-  { id: 'llm-apis', name: 'APIs de LLM', category: 'ai' },
+  { id: 'llm-apis', name: { es: 'APIs de LLM', en: 'LLM APIs' }, category: 'ai' },
   { id: 'n8n', name: 'n8n', category: 'ai' },
 
   { id: 'git', name: 'Git', category: 'tools' },
@@ -143,41 +178,59 @@ export const SKILLS: Skill[] = [
  * configuring MCP servers, Spec-Driven Development, n8n and integrating
  * LLM APIs.
  */
-export const AI_PRACTICES: AiPractice[] = [
+export const AI_PRACTICES: AiPracticeData[] = [
   {
     id: 'context',
-    title: 'Le doy contexto al agente',
-    body: 'Cada repositorio tiene su CLAUDE.md y su copilot-instructions.md con la arquitectura, los comandos y las convenciones del proyecto. Así el agente parte sabiendo dónde está parado.',
+    title: { es: 'Le doy contexto al agente', en: 'I give the agent context' },
+    body: {
+      es: 'Cada repositorio tiene su CLAUDE.md y su copilot-instructions.md con la arquitectura, los comandos y las convenciones del proyecto. Así el agente parte sabiendo dónde está parado.',
+      en: 'Every repository has its own CLAUDE.md and copilot-instructions.md with the project’s architecture, commands and conventions, so the agent starts out knowing where it stands.',
+    },
     tools: ['Claude Code', 'GitHub Copilot'],
   },
   {
     id: 'skills',
-    title: 'Escribo skills propias',
-    body: 'Convierto lo que el equipo repite en skills: cómo armar un endpoint con arquitectura hexagonal en NestJS o cómo integrar las librerías internas de pagos y leads. El agente sigue nuestro patrón en vez de inventar uno.',
+    title: { es: 'Escribo skills propias', en: 'I write my own skills' },
+    body: {
+      es: 'Convierto lo que el equipo repite en skills: cómo armar un endpoint con arquitectura hexagonal en NestJS o cómo integrar las librerías internas de pagos y leads. El agente sigue nuestro patrón en vez de inventar uno.',
+      en: 'I turn what the team keeps repeating into skills: how to build an endpoint with hexagonal architecture in NestJS, or how to integrate the internal payments and leads libraries. The agent follows our pattern instead of inventing one.',
+    },
     tools: ['Agent Skills', 'NestJS'],
   },
   {
     id: 'sdd',
-    title: 'Primero la especificación',
-    body: 'Trabajo con Spec-Driven Development: antes de que el agente escriba una línea, queda escrito qué tiene que hacer y cómo se valida. El agente implementa a partir de esa especificación y yo reviso el resultado contra ella.',
+    title: { es: 'Primero la especificación', en: 'Spec first' },
+    body: {
+      es: 'Trabajo con Spec-Driven Development: antes de que el agente escriba una línea, queda escrito qué tiene que hacer y cómo se valida. El agente implementa a partir de esa especificación y yo reviso el resultado contra ella.',
+      en: 'I work with Spec-Driven Development: before the agent writes a single line, what it has to do and how it will be validated are written down. The agent implements from that spec, and I review the result against it.',
+    },
     tools: ['Spec-Driven Development'],
   },
   {
     id: 'mcp',
-    title: 'Lo conecto a herramientas reales',
-    body: 'Configuro servidores MCP para que el agente lea diseños de Figma, colecciones de Postman, documentación actualizada y el design system, en lugar de trabajar con supuestos.',
+    title: { es: 'Lo conecto a herramientas reales', en: 'I connect it to real tools' },
+    body: {
+      es: 'Configuro servidores MCP para que el agente lea diseños de Figma, colecciones de Postman, documentación actualizada y el design system, en lugar de trabajar con supuestos.',
+      en: 'I set up MCP servers so the agent reads Figma designs, Postman collections, up-to-date documentation and the design system instead of working from assumptions.',
+    },
     tools: ['MCP', 'Figma', 'Postman', 'Context7'],
   },
   {
     id: 'llm',
-    title: 'Integro modelos y automatizo flujos',
-    body: 'Además de usar IA para programar, he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n.',
-    tools: ['APIs de LLM', 'n8n'],
+    title: { es: 'Integro modelos y automatizo flujos', en: 'I integrate models and automate workflows' },
+    body: {
+      es: 'Además de usar IA para programar, he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n.',
+      en: 'Beyond using AI to write code, I’ve integrated language model APIs into applications and I build automations with n8n.',
+    },
+    tools: [{ es: 'APIs de LLM', en: 'LLM APIs' }, 'n8n'],
   },
   {
     id: 'review',
-    title: 'Reviso todo lo que produce',
-    body: 'El agente propone y yo decido. Nada se mergea sin que lo haya leído, probado y entendido.',
+    title: { es: 'Reviso todo lo que produce', en: 'I review everything it produces' },
+    body: {
+      es: 'El agente propone y yo decido. Nada se mergea sin que lo haya leído, probado y entendido.',
+      en: 'The agent proposes and I decide. Nothing gets merged until I’ve read it, tested it and understood it.',
+    },
     tools: ['Code review'],
   },
 ];
@@ -192,34 +245,66 @@ export const AI_PRACTICES: AiPractice[] = [
  * replace each one with his real number (or his best estimate) before
  * relying on it.
  */
-export const PROJECTS: Project[] = [
+export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-landing',
-    title: 'Landing Seguros Falabella',
+    title: { es: 'Landing Seguros Falabella', en: 'Seguros Falabella Landing' },
     category: 'Seguros Falabella',
     stage: 1,
-    flow: 'Cotización',
+    flow: { es: 'Cotización', en: 'Quote' },
     countries: ['CL', 'PE', 'CO'],
     status: 'live',
-    role: 'Desarrollo full-stack del sitio regional de cotización y contratación.',
-    description:
-      'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia.',
-    summary:
-      'La puerta de entrada: el sitio donde el cliente elige un seguro, lo cotiza y pasa a contratarlo. Es el mismo producto para tres países, con el contenido administrable por el equipo de negocio.',
-    challenge:
-      'Mantener una sola base de código para tres países sin que el negocio dependa de un despliegue cada vez que cambia una campaña o un texto.',
+    role: {
+      es: 'Desarrollo full-stack del sitio regional de cotización y contratación.',
+      en: 'Full-stack development of the regional quote and purchase site.',
+    },
+    description: {
+      es: 'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia.',
+      en: 'Insurance quotes and purchase, 100% online, for Chile, Peru and Colombia.',
+    },
+    summary: {
+      es: 'La puerta de entrada: el sitio donde el cliente elige un seguro, lo cotiza y pasa a contratarlo. Es el mismo producto para tres países, con el contenido administrable por el equipo de negocio.',
+      en: 'The front door: the site where customers choose an insurance product, get a quote and go on to buy it. It’s the same product in three countries, with content the business team manages itself.',
+    },
+    challenge: {
+      es: 'Mantener una sola base de código para tres países sin que el negocio dependa de un despliegue cada vez que cambia una campaña o un texto.',
+      en: 'Keep a single codebase for three countries without the business needing a deployment every time a campaign or a line of copy changes.',
+    },
     contributions: [
-      'Aplicación en Next.js con componentes documentados en Storybook.',
-      'Estado del flujo de cotización con Zustand.',
-      'Servicios con NestJS y persistencia en MongoDB.',
-      'Contenido y campañas administrables desde Strapi 5.',
+      {
+        es: 'Aplicación en Next.js con componentes documentados en Storybook.',
+        en: 'Next.js application with components documented in Storybook.',
+      },
+      { es: 'Estado del flujo de cotización con Zustand.', en: 'Quote flow state managed with Zustand.' },
+      { es: 'Servicios con NestJS y persistencia en MongoDB.', en: 'NestJS services with MongoDB persistence.' },
+      {
+        es: 'Contenido y campañas administrables desde Strapi 5.',
+        en: 'Content and campaigns managed from Strapi 5.',
+      },
     ],
-    outcome:
-      'Desde la migración a Next.js el sitio carga bastante más rápido en móvil, y las campañas ya no esperan a un desarrollador: el equipo de negocio las publica por su cuenta.',
+    outcome: {
+      es: 'Desde la migración a Next.js el sitio carga bastante más rápido en móvil, y las campañas ya no esperan a un desarrollador: el equipo de negocio las publica por su cuenta.',
+      en: 'Since the move to Next.js the site loads much faster on mobile, and campaigns no longer wait for a developer: the business team publishes them on its own.',
+    },
     metrics: [
-      { value: '54 → 90', label: 'en Lighthouse móvil, antes y después de pasar de Nuxt a Next.js' },
-      { value: '~1 h', label: 'para publicar una campaña desde Strapi; antes dependía de un despliegue de ~3 días' },
-      { value: '3 países', label: 'servidos desde una sola base de código' },
+      {
+        value: '54 → 90',
+        label: {
+          es: 'en Lighthouse móvil, antes y después de pasar de Nuxt a Next.js',
+          en: 'on mobile Lighthouse, before and after moving from Nuxt to Next.js',
+        },
+      },
+      {
+        value: '~1 h',
+        label: {
+          es: 'para publicar una campaña desde Strapi; antes dependía de un despliegue de ~3 días',
+          en: 'to publish a campaign from Strapi; it used to wait on a ~3-day deployment',
+        },
+      },
+      {
+        value: { es: '3 países', en: '3 countries' },
+        label: { es: 'servidos desde una sola base de código', en: 'served from a single codebase' },
+      },
     ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Strapi 5', 'MongoDB'],
     url: 'https://www.segurosfalabella.com',
@@ -230,31 +315,72 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'seguros-falabella-aceptacion-digital',
-    title: 'Aceptación Digital',
+    title: { es: 'Aceptación Digital', en: 'Digital Acceptance' },
     category: 'Seguros Falabella',
     stage: 2,
-    flow: 'Aceptación',
+    flow: { es: 'Aceptación', en: 'Acceptance' },
     countries: ['CL'],
     status: 'live',
-    role: 'Desarrollo del flujo de cotización y contratación en tiendas.',
-    description:
-      'Contratación digital en retail: captura de datos del cliente, pago y confirmación, sin papeles.',
-    summary:
-      'El flujo que se usa en tienda para contratar un seguro sin papeles ni firmas físicas: captura los datos del cliente, cobra y confirma, con tracking y el estado guardado entre pasos.',
-    challenge:
-      'Reemplazar la firma en papel por un proceso digital guiado que no pierda al cliente si se corta a la mitad.',
+    role: {
+      es: 'Desarrollo del flujo de cotización y contratación en tiendas.',
+      en: 'Development of the in-store quote and purchase flow.',
+    },
+    description: {
+      es: 'Contratación digital en retail: captura de datos del cliente, pago y confirmación, sin papeles.',
+      en: 'Digital in-store purchase: customer details, payment and confirmation, with no paperwork.',
+    },
+    summary: {
+      es: 'El flujo que se usa en tienda para contratar un seguro sin papeles ni firmas físicas: captura los datos del cliente, cobra y confirma, con tracking y el estado guardado entre pasos.',
+      en: 'The flow stores use to sell insurance without paper forms or handwritten signatures: it captures the customer’s details, takes payment and confirms, with tracking and state saved between steps.',
+    },
+    challenge: {
+      es: 'Reemplazar la firma en papel por un proceso digital guiado que no pierda al cliente si se corta a la mitad.',
+      en: 'Replace the paper signature with a guided digital process that doesn’t lose the customer if it gets interrupted halfway.',
+    },
     contributions: [
-      'Flujo guiado paso a paso con persistencia de estado.',
-      'Componentes con Tomaco Components y Storybook.',
-      'Servicios de validación y orquestación con NestJS.',
-      'Textos legales y contenido administrables con Strapi.',
+      {
+        es: 'Flujo guiado paso a paso con persistencia de estado.',
+        en: 'Step-by-step guided flow with persisted state.',
+      },
+      {
+        es: 'Componentes con Tomaco Components y Storybook.',
+        en: 'Components built with Tomaco Components and Storybook.',
+      },
+      {
+        es: 'Servicios de validación y orquestación con NestJS.',
+        en: 'Validation and orchestration services in NestJS.',
+      },
+      {
+        es: 'Textos legales y contenido administrables con Strapi.',
+        en: 'Legal copy and content managed in Strapi.',
+      },
     ],
-    outcome:
-      'El papel prácticamente desapareció del mesón, cada venta toma menos tiempo y un corte a mitad de camino ya no obliga a empezar de cero.',
+    outcome: {
+      es: 'El papel prácticamente desapareció del mesón, cada venta toma menos tiempo y un corte a mitad de camino ya no obliga a empezar de cero.',
+      en: 'Paper has all but disappeared from the sales counter, each sale takes less time, and an interruption halfway through no longer means starting over.',
+    },
     metrics: [
-      { value: '85%', label: 'de las contrataciones en tienda se cierran en digital' },
-      { value: '−40%', label: 'en el tiempo por venta: de unos 20 minutos a unos 12' },
-      { value: '7 de 10', label: 'procesos interrumpidos se retoman en el paso donde quedaron' },
+      {
+        value: '85%',
+        label: {
+          es: 'de las contrataciones en tienda se cierran en digital',
+          en: 'of in-store sales are now closed digitally',
+        },
+      },
+      {
+        value: '−40%',
+        label: {
+          es: 'en el tiempo por venta: de unos 20 minutos a unos 12',
+          en: 'in time per sale: from about 20 minutes to about 12',
+        },
+      },
+      {
+        value: { es: '7 de 10', en: '7 in 10' },
+        label: {
+          es: 'procesos interrumpidos se retoman en el paso donde quedaron',
+          en: 'interrupted sales pick up at the step where they stopped',
+        },
+      },
     ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://aceptacion.segurosfalabella.com/',
@@ -265,31 +391,66 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'seguros-falabella-boton-pago',
-    title: 'Botón de Pago',
+    title: { es: 'Botón de Pago', en: 'Payment Portal' },
     category: 'Seguros Falabella',
     stage: 3,
-    flow: 'Pago',
+    flow: { es: 'Pago', en: 'Payment' },
     countries: ['CL'],
     status: 'live',
-    role: 'Desarrollo del flujo de pago de cuotas en línea.',
-    description:
-      'Pago en línea de cuotas atrasadas de seguros, de la consulta a la confirmación.',
-    summary:
-      'Para que un cliente con cuotas atrasadas las pague solo, en pocos pasos: consulta la deuda, paga y recibe la confirmación.',
-    challenge:
-      'Un flujo de pago donde el cliente siempre sabe en qué estado está su pago, y que se integre con el resto de los servicios.',
+    role: {
+      es: 'Desarrollo del flujo de pago de cuotas en línea.',
+      en: 'Development of the online installment payment flow.',
+    },
+    description: {
+      es: 'Pago en línea de cuotas atrasadas de seguros, de la consulta a la confirmación.',
+      en: 'Online payment of overdue insurance installments, from lookup to confirmation.',
+    },
+    summary: {
+      es: 'Para que un cliente con cuotas atrasadas las pague solo, en pocos pasos: consulta la deuda, paga y recibe la confirmación.',
+      en: 'So a customer with overdue installments can pay them on their own in a few steps: check what they owe, pay and get a confirmation.',
+    },
+    challenge: {
+      es: 'Un flujo de pago donde el cliente siempre sabe en qué estado está su pago, y que se integre con el resto de los servicios.',
+      en: 'A payment flow where customers always know the status of their payment, and that integrates with the rest of the services.',
+    },
     contributions: [
-      'Flujo con estados claros: consulta, pago y confirmación.',
-      'Estado con Zustand y componentes Tomaco.',
-      'Integración de servicios de pago con NestJS.',
-      'Manejo de la intención de pago y su confirmación.',
+      {
+        es: 'Flujo con estados claros: consulta, pago y confirmación.',
+        en: 'A flow with clear states: lookup, payment and confirmation.',
+      },
+      { es: 'Estado con Zustand y componentes Tomaco.', en: 'State in Zustand and Tomaco components.' },
+      { es: 'Integración de servicios de pago con NestJS.', en: 'Payment service integration with NestJS.' },
+      {
+        es: 'Manejo de la intención de pago y su confirmación.',
+        en: 'Handling of the payment intent and its confirmation.',
+      },
     ],
-    outcome:
-      'Ponerse al día con una cuota dejó de depender del horario de cobranza: se resuelve en minutos desde el teléfono, y casi ningún pago queda en un estado dudoso.',
+    outcome: {
+      es: 'Ponerse al día con una cuota dejó de depender del horario de cobranza: se resuelve en minutos desde el teléfono, y casi ningún pago queda en un estado dudoso.',
+      en: 'Catching up on an installment no longer depends on collections office hours: it takes minutes from a phone, and almost no payment is left in an uncertain state.',
+    },
     metrics: [
-      { value: '~3 min', label: 'entre consultar la deuda y ver el pago confirmado' },
-      { value: '−30%', label: 'en llamadas al call center por cuotas atrasadas' },
-      { value: '<1%', label: 'de los pagos termina en revisión manual por quedar sin confirmar' },
+      {
+        value: '~3 min',
+        label: {
+          es: 'entre consultar la deuda y ver el pago confirmado',
+          en: 'from checking the balance to seeing the payment confirmed',
+        },
+      },
+      {
+        value: '−30%',
+        label: {
+          es: 'en llamadas al call center por cuotas atrasadas',
+          en: 'in call-center calls about overdue installments',
+        },
+      },
+      {
+        value: '<1%',
+        label: {
+          es: 'de los pagos termina en revisión manual por quedar sin confirmar',
+          en: 'of payments end up in manual review for lack of a confirmation',
+        },
+      },
     ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://pago.segurosfalabella.com/',
@@ -300,31 +461,66 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'seguros-falabella-login-postventa',
-    title: 'Login Postventa',
+    title: { es: 'Login Postventa', en: 'Customer Login' },
     category: 'Seguros Falabella',
     stage: 4,
-    flow: 'Acceso',
+    flow: { es: 'Acceso', en: 'Access' },
     countries: ['CL', 'PE', 'CO'],
     status: 'live',
-    role: 'Desarrollo del acceso unificado a la zona de clientes.',
-    description:
-      'Un solo inicio de sesión para la zona de clientes en Chile, Perú y Colombia.',
-    summary:
-      'El acceso a la zona de clientes: un único inicio de sesión, el mismo para Chile, Perú y Colombia, que da paso a todos los trámites postventa.',
-    challenge:
-      'Centralizar el acceso de tres países en una sola autenticación, segura y consistente para todos los productos.',
+    role: {
+      es: 'Desarrollo del acceso unificado a la zona de clientes.',
+      en: 'Development of the unified sign-in to the customer area.',
+    },
+    description: {
+      es: 'Un solo inicio de sesión para la zona de clientes en Chile, Perú y Colombia.',
+      en: 'One sign-in for the customer area in Chile, Peru and Colombia.',
+    },
+    summary: {
+      es: 'El acceso a la zona de clientes: un único inicio de sesión, el mismo para Chile, Perú y Colombia, que da paso a todos los trámites postventa.',
+      en: 'The way into the customer area: a single sign-in, the same for Chile, Peru and Colombia, that leads to every after-sales request.',
+    },
+    challenge: {
+      es: 'Centralizar el acceso de tres países en una sola autenticación, segura y consistente para todos los productos.',
+      en: 'Centralize access for three countries in a single authentication, secure and consistent across every product.',
+    },
     contributions: [
-      'Autenticación centralizada para la zona de clientes.',
-      'Acceso multi-país (CL · PE · CO).',
-      'Componentes Tomaco y documentación en Storybook.',
-      'Servicios de sesión con NestJS.',
+      {
+        es: 'Autenticación centralizada para la zona de clientes.',
+        en: 'Centralized authentication for the customer area.',
+      },
+      { es: 'Acceso multi-país (CL · PE · CO).', en: 'Multi-country access (CL · PE · CO).' },
+      {
+        es: 'Componentes Tomaco y documentación en Storybook.',
+        en: 'Tomaco components documented in Storybook.',
+      },
+      { es: 'Servicios de sesión con NestJS.', en: 'Session services in NestJS.' },
     ],
-    outcome:
-      'Chile, Perú y Colombia entran por la misma puerta, y cada cambio al login se prueba de punta a punta antes de llegar a QA.',
+    outcome: {
+      es: 'Chile, Perú y Colombia entran por la misma puerta, y cada cambio al login se prueba de punta a punta antes de llegar a QA.',
+      en: 'Chile, Peru and Colombia come in through the same door, and every change to the login is tested end to end before it reaches QA.',
+    },
     metrics: [
-      { value: '3 → 1', label: 'accesos: el de cada país quedó en un solo inicio de sesión' },
-      { value: '45', label: 'escenarios end-to-end en Playwright, que corren en cada pull request' },
-      { value: '−40%', label: 'en bugs de acceso reportados por QA desde que existe la suite' },
+      {
+        value: '3 → 1',
+        label: {
+          es: 'accesos: el de cada país quedó en un solo inicio de sesión',
+          en: 'sign-ins: one per country became a single one',
+        },
+      },
+      {
+        value: '45',
+        label: {
+          es: 'escenarios end-to-end en Playwright, que corren en cada pull request',
+          en: 'end-to-end scenarios in Playwright, run on every pull request',
+        },
+      },
+      {
+        value: '−40%',
+        label: {
+          es: 'en bugs de acceso reportados por QA desde que existe la suite',
+          en: 'in login bugs reported by QA since the suite was added',
+        },
+      },
     ],
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
@@ -335,31 +531,60 @@ export const PROJECTS: Project[] = [
   },
   {
     id: 'seguros-falabella-postventa',
-    title: 'Postventa',
+    title: { es: 'Postventa', en: 'After-sales Platform' },
     category: 'Seguros Falabella',
     stage: 5,
-    flow: 'Postventa',
+    flow: { es: 'Postventa', en: 'After-sales' },
     countries: ['CL', 'PE', 'CO'],
     status: 'internal',
-    role: 'Desarrollo de la plataforma de autogestión postventa.',
-    description:
-      'Trámites después de la contratación, para clientes y ejecutivos de Chile, Perú y Colombia.',
-    summary:
-      'Donde se resuelve todo lo que pasa después de contratar: una plataforma para que clientes y ejecutivos hagan sus trámites sin llamar a nadie, en tres países.',
-    challenge:
-      'Unificar los trámites postventa de tres países en una plataforma que crezca sin reescribirse por cada mercado.',
+    role: {
+      es: 'Desarrollo de la plataforma de autogestión postventa.',
+      en: 'Development of the after-sales self-service platform.',
+    },
+    description: {
+      es: 'Trámites después de la contratación, para clientes y ejecutivos de Chile, Perú y Colombia.',
+      en: 'Post-purchase requests for customers and agents in Chile, Peru and Colombia.',
+    },
+    summary: {
+      es: 'Donde se resuelve todo lo que pasa después de contratar: una plataforma para que clientes y ejecutivos hagan sus trámites sin llamar a nadie, en tres países.',
+      en: 'Where everything after the purchase gets handled: a platform where customers and agents complete their requests without calling anyone, in three countries.',
+    },
+    challenge: {
+      es: 'Unificar los trámites postventa de tres países en una plataforma que crezca sin reescribirse por cada mercado.',
+      en: 'Bring three countries’ after-sales requests into one platform that can grow without being rewritten for each market.',
+    },
     contributions: [
-      'Plataforma de autogestión de trámites.',
-      'Front-end multi-país con React.',
-      'Servicios de dominio con NestJS.',
-      'Configuración por país.',
+      { es: 'Plataforma de autogestión de trámites.', en: 'Self-service platform for requests.' },
+      { es: 'Front-end multi-país con React.', en: 'Multi-country front end in React.' },
+      { es: 'Servicios de dominio con NestJS.', en: 'Domain services in NestJS.' },
+      { es: 'Configuración por país.', en: 'Per-country configuration.' },
     ],
-    outcome:
-      'Llevar un trámite a otro país ya no es un desarrollo nuevo, es configuración. Y el panel, que arrastraba código heredado, carga en menos de la mitad del tiempo.',
+    outcome: {
+      es: 'Llevar un trámite a otro país ya no es un desarrollo nuevo, es configuración. Y el panel, que arrastraba código heredado, carga en menos de la mitad del tiempo.',
+      en: 'Taking a request type to another country is no longer new development, it’s configuration. And the dashboard, which carried legacy code, loads in less than half the time.',
+    },
     metrics: [
-      { value: '2,5×', label: 'más rápida la carga inicial del panel tras optimizar el código heredado' },
-      { value: '~20', label: 'trámites en autogestión, compartidos por los tres países' },
-      { value: '~2 días', label: 'para habilitar en otro país un trámite que ya existe, sin código nuevo' },
+      {
+        value: { es: '2,5×', en: '2.5×' },
+        label: {
+          es: 'más rápida la carga inicial del panel tras optimizar el código heredado',
+          en: 'faster initial dashboard load after optimizing the legacy code',
+        },
+      },
+      {
+        value: '~20',
+        label: {
+          es: 'trámites en autogestión, compartidos por los tres países',
+          en: 'self-service request types, shared by all three countries',
+        },
+      },
+      {
+        value: { es: '~2 días', en: '~2 days' },
+        label: {
+          es: 'para habilitar en otro país un trámite que ya existe, sin código nuevo',
+          en: 'to enable an existing request type in another country, with no new code',
+        },
+      },
     ],
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
@@ -369,48 +594,48 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+type StackGroup = Exclude<SkillCategory, 'ai'>;
+
 /** Category for each technology, used to group the stack on case-file pages. */
-const TECH_CATEGORY: Record<string, string> = {
-  JavaScript: 'Frontend',
-  TypeScript: 'Frontend',
-  React: 'Frontend',
-  'Next.js': 'Frontend',
-  Zustand: 'Frontend',
-  'Bootstrap 5': 'Frontend',
-  'Tailwind CSS': 'Frontend',
-  'Tomaco Components': 'Frontend',
-  NestJS: 'Backend',
-  'Strapi 5': 'Backend',
-  MongoDB: 'Datos',
-  PostgreSQL: 'Datos',
-  Storybook: 'Herramientas',
-  Figma: 'Herramientas',
+const TECH_CATEGORY: Record<string, StackGroup> = {
+  JavaScript: 'frontend',
+  TypeScript: 'frontend',
+  React: 'frontend',
+  'Next.js': 'frontend',
+  Zustand: 'frontend',
+  'Bootstrap 5': 'frontend',
+  'Tailwind CSS': 'frontend',
+  'Tomaco Components': 'frontend',
+  NestJS: 'backend',
+  'Strapi 5': 'backend',
+  MongoDB: 'database',
+  PostgreSQL: 'database',
+  Storybook: 'tools',
+  Figma: 'tools',
 };
 
-const GROUP_ORDER = ['Frontend', 'Backend', 'Datos', 'Herramientas'];
+const GROUP_ORDER: StackGroup[] = ['frontend', 'backend', 'database', 'tools'];
 
 export interface TechGroup {
-  label: string;
+  /** Translated through the `Stack` messages. */
+  key: StackGroup;
   items: string[];
 }
 
-/** Groups a project's tech stack into ordered, labeled buckets. */
+/** Groups a project's tech stack into ordered buckets. */
 export const groupTechStack = (techStack: string[]): TechGroup[] => {
-  const buckets = new Map<string, string[]>();
+  const buckets = new Map<StackGroup, string[]>();
   for (const tech of techStack) {
-    const group = TECH_CATEGORY[tech] ?? 'Herramientas';
+    const group = TECH_CATEGORY[tech] ?? 'tools';
     const items = buckets.get(group) ?? [];
     items.push(tech);
     buckets.set(group, items);
   }
   return GROUP_ORDER.filter((group) => buckets.has(group)).map((group) => ({
-    label: group,
+    key: group,
     items: buckets.get(group) as string[],
   }));
 };
-
-export const getProjectById = (id: string): Project | undefined =>
-  PROJECTS.find((project) => project.id === id);
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
@@ -426,3 +651,12 @@ export const SOCIAL_LINKS: SocialLink[] = [
     icon: 'github',
   },
 ];
+
+/* Copy resolved to one language — what components actually render. */
+
+export const getNavLinks = (locale: Locale) => inLocale(NAV_LINKS, locale);
+export const getPersonalInfo = (locale: Locale) => inLocale(PERSONAL_INFO, locale);
+export const getTimeline = (locale: Locale) => inLocale(TIMELINE, locale);
+export const getSkills = (locale: Locale) => inLocale(SKILLS, locale);
+export const getAiPractices = (locale: Locale) => inLocale(AI_PRACTICES, locale);
+export const getProjects = (locale: Locale) => inLocale(PROJECTS, locale);

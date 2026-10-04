@@ -1,0 +1,154 @@
+{
+  "Meta": {
+    "title": "Juan Manuel Jerez Baraona · Full-stack developer",
+    "description": "Full-stack developer in Santiago, Chile. A biotechnology engineer who now builds the quote, payment and after-sales flows of Seguros Falabella with React, Next.js, NestJS and Strapi, and works with AI agents every day.",
+    "ogLocale": "en_US",
+    "keywords": [
+      "full stack developer",
+      "react",
+      "next.js",
+      "typescript",
+      "nestjs",
+      "strapi",
+      "nuxt",
+      "vue",
+      "playwright",
+      "claude code",
+      "codex",
+      "opencode",
+      "github copilot",
+      "spec-driven development",
+      "n8n",
+      "mcp",
+      "ai",
+      "santiago chile"
+    ],
+    "projectNotFound": "Project not found — Juan Manuel Jerez"
+  },
+  "Og": {
+    "title": "I traded the microscope for code.",
+    "detail": "Full-stack developer · React, Next.js, NestJS · AI-ready",
+    "footer": "Santiago, Chile · Seguros Falabella · CL PE CO"
+  },
+  "Nav": {
+    "home": "Go to home",
+    "goTo": "Go to {section}",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "closeMobileMenu": "Close mobile menu",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "Language"
+  },
+  "Mode": {
+    "label": "View the site in brightfield",
+    "off": "Fluorescence",
+    "on": "Brightfield"
+  },
+  "Stack": {
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "ai": "AI",
+    "database": "Data",
+    "tools": "Tools"
+  },
+  "Header": {
+    "title": "I traded the microscope for code.",
+    "intro": "I’m <b>{name}</b>. I studied biotechnology engineering and worked in a neurobiology lab before moving into software. Today I build the quote, payment and after-sales flows for <b>Seguros Falabella</b> with React, Next.js, NestJS and Strapi, and AI is part of my everyday work.",
+    "seeProjects": "See projects",
+    "fullStackSince": "Full-stack since",
+    "inProduction": "In production",
+    "profile": "Profile",
+    "aiReady": "AI-ready",
+    "channels": "Cultured neuron, three channels. Switch one off to see each layer."
+  },
+  "Cv": {
+    "download": "Download CV"
+  },
+  "About": {
+    "eyebrow": "Background",
+    "title": "From the lab to web development.",
+    "lab": "I studied biotechnology engineering and spent three years in a neurobiology lab doing statistics, data analysis and bioinformatics. That’s where I learned not to trust a result until I can reproduce it.",
+    "code": "In 2016 I started building online stores, and since 2022 I’ve worked as a full-stack developer. The lab habit came with me: I test, measure and review before I call anything done.",
+    "portrait": "Portrait of {name}"
+  },
+  "CodeLab": {
+    "eyebrow": "Biology × code",
+    "title": "The neuron up top is <hl>code</hl>.",
+    "body": "It isn’t an image. It’s a recursive function: each dendrite grows a few steps, splits in two, and the function calls itself again with a shorter branch. Below is that code, the same code that runs this site, read the way a sequencer reads DNA.",
+    "read": "Read 01 · {count} bases · seed {seed}",
+    "code": "Source of the grow function",
+    "legend": "Bases in the read",
+    "bases": {
+      "A": "keyword",
+      "C": "variable",
+      "G": "number",
+      "T": "call"
+    },
+    "replay": "Sequence again",
+    "order": "Order",
+    "orders": "Branching orders",
+    "growth": "Each order is one level of recursion: the same neuron from the top of the page, growing."
+  },
+  "Projects": {
+    "eyebrow": "Projects · Seguros Falabella",
+    "title": "Five stages, <hl>one customer</hl>.",
+    "body": "Five applications that, in order, cover what a person does with their insurance: get a quote, buy it, pay for it, sign in to their account and handle requests.",
+    "empty": "No projects published yet."
+  },
+  "Project": {
+    "public": "Public",
+    "internal": "Internal access",
+    "internalAddress": "internal access",
+    "stages": "Journey stages",
+    "hover": "Hover to magnify",
+    "desktopShot": "{title} on desktop",
+    "mobileShot": "{title} on mobile",
+    "fullCase": "Read the full case",
+    "openSite": "Visit site",
+    "openSiteAt": "Visit site: {host}",
+    "carousel": "carousel",
+    "carouselLabel": "Projects, one stage per slide",
+    "scale": "Stages",
+    "stage": "Stage {stage}: {flow}",
+    "swipe": "Swipe to change stage"
+  },
+  "Case": {
+    "back": "← All projects",
+    "problem": "The problem",
+    "did": "What I did",
+    "outcome": "Outcome",
+    "approximate": "Approximate figures: the exact data is confidential.",
+    "phone": "On a phone",
+    "sheet": "Fact sheet",
+    "stage": "Stage",
+    "stageOf": "{stage} of {total} · {flow}",
+    "status": "Status",
+    "countries": "Countries",
+    "neighbours": "Previous and next stage"
+  },
+  "Ai": {
+    "eyebrow": "AI-ready profile",
+    "title": "I use AI every day. And I <hl>review everything</hl> it writes.",
+    "body": "I come from analyzing data in a lab, so I treat a language model like any other instrument: fast and useful, but I don’t trust it until I’ve checked.",
+    "skill": "One of my skills"
+  },
+  "Skills": {
+    "title": "What I work with.",
+    "body": "Each well is a technology I use, sorted by channel: frontend, backend, AI, data and tools."
+  },
+  "Contact": {
+    "eyebrow": "Contact · Open to new opportunities",
+    "title": "Let’s talk.",
+    "body": "Looking for a full-stack developer for your team? Email me: it’s the most direct way to reach me, and I reply quickly.",
+    "location": "Location",
+    "languages": "Languages",
+    "languagesValue": "Spanish (native) · English (B2)",
+    "fullStackSince": "Full-stack since"
+  },
+  "NotFound": {
+    "title": "This page is out of focus.",
+    "body": "The address doesn’t exist or has changed. The projects are right where they’ve always been.",
+    "cta": "Go to the projects"
+  }
+}

@@ -1,13 +1,17 @@
-import { PERSONAL_INFO, SOCIAL_LINKS } from '@/constants/data';
+import { useLocale, useTranslations } from 'next-intl';
+import { SOCIAL_LINKS, getPersonalInfo } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 
-const FACTS = [
-  { label: 'Ubicación', value: PERSONAL_INFO.location },
-  { label: 'Idiomas', value: 'Español nativo · Inglés B2' },
-  { label: 'Full-stack desde', value: String(PERSONAL_INFO.fullStackSince) },
-];
-
 const Contact = () => {
+  const t = useTranslations('Contact');
+  const tCv = useTranslations('Cv');
+  const info = getPersonalInfo(useLocale());
+  const facts = [
+    { label: t('location'), value: info.location },
+    { label: t('languages'), value: t('languagesValue') },
+    { label: t('fullStackSince'), value: String(info.fullStackSince) },
+  ];
+
   return (
     <section
       id="contact"
@@ -19,23 +23,22 @@ const Contact = () => {
           <Reveal>
             <p className="meta flex items-center gap-2.5 text-muted">
               <span className="swatch text-accent" aria-hidden="true" />
-              Contacto · Disponible para nuevas oportunidades
+              {t('eyebrow')}
             </p>
             <h2 id="contact-heading" className="display mt-6 text-[2.6rem] sm:text-6xl lg:text-7xl">
-              Conversemos.
+              {t('title')}
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              ¿Buscas un desarrollador full-stack para tu equipo? Escríbeme: el correo es la vía más
-              directa y respondo rápido.
+              {t('body')}
             </p>
           </Reveal>
 
           <Reveal delay={100} className="mt-12">
             <a
-              href={`mailto:${PERSONAL_INFO.email}`}
+              href={`mailto:${info.email}`}
               className="link-underline wide break-all text-2xl sm:text-4xl"
             >
-              {PERSONAL_INFO.email}
+              {info.email}
             </a>
 
             <ul className="mt-12 flex flex-wrap gap-3">
@@ -50,8 +53,8 @@ const Contact = () => {
                 </li>
               ))}
               <li>
-                <a href={PERSONAL_INFO.cv} download className="btn btn-ghost">
-                  Descargar CV
+                <a href={info.cv} download className="btn btn-ghost">
+                  {tCv('download')}
                   <span className="meta text-muted">PDF</span>
                 </a>
               </li>
@@ -61,7 +64,7 @@ const Contact = () => {
 
         <Reveal delay={160}>
           <dl className="border-t border-line">
-            {FACTS.map((fact) => (
+            {facts.map((fact) => (
               <div key={fact.label} className="flex justify-between gap-4 border-b border-line py-3">
                 <dt className="meta text-muted">{fact.label}</dt>
                 <dd className="text-right">{fact.value}</dd>

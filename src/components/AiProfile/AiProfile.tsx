@@ -1,8 +1,9 @@
-import { AI_PRACTICES } from '@/constants/data';
+import { useLocale, useTranslations } from 'next-intl';
+import { getAiPractices } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 
-/** One of his real skills, trimmed to what's safe to show publicly. */
+/** One of his real skills, trimmed to what's safe to show publicly. Kept verbatim (in Spanish) in both languages. */
 const SKILL_TREE = `.claude/skills/nestjs-hexagonal-arch/
 ├─ SKILL.md
 └─ references/
@@ -21,6 +22,9 @@ description: Arquitectura hexagonal en NestJS.
 ---`;
 
 const AiProfile = () => {
+  const t = useTranslations('Ai');
+  const practices = getAiPractices(useLocale());
+
   return (
     <section
       id="ia"
@@ -31,23 +35,16 @@ const AiProfile = () => {
         <div>
           <SectionHeading
             id="ia-heading"
-            eyebrow="Perfil IA-ready"
-            title={
-              <>
-                Uso IA todos los días. Y <em className="hl">reviso todo</em> lo que escribe.
-              </>
-            }
+            eyebrow={t('eyebrow')}
+            title={t.rich('title', { hl: (chunks) => <em className="hl">{chunks}</em> })}
           >
-            <p>
-              Vengo de analizar datos en un laboratorio, así que trato a un modelo de lenguaje
-              como a cualquier instrumento: rápido y útil, pero no le creo hasta verificarlo.
-            </p>
+            <p>{t('body')}</p>
           </SectionHeading>
 
           <Reveal delay={120} className="mt-12">
             <figure className="border border-line bg-stage">
               <figcaption className="meta flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 text-muted">
-                <span>Una de mis skills</span>
+                <span>{t('skill')}</span>
                 <span className="text-accent">Claude Code</span>
               </figcaption>
               <div className="grid gap-px bg-line">
@@ -64,7 +61,7 @@ const AiProfile = () => {
 
         <Reveal delay={80}>
           <ul className="border-t border-line">
-            {AI_PRACTICES.map((practice) => (
+            {practices.map((practice) => (
               <li key={practice.id} className="border-b border-line py-7">
                 <h3 className="text-xl">{practice.title}</h3>
                 <p className="mt-3 leading-relaxed text-muted">{practice.body}</p>

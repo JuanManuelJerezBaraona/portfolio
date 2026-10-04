@@ -1,47 +1,45 @@
 import Image from 'next/image';
-import { PERSONAL_INFO, TIMELINE } from '@/constants/data';
+import { useLocale, useTranslations } from 'next-intl';
+import { getPersonalInfo, getTimeline } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 const AboutMe = () => {
+  const t = useTranslations('About');
+  const locale = useLocale();
+  const info = getPersonalInfo(locale);
+  const timeline = getTimeline(locale);
+
   return (
     <section id="about" className="sec-about px-4 py-24 sm:px-6 lg:px-8 lg:py-32" aria-labelledby="about-heading">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div>
-          <SectionHeading id="about-heading" eyebrow="Trayectoria" title="Del laboratorio al desarrollo web.">
-            <p>
-              Estudié Ingeniería en Biotecnología y pasé tres años en un laboratorio de
-              neurobiología haciendo estadística, análisis de datos y bioinformática. Ahí aprendí
-              a no creerle a un resultado hasta poder reproducirlo.
-            </p>
-            <p className="mt-4">
-              En 2016 empecé a programar tiendas online y desde 2022 trabajo como full-stack. La
-              costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo
-              por terminado.
-            </p>
+          <SectionHeading id="about-heading" eyebrow={t('eyebrow')} title={t('title')}>
+            <p>{t('lab')}</p>
+            <p className="mt-4">{t('code')}</p>
           </SectionHeading>
 
           <Reveal delay={120} className="mt-12 flex items-end gap-5">
             <div className="relative aspect-[3/4] w-32 flex-none overflow-hidden border border-line sm:w-40">
               <Image
-                src={PERSONAL_INFO.profileImage}
-                alt={`Retrato de ${PERSONAL_INFO.name}`}
+                src={info.profileImage}
+                alt={t('portrait', { name: info.name })}
                 fill
                 sizes="160px"
                 className="object-cover"
               />
             </div>
             <p className="meta pb-1 text-muted">
-              {PERSONAL_INFO.name}
+              {info.name}
               <br />
-              {PERSONAL_INFO.location}
+              {info.location}
             </p>
           </Reveal>
         </div>
 
         <Reveal delay={80}>
-          <ol className="border-t border-line" aria-label="Trayectoria">
-            {TIMELINE.map((entry) => (
+          <ol className="border-t border-line" aria-label={t('eyebrow')}>
+            {timeline.map((entry) => (
               <li
                 key={`${entry.period}-${entry.place}`}
                 className="grid gap-1 border-b border-line py-5 sm:grid-cols-[8.5rem_1fr] sm:gap-6"

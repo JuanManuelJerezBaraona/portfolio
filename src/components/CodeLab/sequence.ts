@@ -83,7 +83,8 @@ const tokenizeLine = (source: string, counter: { value: number }): Token[] => {
  * shows the code that actually renders the site.
  */
 export const readRegion = (file: string, name: string) => {
-  const lines = readFileSync(join(process.cwd(), file), 'utf8').split('\n');
+  // Only read while prerendering, so the file tracer doesn't need to follow it.
+  const lines = readFileSync(join(/*turbopackIgnore: true*/ process.cwd(), file), 'utf8').split('\n');
   const start = lines.findIndex((line) => line.trim() === `// #region ${name}`);
   const end = lines.findIndex((line) => line.trim() === `// #endregion ${name}`);
   if (start === -1 || end <= start) {

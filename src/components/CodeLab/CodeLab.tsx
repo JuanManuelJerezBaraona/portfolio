@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { useTranslations } from 'next-intl';
 import { MAIN_NEURON, SEED } from '@/components/Header/Micrograph';
 import Reveal from '@/components/ui/Reveal';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -7,12 +8,7 @@ import { sequence, type Base } from './sequence';
 const SOURCE = 'src/components/Header/Micrograph.tsx';
 const READ = sequence(SOURCE, 'grow');
 
-const LEGEND: { base: Base; label: string }[] = [
-  { base: 'A', label: 'palabra clave' },
-  { base: 'C', label: 'variable' },
-  { base: 'G', label: 'número' },
-  { base: 'T', label: 'llamada' },
-];
+const LEGEND: Base[] = ['A', 'C', 'G', 'T'];
 
 const ORDERS = [0, 1, 2, 3];
 
@@ -20,6 +16,7 @@ const vars = (values: Record<string, string | number>) => values as CSSPropertie
 
 /** The hero's main neuron, cropped, growing one recursion level at a time. */
 const Growth = () => {
+  const t = useTranslations('CodeLab');
   const { x, y, soma } = MAIN_NEURON;
   const half = 175;
   return (
@@ -47,8 +44,8 @@ const Growth = () => {
       </div>
       <figcaption className="mt-5">
         <div className="flex items-center gap-3">
-          <span className="meta text-muted">Orden</span>
-          <ol className="flex flex-1 gap-1.5" aria-label="Órdenes de ramificación">
+          <span className="meta text-muted">{t('order')}</span>
+          <ol className="flex flex-1 gap-1.5" aria-label={t('orders')}>
             {ORDERS.map((order) => (
               <li key={order} className="order-chip meta" style={vars({ '--o': order })}>
                 {order}
@@ -57,7 +54,7 @@ const Growth = () => {
           </ol>
         </div>
         <p className="meta mt-3 leading-relaxed text-muted">
-          Cada orden es un nivel de la recursión: la misma neurona del inicio, creciendo.
+          {t('growth')}
         </p>
       </figcaption>
     </figure>
@@ -65,6 +62,8 @@ const Growth = () => {
 };
 
 const CodeLab = () => {
+  const t = useTranslations('CodeLab');
+
   return (
     <section
       id="codigo"
@@ -74,18 +73,10 @@ const CodeLab = () => {
       <div className="mx-auto max-w-7xl">
         <SectionHeading
           id="codigo-heading"
-          eyebrow="Biología × código"
-          title={
-            <>
-              La neurona del inicio es <em className="hl">código</em>.
-            </>
-          }
+          eyebrow={t('eyebrow')}
+          title={t.rich('title', { hl: (chunks) => <em className="hl">{chunks}</em> })}
         >
-          <p>
-            No es una imagen. Es una función recursiva: cada dendrita avanza unos pasos, se divide
-            en dos y la función se vuelve a llamar con una rama más corta. Abajo está ese código,
-            el mismo que corre en este sitio, leído como un secuenciador lee ADN.
-          </p>
+          <p>{t('body')}</p>
         </SectionHeading>
 
         <Reveal className="mt-14" amount={0.15}>
@@ -95,7 +86,7 @@ const CodeLab = () => {
                 <span className="text-text">grow()</span> · {SOURCE.split('/').pop()}
               </span>
               <span className="hidden sm:inline">
-                Lectura 01 · {READ.length} bases · semilla {SEED}
+                {t('read', { count: READ.length, seed: SEED })}
               </span>
             </div>
 
@@ -108,7 +99,7 @@ const CodeLab = () => {
             </p>
 
             <div className="seq-body">
-              <div className="seq-code" tabIndex={0} role="region" aria-label="Código de la función grow">
+              <div className="seq-code" tabIndex={0} role="region" aria-label={t('code')}>
                 <pre>
                   <code>
                     {READ.lines.map((line) => (
@@ -147,18 +138,18 @@ const CodeLab = () => {
             </div>
 
             <div className="seq-foot">
-              <ul className="meta flex flex-wrap gap-x-5 gap-y-2" aria-label="Bases de la lectura">
-                {LEGEND.map((item) => (
-                  <li key={item.base} className="flex items-center gap-2">
-                    <span className={`b-${item.base} font-semibold`}>{item.base}</span>
-                    <span className="text-muted">{item.label}</span>
+              <ul className="meta flex flex-wrap gap-x-5 gap-y-2" aria-label={t('legend')}>
+                {LEGEND.map((base) => (
+                  <li key={base} className="flex items-center gap-2">
+                    <span className={`b-${base} font-semibold`}>{base}</span>
+                    <span className="text-muted">{t(`bases.${base}`)}</span>
                   </li>
                 ))}
               </ul>
               {/* Kept next to its label: focusing it must not scroll the page. */}
-              <input id="seq-replay" type="checkbox" className="seq-replay-input" aria-label="Secuenciar de nuevo" />
+              <input id="seq-replay" type="checkbox" className="seq-replay-input" aria-label={t('replay')} />
               <label htmlFor="seq-replay" className="seq-replay btn btn-ghost">
-                Secuenciar de nuevo
+                {t('replay')}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
                   <path strokeLinecap="square" d="M4 12a8 8 0 1 0 2.5-5.8M4 4v5h5" />
                 </svg>

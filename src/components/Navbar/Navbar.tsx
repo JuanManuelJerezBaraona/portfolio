@@ -1,10 +1,11 @@
 'use client';
 
-import { NAV_LINKS, PERSONAL_INFO } from '@/constants/data';
+import { NAV_LINKS, PERSONAL_INFO, getNavLinks } from '@/constants/data';
+import LocaleSwitch from '@/components/ui/LocaleSwitch';
 import ModeToggle from '@/components/ui/ModeToggle';
+import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useUIStore } from '@/store/uiStore';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
 
 const Navbar = () => {
@@ -19,6 +20,8 @@ const Navbar = () => {
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations('Nav');
+  const links = getNavLinks(useLocale());
   const isHome = pathname === '/';
 
   const handleNavClick = (href: string, sectionId: string) => {
@@ -136,18 +139,18 @@ const Navbar = () => {
           otherwise become the containing block of the fixed overlay below. */}
       <div className="relative z-50 border-b border-line bg-void/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-3" aria-label="Ir al inicio">
+          <Link href="/" className="flex items-center gap-3" aria-label={t('home')}>
             <span className="channel-mark" aria-hidden="true">
               <span />
               <span />
               <span />
             </span>
-            <span className="wide text-[0.95rem]">{PERSONAL_INFO.shortName}</span>
+            <span className="wide whitespace-nowrap text-[0.95rem]">{PERSONAL_INFO.shortName}</span>
           </Link>
 
-          <div className="flex items-center gap-5 md:gap-8">
+          <div className="flex items-center gap-3.5 sm:gap-5 md:gap-8">
             <div className="hidden items-center gap-7 md:flex">
-              {NAV_LINKS.map((link) => {
+              {links.map((link) => {
                 const isActive = isHome && activeSection === link.id;
                 return (
                   <button
@@ -158,7 +161,7 @@ const Navbar = () => {
                       isActive ? 'text-text' : 'text-muted hover:text-text'
                     }`}
                     tabIndex={0}
-                    aria-label={`Ir a ${link.label}`}
+                    aria-label={t('goTo', { section: link.label })}
                     aria-current={isActive ? 'page' : undefined}
                   >
                     <span
@@ -171,16 +174,17 @@ const Navbar = () => {
               })}
             </div>
 
+            <LocaleSwitch />
             <ModeToggle />
 
             <button
               ref={mobileMenuButtonRef}
               onClick={toggleMobileMenu}
               className="meta -mr-2 p-2 text-text md:hidden"
-              aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={isMobileMenuOpen ? t('closeMenu') : t('openMenu')}
               aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? 'Cerrar' : 'Menú'}
+              {isMobileMenuOpen ? t('close') : t('menu')}
             </button>
           </div>
         </div>
@@ -189,7 +193,7 @@ const Navbar = () => {
       <button
         type="button"
         onClick={closeMobileMenu}
-        aria-label="Cerrar menú móvil"
+        aria-label={t('closeMobileMenu')}
         tabIndex={isMobileMenuOpen ? 0 : -1}
         className={`fixed inset-x-0 bottom-0 top-16 bg-void/70 transition-opacity duration-300 md:hidden ${
           isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
@@ -204,7 +208,7 @@ const Navbar = () => {
         aria-hidden={!isMobileMenuOpen}
       >
         <div className="flex flex-col px-4 py-3 sm:px-6">
-          {NAV_LINKS.map((link) => (
+          {links.map((link) => (
             <button
               key={link.id}
               onClick={() => handleNavClick(link.href, link.id)}
@@ -213,7 +217,7 @@ const Navbar = () => {
                 isHome && activeSection === link.id ? 'text-text' : 'text-muted'
               }`}
               tabIndex={isMobileMenuOpen ? 0 : -1}
-              aria-label={`Ir a ${link.label}`}
+              aria-label={t('goTo', { section: link.label })}
               aria-current={isHome && activeSection === link.id ? 'page' : undefined}
             >
               <span

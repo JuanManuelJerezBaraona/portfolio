@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Juan Manuel Jerez Baraona · Full Stack Developer · CV</title>
+<meta name="author" content="Juan Manuel Jerez Baraona">
+<meta name="keywords" content="Full Stack Developer, React, Next.js, NestJS, TypeScript, Node.js, Strapi, MongoDB, Vue, Nuxt, Playwright, Spec-Driven Development, Claude Code, Codex, OpenCode, GitHub Copilot, MCP, n8n">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block">
+<!--
+  ATS rules this file follows on purpose:
+  - one column, in reading order; no tables, text boxes or text inside images
+  - standard section names (Summary, Experience, Skills & Languages, Education)
+  - every date in the same format, every link written out as text
+  - ligatures off, so "fi"/"fl" extract as two letters instead of one glyph
+  English twin of cv.html: keep both in sync. Build the PDFs with `npm run cv`.
+-->
+<style>
+  @page { size: A4; margin: 0; }
+
+  :root {
+    --ink: #14171c;
+    --soft: #4a525e;
+    --faint: #8a929c;
+    --rule: #d9dde2;
+    --dapi: #4d6bff;
+    --gfp: #18b866;
+    --mcherry: #f0405f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.3pt;
+    line-height: 1.38;
+    color: var(--ink);
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0, "clig" 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body { padding: 10.5mm 16mm 3mm; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- header ---------- */
+  header { padding-bottom: 3.6mm; border-bottom: 1.4pt solid var(--ink); }
+
+  .name-row { display: flex; align-items: center; gap: 3.2mm; }
+
+  h1 {
+    font-size: 24pt;
+    font-weight: 800;
+    font-variation-settings: "wdth" 125;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  /* The portfolio's logo: three emission channels overlapping. */
+  .mark { position: relative; width: 5.2mm; height: 4.8mm; flex: none; }
+  .mark i {
+    position: absolute; width: 3mm; height: 3mm; border-radius: 50%;
+    mix-blend-mode: multiply;
+  }
+  .mark i:nth-child(1) { left: 0; bottom: 0; background: var(--dapi); }
+  .mark i:nth-child(2) { right: 0; bottom: 0; background: var(--gfp); }
+  .mark i:nth-child(3) { left: 1.1mm; top: 0; background: var(--mcherry); }
+
+  .headline {
+    margin-top: 2.2mm;
+    font-size: 11.2pt;
+    font-weight: 600;
+    font-variation-settings: "wdth" 112;
+  }
+
+  .contact {
+    margin-top: 1.4mm;
+    font-size: 8.7pt;
+    color: var(--soft);
+  }
+  .contact span + span::before { content: "·"; margin: 0 1.6mm; color: var(--faint); }
+
+  /* ---------- sections ---------- */
+  section { margin-top: 3.2mm; }
+
+  h2 {
+    font-size: 8.4pt;
+    font-weight: 700;
+    font-variation-settings: "wdth" 118;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-bottom: 1.2mm;
+    margin-bottom: 1.8mm;
+    border-bottom: 0.6pt solid var(--rule);
+  }
+
+  p { text-wrap: pretty; }
+  .summary { color: #262b33; }
+
+  .entry + .entry { margin-top: 2.1mm; }
+  .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  h3 { font-size: 10.2pt; font-weight: 700; }
+  h3 .org { font-weight: 400; color: var(--soft); }
+  .date { font-size: 8.6pt; color: var(--soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .context { margin-top: 0.4mm; font-size: 8.7pt; color: var(--soft); }
+
+  ul { margin-top: 0.9mm; padding-left: 3.6mm; }
+  li { padding-left: 0.6mm; }
+  li + li { margin-top: 0.5mm; }
+  li::marker { color: var(--faint); }
+
+  .projects li { list-style: none; padding-left: 0; }
+  .projects ul { padding-left: 0; }
+  .projects b { font-weight: 600; }
+  .projects .meta { color: var(--soft); }
+
+  .skills { display: grid; grid-template-columns: 30mm 1fr; row-gap: 0.8mm; column-gap: 3mm; }
+  .skills dt { font-weight: 600; }
+  .skills dd { color: #262b33; }
+
+  .small { font-size: 8.7pt; color: var(--soft); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="name-row">
+    <h1>Juan Manuel Jerez Baraona</h1>
+    <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+  <p class="headline">Full Stack Developer · React · Next.js · NestJS · TypeScript</p>
+  <p class="contact">
+    <span>Santiago, Chile</span>
+    <span><a href="tel:+56983601614">+56 9 8360 1614</a></span>
+    <span><a href="mailto:jjerezbaraona@gmail.com">jjerezbaraona@gmail.com</a></span>
+    <span><a href="https://juanmanueljerezportfolio.vercel.app/en">juanmanueljerezportfolio.vercel.app/en</a></span>
+  </p>
+  <p class="contact">
+    <span><a href="https://www.linkedin.com/in/juan-manuel-jerez-baraona-b54486274/">linkedin.com/in/juan-manuel-jerez-baraona-b54486274</a></span>
+    <span><a href="https://github.com/JuanManuelJerezBaraona">github.com/JuanManuelJerezBaraona</a></span>
+  </p>
+</header>
+
+<section>
+  <h2>Summary</h2>
+  <p class="summary">
+    Full Stack Developer since 2022 and Biotechnology Engineer by training. At Seguros Falabella I build
+    the quote, digital acceptance, payment and after-sales flows for Chile, Peru and Colombia with React,
+    Next.js, NestJS, Strapi and TypeScript; I migrated Nuxt/Vue applications to Next.js, optimized legacy
+    applications and take part in architecture decisions. I use AI agents (Claude Code, Codex, OpenCode,
+    Copilot) with Spec-Driven Development and review all their output.
+  </p>
+</section>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Full Stack Developer <span class="org">· Tsoft, for Seguros Falabella</span></h3>
+      <span class="date">2024 – Present</span>
+    </div>
+    <ul>
+      <li>Built five applications across the insurance customer journey: regional quote and purchase site, in-store digital acceptance, payment portal, customer login and after-sales platform.</li>
+      <li>Migrated Nuxt/Vue applications to Next.js with TypeScript and improved the performance of legacy applications.</li>
+      <li>Frontend with Next.js, React, TypeScript and Zustand; Tomaco design system documented in Storybook from Figma.</li>
+      <li>Backend with NestJS and hexagonal architecture, MongoDB, and content managed in Strapi 5 (headless CMS).</li>
+      <li>Took part in architecture decisions and automated end-to-end testing with Playwright.</li>
+      <li>AI-assisted development: custom Claude Code skills, MCP servers (Figma, Postman) and per-repository context.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Full Stack Developer <span class="org">· ABO Consultores</span></h3>
+      <span class="date">2024</span>
+    </div>
+    <ul>
+      <li>Full stack web development with React, TypeScript, Node.js, Express, MongoDB and Tailwind CSS.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Full Stack Developer <span class="org">· SUPER CBD</span></h3>
+      <span class="date">2022 – 2024</span>
+    </div>
+    <ul>
+      <li>Full stack e-commerce development with React, Node.js, Express and PostgreSQL.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Front End Developer <span class="org">· Farmacia Veterinaria Los Pingos</span></h3>
+      <span class="date">2016 – 2022</span>
+    </div>
+    <ul>
+      <li>E-commerce development with JavaScript, React, HTML, CSS and Bootstrap.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Research Assistant <span class="org">· Neurobiology Laboratory</span></h3>
+      <span class="date">2013 – 2016</span>
+    </div>
+    <ul>
+      <li>Data science, statistics and bioinformatics.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="projects">
+  <h2>Production Projects · Seguros Falabella</h2>
+  <ul>
+    <li><b>Regional quote site ·</b><span class="meta"> Chile, Peru and Colombia · Next.js, NestJS, Strapi 5, MongoDB · segurosfalabella.com</span></li>
+    <li><b>Digital Acceptance ·</b><span class="meta"> Chile · Next.js, NestJS, Tomaco, Strapi 5, MongoDB · aceptacion.segurosfalabella.com</span></li>
+    <li><b>Payment Portal ·</b><span class="meta"> Chile · Next.js, NestJS, Zustand, Strapi 5, MongoDB · pago.segurosfalabella.com</span></li>
+    <li><b>After-sales and customer login ·</b><span class="meta"> Chile, Peru and Colombia · React, NestJS · clientes.segurosfalabella.com</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Skills &amp; Languages</h2>
+  <dl class="skills">
+    <dt>Frontend</dt>
+    <dd>TypeScript, JavaScript, React, Next.js, Vue, Nuxt, Zustand, HTML5, CSS3, Sass, Tailwind CSS, Bootstrap, Material UI, Storybook, Vite</dd>
+    <dt>Backend</dt>
+    <dd>Node.js, NestJS, Express, Fastify, Strapi (headless CMS), REST APIs, OAuth 2.0, Server-Sent Events, Swagger, hexagonal architecture</dd>
+    <dt>Databases</dt>
+    <dd>MongoDB, PostgreSQL</dd>
+    <dt>Testing</dt>
+    <dd>Playwright (end-to-end), Jest</dd>
+    <dt>AI for development</dt>
+    <dd>Claude Code, Codex, OpenCode, GitHub Copilot, Spec-Driven Development (SDD), Agent Skills, MCP (Model Context Protocol), n8n, LLM API integration, context engineering</dd>
+    <dt>Tools</dt>
+    <dd>Git, GitHub, GitLab, Figma, Postman, Docker, Datadog, Kibana</dd>
+    <dt>Languages</dt>
+    <dd>Spanish (native), English (upper intermediate, B2), taking ongoing classes since 2023</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Biotechnology Engineering <span class="org">· Universidad Andrés Bello</span></h3>
+      <span class="date">2009 – 2015</span>
+    </div>
+  </div>
+  <div class="entry">
+    <div class="entry-head">
+      <h3>Full Stack JavaScript Developer Bootcamp <span class="org">· Academia Desafío Latam</span></h3>
+      <span class="date">2023 – 2024</span>
+    </div>
+  </div>
+  <p class="small" style="margin-top: 1.8mm;">
+    Courses: SOLID Principles and Clean Code · TypeScript · React and TypeScript · Node.js · SQL with PostgreSQL · Figma UI/UX
+  </p>
+</section>
+
+
+</body>
+</html>

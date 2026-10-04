@@ -1,16 +1,17 @@
 import { ImageResponse } from 'next/og';
+import type { Locale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { micrographSvg } from '@/components/Header/Micrograph';
-import {
-  OG_DETAIL,
-  OG_FOOTER,
-  OG_NAME,
-  OG_TITLE,
-  OgShareImage,
-} from '@/components/og/OgShareImage';
+import { OG_NAME, OgShareImage, type OgCopy } from '@/components/og/OgShareImage';
+import { routing } from '@/i18n/routing';
 
-export const alt = 'Juan Manuel Jerez Baraona · Desarrollador full-stack. Pasé del microscopio al código.';
+// `alt` can't vary per route, so it stays readable in both languages.
+export const alt = 'Juan Manuel Jerez Baraona · Full-stack · React, Next.js, NestJS';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
+
+/** One card per language, rendered at build time. */
+export const generateStaticParams = () => routing.locales.map((locale) => ({ locale }));
 
 /**
  * Fetches a static TTF instance of a Google font, subset to `text`.
@@ -29,11 +30,11 @@ const loadGoogleFont = async (query: string, text: string) => {
 };
 
 /** Archivo for the card; if the network fails it falls back to the default sans. */
-const loadFonts = async () => {
+const loadFonts = async (copy: OgCopy) => {
   try {
     const [expanded, regular] = await Promise.all([
-      loadGoogleFont('Archivo:wdth,wght@125,800', OG_TITLE),
-      loadGoogleFont('Archivo:wght@400', OG_NAME + OG_DETAIL + OG_FOOTER),
+      loadGoogleFont('Archivo:wdth,wght@125,800', copy.title),
+      loadGoogleFont('Archivo:wght@400', OG_NAME + copy.detail + copy.footer),
     ]);
     return [
       { name: 'Archivo Expanded', data: expanded, weight: 800 as const, style: 'normal' as const },
@@ -44,11 +45,14 @@ const loadFonts = async () => {
   }
 };
 
-const OgImage = async () => {
-  const fonts = await loadFonts();
+const OgImage = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale: locale as Locale, namespace: 'Og' });
+  const copy: OgCopy = { title: t('title'), detail: t('detail'), footer: t('footer') };
+  const fonts = await loadFonts(copy);
   const micrographSrc = `data:image/svg+xml;base64,${Buffer.from(micrographSvg()).toString('base64')}`;
 
-  return new ImageResponse(<OgShareImage micrographSrc={micrographSrc} />, {
+  return new ImageResponse(<OgShareImage micrographSrc={micrographSrc} copy={copy} />, {
     ...size,
     fonts: fonts.length ? fonts : undefined,
   });

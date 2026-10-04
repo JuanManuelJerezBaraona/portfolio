@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useRef, useState, type KeyboardEvent } from 'react';
+import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
 import Loupe from '@/components/ui/Loupe';
 import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
@@ -16,6 +17,7 @@ interface ProjectViewerProps {
  * selected project under the loupe on the right.
  */
 const ProjectViewer = ({ projects }: ProjectViewerProps) => {
+  const t = useTranslations('Project');
   const [selected, setSelected] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const project = projects[selected];
@@ -36,7 +38,7 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
 
   return (
     <div className="grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-14">
-      <div role="tablist" aria-orientation="vertical" aria-label="Etapas del recorrido" className="border-t border-line">
+      <div role="tablist" aria-orientation="vertical" aria-label={t('stages')} className="border-t border-line">
         {projects.map((item, index) => {
           const isSelected = index === selected;
           return (
@@ -85,13 +87,13 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
           <figure className="relative">
             <div className="border border-line bg-stage">
               <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5">
-                <span className="meta truncate text-muted">{hostname(project)}</span>
-                <span className="meta flex-none text-muted/70">Pasa el cursor para ampliar</span>
+                <span className="meta truncate text-muted">{hostname(project) ?? t('internalAddress')}</span>
+                <span className="meta flex-none text-muted/70">{t('hover')}</span>
               </div>
               {project.screenshots?.desktop && (
                 <Loupe
                   src={project.screenshots.desktop}
-                  alt={`Captura de ${project.title} en escritorio`}
+                  alt={t('desktopShot', { title: project.title })}
                   width={2530}
                   height={1140}
                   sizes="(min-width: 1280px) 720px, 60vw"
@@ -102,7 +104,7 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
               <div className="pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.8)]">
                 <Image
                   src={project.screenshots.mobile}
-                  alt={`Captura de ${project.title} en móvil`}
+                  alt={t('mobileShot', { title: project.title })}
                   width={659}
                   height={1024}
                   sizes="140px"
@@ -119,14 +121,14 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href={`/proyectos/${project.id}`} className="btn btn-primary">
-                Ver caso completo
+                {t('fullCase')}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
                   <path strokeLinecap="square" d="M5 12h14m0 0-6-6m6 6-6 6" />
                 </svg>
               </Link>
               {project.url && (
                 <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                  Abrir sitio
+                  {t('openSite')}
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
                     <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
                   </svg>

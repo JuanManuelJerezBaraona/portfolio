@@ -1,26 +1,41 @@
+import type { Locale } from 'next-intl';
+
+/** Copy that changes with the language. A plain string reads the same in both. */
+export type Text = string | Record<Locale, string>;
+
+/** The same shape with every `Text` resolved to the string of one language. */
+export type InLocale<T> = T extends Record<Locale, string>
+  ? string
+  : T extends readonly (infer Item)[]
+    ? InLocale<Item>[]
+    : T extends object
+      ? { [K in keyof T]: InLocale<T[K]> }
+      : T;
+
 export type SkillCategory = 'frontend' | 'backend' | 'database' | 'ai' | 'tools';
 
-export interface Skill {
+export interface SkillData {
   id: string;
-  name: string;
+  name: Text;
   category: SkillCategory;
 }
+export type Skill = InLocale<SkillData>;
 
 export type CountryCode = 'CL' | 'PE' | 'CO';
 
 /** One figure in a case's result, read as a sentence: value + label. */
-export interface Metric {
+export interface MetricData {
   /** Short enough to read at a glance, e.g. "54 → 90" or "~3 min". */
-  value: string;
+  value: Text;
   /** Continues the value, e.g. "de las contrataciones en tienda…". */
-  label: string;
+  label: Text;
 }
 
-export interface Project {
+export interface ProjectData {
   id: string;
-  title: string;
+  title: Text;
   category: string;
-  description: string;
+  description: Text;
   techStack: string[];
   url?: string;
   screenshots?: {
@@ -31,49 +46,53 @@ export interface Project {
   /** Position in the customer journey (1 = entry). */
   stage: number;
   /** Journey stage name, e.g. "Cotización". */
-  flow: string;
+  flow: Text;
   /** Countries where the flow runs in production. */
   countries: CountryCode[];
   /** "live" = public URL in production, "internal" = restricted access. */
   status: 'live' | 'internal';
   /** What Juan Manuel specifically owned on this flow. */
-  role: string;
+  role: Text;
   /** Longer narrative used on the case-file hero. */
-  summary: string;
+  summary: Text;
   /** The problem this flow had to solve. */
-  challenge: string;
+  challenge: Text;
   /** Concrete contributions, grounded in the real stack. */
-  contributions: string[];
+  contributions: Text[];
   /** What changed after the work, in one sentence. */
-  outcome: string;
+  outcome: Text;
   /** The figures behind the outcome. */
-  metrics: Metric[];
+  metrics: MetricData[];
 }
+export type Project = InLocale<ProjectData>;
 
-export interface TimelineEntry {
+export interface TimelineEntryData {
   /** e.g. "2016 – 2022" */
-  period: string;
-  role: string;
-  place: string;
-  detail?: string;
+  period: Text;
+  role: Text;
+  place: Text;
+  detail?: Text;
   /** Concrete things he did in this role, confirmed by him. */
-  highlights?: string[];
+  highlights?: Text[];
   /** The role he holds today. */
   current?: boolean;
 }
+export type TimelineEntry = InLocale<TimelineEntryData>;
 
-export interface AiPractice {
+export interface AiPracticeData {
   id: string;
-  title: string;
-  body: string;
-  tools: string[];
+  title: Text;
+  body: Text;
+  tools: Text[];
 }
+export type AiPractice = InLocale<AiPracticeData>;
 
-export interface NavLink {
+export interface NavLinkData {
   id: string;
-  label: string;
+  label: Text;
   href: string;
 }
+export type NavLink = InLocale<NavLinkData>;
 
 export interface SocialLink {
   id: string;
@@ -82,14 +101,16 @@ export interface SocialLink {
   icon: string;
 }
 
-export interface PersonalInfo {
+export interface PersonalInfoData {
   name: string;
   shortName: string;
-  title: string;
-  location: string;
+  title: Text;
+  location: Text;
   /** Year he started working as a full-stack developer. */
   fullStackSince: number;
   email: string;
-  cv: string;
+  /** PDF in each language. */
+  cv: Text;
   profileImage: string;
 }
+export type PersonalInfo = InLocale<PersonalInfoData>;

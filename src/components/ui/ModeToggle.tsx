@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useRef, useSyncExternalStore, type MouseEvent } from 'react';
 import { flushSync } from 'react-dom';
 import { MODE_STORAGE_KEY } from './scopeMode';
@@ -84,6 +85,7 @@ const switchLamp = (on: boolean, origin: HTMLElement | null) => {
 const ModeToggle = () => {
   const brightfield = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const knob = useRef<HTMLSpanElement>(null);
+  const t = useTranslations('Mode');
 
   // The click is cancelled so the checkbox (and the `:has()` rule) only flips
   // inside the transition; otherwise the "before" snapshot would already be
@@ -102,14 +104,14 @@ const ModeToggle = () => {
         checked={brightfield}
         onClick={handleClick}
         onChange={() => {}}
-        aria-label="Ver el sitio en campo claro"
+        aria-label={t('label')}
       />
       <span className="mode-track" aria-hidden="true">
         <span ref={knob} className="mode-knob" />
       </span>
       <span className="meta mode-label" aria-hidden="true">
-        <span className="mode-label-off">Fluorescencia</span>
-        <span className="mode-label-on">Campo claro</span>
+        <span className="mode-label-off">{t('off')}</span>
+        <span className="mode-label-on">{t('on')}</span>
       </span>
     </label>
   );

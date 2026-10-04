@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
+import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
 import { Countries, hostname, stageLabel } from '@/components/ui/ProjectMeta';
 
@@ -41,6 +42,7 @@ const measure = (track: HTMLElement) => {
  * hears which slide is centred.
  */
 const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
+  const t = useTranslations('Project');
   const track = useRef<HTMLOListElement>(null);
   const scale = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
@@ -92,10 +94,11 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
   };
 
   return (
-    <div role="region" aria-roledescription="carrusel" aria-label="Proyectos, una etapa por lámina">
+    <div role="region" aria-roledescription={t('carousel')} aria-label={t('carouselLabel')}>
       <div className="stage -mx-4 sm:-mx-6">
         <ol ref={track} className="stage-track">
           {projects.map((project, index) => {
+            const host = hostname(project) ?? t('internalAddress');
             const focus = !ready || index === active ? 'in' : index < active ? 'before' : 'after';
             return (
               <li
@@ -124,11 +127,11 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Abrir sitio: ${hostname(project)}`}
+                          aria-label={t('openSiteAt', { host })}
                           className={addressBar}
                         >
                           <StatusDot status={project.status} />
-                          <span className="flex-1 truncate">{hostname(project)}</span>
+                          <span className="flex-1 truncate">{host}</span>
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 flex-none" aria-hidden="true">
                             <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
                           </svg>
@@ -136,13 +139,13 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                       ) : (
                         <p className={addressBar}>
                           <StatusDot status={project.status} />
-                          <span className="flex-1 truncate">{hostname(project)}</span>
+                          <span className="flex-1 truncate">{host}</span>
                         </p>
                       )}
                       {project.screenshots?.desktop && (
                         <Image
                           src={project.screenshots.desktop}
-                          alt={`Captura de ${project.title} en escritorio`}
+                          alt={t('desktopShot', { title: project.title })}
                           width={2530}
                           height={1140}
                           sizes="(min-width: 640px) 384px, 80vw"
@@ -154,7 +157,7 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                       <div className="slide-phone">
                         <Image
                           src={project.screenshots.mobile}
-                          alt={`Captura de ${project.title} en móvil`}
+                          alt={t('mobileShot', { title: project.title })}
                           width={659}
                           height={1024}
                           sizes="110px"
@@ -169,7 +172,7 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                     <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{project.summary}</p>
                     <div className="mt-auto pt-6">
                       <Link href={`/proyectos/${project.id}`} className="link-underline font-medium">
-                        Ver caso completo →
+                        {t('fullCase')} →
                       </Link>
                     </div>
                   </div>
@@ -181,12 +184,12 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
       </div>
 
       <div ref={scale} className="vernier" style={{ '--n': projects.length } as CSSProperties}>
-        <div role="group" aria-label="Etapas" className="vernier-stops">
+        <div role="group" aria-label={t('scale')} className="vernier-stops">
           {projects.map((project, index) => (
             <button
               key={project.id}
               type="button"
-              aria-label={`Etapa ${stageLabel(project)}: ${project.flow}`}
+              aria-label={t('stage', { stage: stageLabel(project), flow: project.flow })}
               aria-current={index === active ? 'true' : undefined}
               onClick={() => goTo(index)}
               className="vernier-stop meta"
@@ -201,7 +204,7 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
           ))}
           <span className="vernier-cursor" />
         </div>
-        <p className="meta mt-4 text-center text-muted/70">Desliza para cambiar de etapa</p>
+        <p className="meta mt-4 text-center text-muted/70">{t('swipe')}</p>
       </div>
     </div>
   );

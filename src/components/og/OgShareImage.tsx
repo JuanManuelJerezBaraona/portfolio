@@ -1,5 +1,13 @@
+/** The translated lines of the card. */
+export type OgCopy = {
+  title: string;
+  detail: string;
+  footer: string;
+};
+
 type OgShareImageProps = {
   micrographSrc: string;
+  copy: OgCopy;
 };
 
 const VOID = '#030508';
@@ -10,10 +18,7 @@ const DAPI = '#6f8cff';
 const GFP = '#4ef08f';
 const MCHERRY = '#ff4f73';
 
-export const OG_TITLE = 'Pasé del microscopio al código.';
 export const OG_NAME = 'Juan Manuel Jerez Baraona';
-export const OG_DETAIL = 'Desarrollador full-stack · React, Next.js, NestJS · IA-ready';
-export const OG_FOOTER = 'Santiago de Chile · Seguros Falabella · CL PE CO';
 
 const dot = (color: string, style: React.CSSProperties) => (
   <div
@@ -30,7 +35,7 @@ const dot = (color: string, style: React.CSSProperties) => (
   />
 );
 
-export const OgShareImage = ({ micrographSrc }: OgShareImageProps) => (
+export const OgShareImage = ({ micrographSrc, copy }: OgShareImageProps) => (
   <div
     style={{
       width: '100%',
@@ -64,13 +69,13 @@ export const OgShareImage = ({ micrographSrc }: OgShareImageProps) => (
             maxWidth: 640,
           }}
         >
-          {OG_TITLE}
+          {copy.title}
         </div>
-        <div style={{ marginTop: 30, fontSize: 26, color: MUTED }}>{OG_DETAIL}</div>
+        <div style={{ marginTop: 30, fontSize: 26, color: MUTED }}>{copy.detail}</div>
       </div>
 
       <div style={{ display: 'flex', fontSize: 20, color: MUTED, borderTop: `1px solid ${LINE}`, paddingTop: 18, maxWidth: 600 }}>
-        {OG_FOOTER}
+        {copy.footer}
       </div>
     </div>
 
