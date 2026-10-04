@@ -10,30 +10,17 @@ type OgShareImageProps = {
   copy: OgCopy;
 };
 
-const VOID = '#030508';
+// Fluorescence-mode colors, hardcoded: ImageResponse can't read CSS variables.
+export const VOID = '#030508';
 const TEXT = '#e6ecf2';
 const MUTED = '#8593a3';
 const LINE = 'rgba(150,175,205,0.22)';
-const DAPI = '#6f8cff';
-const GFP = '#4ef08f';
-const MCHERRY = '#ff4f73';
+export const DAPI = '#6f8cff';
+export const GFP = '#4ef08f';
+export const MCHERRY = '#ff4f73';
 
 export const OG_NAME = 'Juan Manuel Jerez Baraona';
-
-const dot = (color: string, style: React.CSSProperties) => (
-  <div
-    style={{
-      position: 'absolute',
-      width: 18,
-      height: 18,
-      borderRadius: 9,
-      backgroundColor: color,
-      opacity: 0.9,
-      display: 'flex',
-      ...style,
-    }}
-  />
-);
+export const OG_MARK = '</JM>';
 
 export const OgShareImage = ({ micrographSrc, copy }: OgShareImageProps) => (
   <div
@@ -50,10 +37,12 @@ export const OgShareImage = ({ micrographSrc, copy }: OgShareImageProps) => (
   >
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1, height: '100%' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ display: 'flex', position: 'relative', width: 32, height: 30, marginRight: 16 }}>
-          {dot(DAPI, { left: 0, bottom: 0 })}
-          {dot(GFP, { right: 0, bottom: 0 })}
-          {dot(MCHERRY, { left: 7, top: 0 })}
+        {/* The logo, as in the navbar: </JM> with one channel per symbol. */}
+        <div style={{ display: 'flex', fontFamily: 'Martian Mono', fontSize: 26, fontWeight: 600, marginRight: 18 }}>
+          <span style={{ color: DAPI }}>&lt;</span>
+          <span style={{ color: GFP }}>/</span>
+          <span style={{ color: TEXT }}>JM</span>
+          <span style={{ color: MCHERRY }}>&gt;</span>
         </div>
         <div style={{ fontSize: 26, color: TEXT }}>{OG_NAME}</div>
       </div>

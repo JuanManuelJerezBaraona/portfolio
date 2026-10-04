@@ -79,6 +79,18 @@ export interface TimelineEntryData {
 }
 export type TimelineEntry = InLocale<TimelineEntryData>;
 
+/** One layer of the architecture the Seguros Falabella apps share. */
+export interface ArchitectureLayerData {
+  id: string;
+  /** Channel it's tinted with (frontend, backend, data); `text` for the rest. */
+  channel: 'dapi' | 'gfp' | 'yfp' | 'text';
+  name: Text;
+  /** What the layer is responsible for. */
+  role: Text;
+  tools: string[];
+}
+export type ArchitectureLayer = InLocale<ArchitectureLayerData>;
+
 export interface AiPracticeData {
   id: string;
   title: Text;

@@ -58,15 +58,9 @@
     line-height: 1;
   }
 
-  /* The portfolio's logo: three emission channels overlapping. */
-  .mark { position: relative; width: 5.2mm; height: 4.8mm; flex: none; }
-  .mark i {
-    position: absolute; width: 3mm; height: 3mm; border-radius: 50%;
-    mix-blend-mode: multiply;
-  }
-  .mark i:nth-child(1) { left: 0; bottom: 0; background: var(--dapi); }
-  .mark i:nth-child(2) { right: 0; bottom: 0; background: var(--gfp); }
-  .mark i:nth-child(3) { left: 1.1mm; top: 0; background: var(--mcherry); }
+  /* The portfolio's favicon, </>, one channel per stroke. Vector, not text,
+     so ATS parsers don't read it as part of the name. */
+  .mark { width: 6mm; height: 6mm; flex: none; fill: none; stroke-width: 2.75; stroke-linecap: round; stroke-linejoin: round; }
 
   .headline {
     margin-top: 2.2mm;
@@ -128,7 +122,7 @@
 <header>
   <div class="name-row">
     <h1>Juan Manuel Jerez Baraona</h1>
-    <div class="mark" aria-hidden="true"><i></i><i></i><i></i></div>
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 6 2 12l5.5 6" stroke="var(--dapi)"/><path d="M14 3.5 10 20.5" stroke="var(--gfp)"/><path d="M16.5 6 22 12l-5.5 6" stroke="var(--mcherry)"/></svg>
   </div>
   <p class="headline">Desarrollador Full Stack · React · Next.js · NestJS · TypeScript</p>
   <p class="contact">

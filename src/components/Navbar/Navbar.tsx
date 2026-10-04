@@ -3,6 +3,7 @@
 import { NAV_LINKS, PERSONAL_INFO, getNavLinks } from '@/constants/data';
 import LocaleSwitch from '@/components/ui/LocaleSwitch';
 import ModeToggle from '@/components/ui/ModeToggle';
+import TagMark from '@/components/ui/TagMark';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useUIStore } from '@/store/uiStore';
 import { useLocale, useTranslations } from 'next-intl';
@@ -140,12 +141,9 @@ const Navbar = () => {
       <div className="relative z-50 border-b border-line bg-void/80 backdrop-blur-md">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3" aria-label={t('home')}>
-            <span className="channel-mark" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-            <span className="wide whitespace-nowrap text-[0.95rem]">{PERSONAL_INFO.shortName}</span>
+            <TagMark className="text-[0.95rem]" />
+            {/* On phones the mark stands alone: the bar has no room left for the name. */}
+            <span className="wide hidden whitespace-nowrap text-[0.95rem] sm:inline">{PERSONAL_INFO.shortName}</span>
           </Link>
 
           <div className="flex items-center gap-3.5 sm:gap-5 md:gap-8">

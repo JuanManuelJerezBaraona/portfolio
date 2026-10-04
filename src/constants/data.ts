@@ -2,6 +2,7 @@ import type { Locale } from 'next-intl';
 import { inLocale } from '@/i18n/inLocale';
 import {
   AiPracticeData,
+  ArchitectureLayerData,
   NavLinkData,
   PersonalInfoData,
   ProjectData,
@@ -21,8 +22,8 @@ import {
 
 export const NAV_LINKS: NavLinkData[] = [
   { id: 'about', label: { es: 'Trayectoria', en: 'Background' }, href: '#about' },
-  { id: 'codigo', label: { es: 'Código', en: 'Code' }, href: '#codigo' },
   { id: 'projects', label: { es: 'Proyectos', en: 'Projects' }, href: '#projects' },
+  { id: 'arquitectura', label: { es: 'Arquitectura', en: 'Architecture' }, href: '#arquitectura' },
   { id: 'ia', label: { es: 'IA', en: 'AI' }, href: '#ia' },
   { id: 'skills', label: 'Stack', href: '#skills' },
   { id: 'contact', label: { es: 'Contacto', en: 'Contact' }, href: '#contact' },
@@ -170,6 +171,72 @@ export const SKILLS: SkillData[] = [
   { id: 'docker', name: 'Docker', category: 'tools' },
   { id: 'datadog', name: 'Datadog', category: 'tools' },
   { id: 'kibana', name: 'Kibana', category: 'tools' },
+];
+
+/**
+ * The layers the five Seguros Falabella apps share, top to bottom. Only what
+ * the CV and his confirmed AI skill say: Tomaco documented in Storybook from
+ * Figma, Next.js/React with Zustand, NestJS with hexagonal architecture,
+ * Strapi 5 as headless CMS, MongoDB and Playwright end-to-end tests.
+ */
+export const ARCHITECTURE: ArchitectureLayerData[] = [
+  {
+    id: 'design',
+    channel: 'text',
+    name: { es: 'Diseño', en: 'Design' },
+    role: {
+      es: 'Los componentes del design system Tomaco, documentados en Storybook a partir de Figma.',
+      en: 'Components from the Tomaco design system, documented in Storybook from the Figma designs.',
+    },
+    tools: ['Figma', 'Storybook', 'Tomaco'],
+  },
+  {
+    id: 'front',
+    channel: 'dapi',
+    name: { es: 'Front', en: 'Front end' },
+    role: {
+      es: 'Una app por etapa del recorrido, en TypeScript, con Zustand donde el flujo guarda estado entre pasos.',
+      en: 'One app per stage of the journey, in TypeScript, with Zustand where a flow keeps state between steps.',
+    },
+    tools: ['Next.js', 'React', 'TypeScript', 'Zustand'],
+  },
+  {
+    id: 'services',
+    channel: 'gfp',
+    name: { es: 'Servicios', en: 'Services' },
+    role: {
+      es: 'APIs con arquitectura hexagonal: endpoints, casos de uso y servicios HTTP en capas separadas.',
+      en: 'APIs with hexagonal architecture: endpoints, use cases and HTTP services in separate layers.',
+    },
+    tools: ['NestJS', 'TypeScript'],
+  },
+  {
+    id: 'content',
+    channel: 'gfp',
+    name: { es: 'Contenido', en: 'Content' },
+    role: {
+      es: 'CMS headless: textos, campañas y legales que el negocio cambia sin un despliegue.',
+      en: 'Headless CMS: copy, campaigns and legal text the business changes without a deployment.',
+    },
+    tools: ['Strapi 5'],
+  },
+  {
+    id: 'data',
+    channel: 'yfp',
+    name: { es: 'Datos', en: 'Data' },
+    role: { es: 'Persistencia de los servicios.', en: 'Persistence for the services.' },
+    tools: ['MongoDB'],
+  },
+  {
+    id: 'quality',
+    channel: 'text',
+    name: { es: 'Calidad', en: 'Quality' },
+    role: {
+      es: 'Pruebas end-to-end automatizadas que recorren los flujos completos.',
+      en: 'Automated end-to-end tests that walk through complete flows.',
+    },
+    tools: ['Playwright'],
+  },
 ];
 
 /**
@@ -659,4 +726,5 @@ export const getPersonalInfo = (locale: Locale) => inLocale(PERSONAL_INFO, local
 export const getTimeline = (locale: Locale) => inLocale(TIMELINE, locale);
 export const getSkills = (locale: Locale) => inLocale(SKILLS, locale);
 export const getAiPractices = (locale: Locale) => inLocale(AI_PRACTICES, locale);
+export const getArchitecture = (locale: Locale) => inLocale(ARCHITECTURE, locale);
 export const getProjects = (locale: Locale) => inLocale(PROJECTS, locale);

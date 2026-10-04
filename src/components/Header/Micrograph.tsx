@@ -33,7 +33,6 @@ interface Point {
 }
 
 interface Segment {
-  neuron: number;
   /** Branch order: 0 for primary dendrites, +1 per recursive call. */
   order: number;
   d: string;
@@ -62,16 +61,14 @@ const BRANCH_WIDTH = [3.4, 2.1, 1.3, 0.8];
 const BRANCH_OPACITY = [0.95, 0.85, 0.7, 0.55];
 
 /** Fixed seed: the neuron grows the same way on every visit. */
-export const SEED = 20131126;
+const SEED = 20131126;
 
 const generate = () => {
   const random = createRandom(SEED);
   const range = (min: number, max: number) => min + random() * (max - min);
 
-  // Every dendrite segment, tagged with its neuron and branch order
-  // (= recursion depth). The section "La neurona es código" grows them.
+  // Every dendrite segment, tagged with its branch order (= recursion depth).
   const segments: Segment[] = [];
-  let neuron = 0;
   const axons: string[] = [];
   const somas: { x: number; y: number; r: number; rot: number }[] = [];
   const puncta: Point[] = [];
@@ -93,10 +90,9 @@ const generate = () => {
   const toPath = (points: Point[]) =>
     points.map((p, i) => `${i === 0 ? 'M' : 'L'}${round(p.x)} ${round(p.y)}`).join('');
 
-  // #region grow
   const grow = (start: Point, angle: number, length: number, order: number, maxOrder: number) => {
     const { points, heading } = walk(start, angle, length, 5, 0.28);
-    segments.push({ neuron, order, d: toPath(points) });
+    segments.push({ order, d: toPath(points) });
 
     // Synapses sit along the dendrite, slightly off the shaft.
     for (const p of points.slice(1)) {
@@ -113,10 +109,8 @@ const generate = () => {
       grow(tip, heading + spread, length * range(0.6, 0.8), order + 1, maxOrder);
     }
   };
-  // #endregion grow
 
-  NEURONS.forEach((spec, index) => {
-    neuron = index;
+  NEURONS.forEach((spec) => {
     const offset = random() * Math.PI * 2;
     for (let i = 0; i < spec.dendrites; i += 1) {
       const angle = offset + (i / spec.dendrites) * Math.PI * 2 + range(-0.3, 0.3);
@@ -172,17 +166,10 @@ const generate = () => {
     punctaBySize[bucket] += `M${round(p.x)} ${round(p.y)}h0`;
   }
 
-  return { segments, branches, axons, somas, nuclei, punctaBySize };
+  return { branches, axons, somas, nuclei, punctaBySize };
 };
 
 const IMAGE = generate();
-
-/** The main neuron (the one in the middle of the hero), for the growth demo. */
-export const MAIN_NEURON = {
-  ...NEURONS[0],
-  segments: IMAGE.segments.filter((segment) => segment.neuron === 0),
-  branchWidth: BRANCH_WIDTH,
-};
 
 const Glow = ({ id, amount }: { id: string; amount: number }) => (
   <filter id={id} x="-10%" y="-10%" width="120%" height="120%">

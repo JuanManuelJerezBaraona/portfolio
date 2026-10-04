@@ -1,6 +1,6 @@
 import type { Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
-import { AboutMe, AiProfile, CodeLab, Contact, Header, Projects, Skills } from '@/components';
+import { AboutMe, AiProfile, Architecture, Contact, Header, Projects, Skills } from '@/components';
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -14,8 +14,8 @@ const HomePage = async ({ params }: HomePageProps) => {
     <>
       <Header />
       <AboutMe />
-      <CodeLab />
       <Projects />
+      <Architecture />
       <AiProfile />
       <Skills />
       <Contact />

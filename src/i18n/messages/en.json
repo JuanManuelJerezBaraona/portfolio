@@ -72,29 +72,30 @@
     "code": "In 2016 I started building online stores, and since 2022 I’ve worked as a full-stack developer. The lab habit came with me: I test, measure and review before I call anything done.",
     "portrait": "Portrait of {name}"
   },
-  "CodeLab": {
-    "eyebrow": "Biology × code",
-    "title": "The neuron up top is <hl>code</hl>.",
-    "body": "It isn’t an image. It’s a recursive function: each dendrite grows a few steps, splits in two, and the function calls itself again with a shorter branch. Below is that code, the same code that runs this site, read the way a sequencer reads DNA.",
-    "read": "Read 01 · {count} bases · seed {seed}",
-    "code": "Source of the grow function",
-    "legend": "Bases in the read",
-    "bases": {
-      "A": "keyword",
-      "C": "variable",
-      "G": "number",
-      "T": "call"
-    },
-    "replay": "Sequence again",
-    "order": "Order",
-    "orders": "Branching orders",
-    "growth": "Each order is one level of recursion: the same neuron from the top of the page, growing."
-  },
   "Projects": {
     "eyebrow": "Projects · Seguros Falabella",
     "title": "Five stages, <hl>one customer</hl>.",
     "body": "Five applications that, in order, cover what a person does with their insurance: get a quote, buy it, pay for it, sign in to their account and handle requests.",
     "empty": "No projects published yet."
+  },
+  "Architecture": {
+    "eyebrow": "Architecture",
+    "title": "Under the hood, <hl>one architecture</hl>.",
+    "body": "The five applications share the same layers: a front end in Next.js or React, NestJS services with hexagonal architecture, content in Strapi and data in MongoDB. Each layer has a single job, so a front end can be migrated or an integration swapped without touching the business rules.",
+    "figure": "NestJS services · hexagonal architecture",
+    "domain": "Domain",
+    "domainNote": "business rules",
+    "application": "Application",
+    "applicationNote": "use cases",
+    "infrastructure": "Infrastructure",
+    "infrastructureNote": "adapters",
+    "endpoint": "endpoint",
+    "repository": "repository",
+    "httpService": "HTTP service",
+    "otherApis": "Other APIs",
+    "rule": "Dependencies point inward: the domain knows nothing about NestJS, MongoDB or HTTP.",
+    "skill": "It’s the same pattern I taught the agent in a skill",
+    "layers": "Layers"
   },
   "Project": {
     "public": "Public",

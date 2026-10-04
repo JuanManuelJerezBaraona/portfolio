@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { micrographSvg } from '@/components/Header/Micrograph';
-import { OG_NAME, OgShareImage, type OgCopy } from '@/components/og/OgShareImage';
+import { OG_MARK, OG_NAME, OgShareImage, type OgCopy } from '@/components/og/OgShareImage';
 import { routing } from '@/i18n/routing';
 
 // `alt` can't vary per route, so it stays readable in both languages.
@@ -32,13 +32,15 @@ const loadGoogleFont = async (query: string, text: string) => {
 /** Archivo for the card; if the network fails it falls back to the default sans. */
 const loadFonts = async (copy: OgCopy) => {
   try {
-    const [expanded, regular] = await Promise.all([
+    const [expanded, regular, mono] = await Promise.all([
       loadGoogleFont('Archivo:wdth,wght@125,800', copy.title),
       loadGoogleFont('Archivo:wght@400', OG_NAME + copy.detail + copy.footer),
+      loadGoogleFont('Martian+Mono:wght@600', OG_MARK),
     ]);
     return [
       { name: 'Archivo Expanded', data: expanded, weight: 800 as const, style: 'normal' as const },
       { name: 'Archivo', data: regular, weight: 400 as const, style: 'normal' as const },
+      { name: 'Martian Mono', data: mono, weight: 600 as const, style: 'normal' as const },
     ];
   } catch {
     return [];

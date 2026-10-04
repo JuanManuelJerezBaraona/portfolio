@@ -72,29 +72,30 @@
     "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como full-stack. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
     "portrait": "Retrato de {name}"
   },
-  "CodeLab": {
-    "eyebrow": "Biología × código",
-    "title": "La neurona del inicio es <hl>código</hl>.",
-    "body": "No es una imagen. Es una función recursiva: cada dendrita avanza unos pasos, se divide en dos y la función se vuelve a llamar con una rama más corta. Abajo está ese código, el mismo que corre en este sitio, leído como un secuenciador lee ADN.",
-    "read": "Lectura 01 · {count} bases · semilla {seed}",
-    "code": "Código de la función grow",
-    "legend": "Bases de la lectura",
-    "bases": {
-      "A": "palabra clave",
-      "C": "variable",
-      "G": "número",
-      "T": "llamada"
-    },
-    "replay": "Secuenciar de nuevo",
-    "order": "Orden",
-    "orders": "Órdenes de ramificación",
-    "growth": "Cada orden es un nivel de la recursión: la misma neurona del inicio, creciendo."
-  },
   "Projects": {
     "eyebrow": "Proyectos · Seguros Falabella",
     "title": "Cinco etapas del <hl>mismo cliente</hl>.",
     "body": "Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites.",
     "empty": "Todavía no hay proyectos publicados."
+  },
+  "Architecture": {
+    "eyebrow": "Arquitectura",
+    "title": "Por dentro, <hl>la misma arquitectura</hl>.",
+    "body": "Las cinco aplicaciones comparten capas: un front en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un front se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
+    "figure": "Servicios NestJS · arquitectura hexagonal",
+    "domain": "Dominio",
+    "domainNote": "reglas de negocio",
+    "application": "Aplicación",
+    "applicationNote": "casos de uso",
+    "infrastructure": "Infraestructura",
+    "infrastructureNote": "adaptadores",
+    "endpoint": "endpoint",
+    "repository": "repositorio",
+    "httpService": "servicio HTTP",
+    "otherApis": "Otras APIs",
+    "rule": "Las dependencias apuntan hacia adentro: el dominio no conoce NestJS, MongoDB ni HTTP.",
+    "skill": "Es el mismo patrón que le enseñé al agente en una skill",
+    "layers": "Capas"
   },
   "Project": {
     "public": "Público",
