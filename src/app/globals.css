@@ -1176,7 +1176,8 @@
   .mode-toggle:has(input:checked) .mode-label-off {
     display: none;
   }
-  @media (min-width: 1100px) {
+  /* Only once the bar has room for it next to the links and ES / EN. */
+  @media (min-width: 1200px) {
     .mode-label {
       display: inline;
     }

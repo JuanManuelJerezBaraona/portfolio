@@ -146,8 +146,9 @@ const Navbar = () => {
             <span className="wide hidden whitespace-nowrap text-[0.95rem] sm:inline">{PERSONAL_INFO.shortName}</span>
           </Link>
 
-          <div className="flex items-center gap-3.5 sm:gap-5 md:gap-8">
-            <div className="hidden items-center gap-7 md:flex">
+          {/* The full link row needs ~1040px with both languages, so below `lg` it folds into the menu. */}
+          <div className="flex items-center gap-3.5 sm:gap-5 lg:gap-6 xl:gap-8">
+            <div className="hidden items-center gap-5 lg:flex xl:gap-7">
               {links.map((link) => {
                 const isActive = isHome && activeSection === link.id;
                 return (
@@ -178,7 +179,7 @@ const Navbar = () => {
             <button
               ref={mobileMenuButtonRef}
               onClick={toggleMobileMenu}
-              className="meta -mr-2 p-2 text-text md:hidden"
+              className="meta -mr-2 p-2 text-text lg:hidden"
               aria-label={isMobileMenuOpen ? t('closeMenu') : t('openMenu')}
               aria-expanded={isMobileMenuOpen}
             >
@@ -193,15 +194,18 @@ const Navbar = () => {
         onClick={closeMobileMenu}
         aria-label={t('closeMobileMenu')}
         tabIndex={isMobileMenuOpen ? 0 : -1}
-        className={`fixed inset-x-0 bottom-0 top-16 bg-void/70 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-x-0 bottom-0 top-16 bg-void/70 transition-opacity duration-300 lg:hidden ${
           isMobileMenuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       />
 
       <div
         ref={mobileMenuRef}
-        className={`relative z-50 overflow-hidden border-line bg-void transition-all duration-300 ease-out md:hidden ${
-          isMobileMenuOpen ? 'max-h-96 border-t opacity-100' : 'pointer-events-none max-h-0 opacity-0'
+        // Open, it can grow to the screen (minus the bar) and scrolls if a short landscape phone can't fit it.
+        className={`relative z-50 border-line bg-void transition-all duration-300 ease-out lg:hidden ${
+          isMobileMenuOpen
+            ? 'max-h-[calc(100dvh-4rem)] overflow-y-auto border-y opacity-100'
+            : 'pointer-events-none max-h-0 overflow-hidden opacity-0'
         }`}
         aria-hidden={!isMobileMenuOpen}
       >
