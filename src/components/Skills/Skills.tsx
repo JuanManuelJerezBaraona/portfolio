@@ -47,6 +47,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { getSkills } from '@/constants/data';
 import { Skill, SkillCategory } from '@/types';
 import Reveal from '@/components/ui/Reveal';
+import SectionCover from '@/components/ui/SectionCover';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 /** Brand marks from Simple Icons (CC0), drawn single-color in the channel. */
@@ -168,16 +169,18 @@ const Well = ({ skill, column }: { skill: Skill; column: number }) => {
 const Skills = () => {
   const t = useTranslations('Skills');
   const tStack = useTranslations('Stack');
-  const rows = buildRows(getSkills(useLocale()));
+  const skills = getSkills(useLocale());
+  const rows = buildRows(skills);
 
   return (
     <section
       id="skills"
-      className="sec-skills border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
+      className="sec-skills chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="skills-heading"
     >
       <div className="mx-auto max-w-7xl">
-        <SectionHeading id="skills-heading" eyebrow="Stack" title={t('title')}>
+        <SectionCover id="skills" note={t('note', { count: skills.length })} />
+        <SectionHeading id="skills-heading" className="mt-14" title={t('title')}>
           <p>{t('body')}</p>
         </SectionHeading>
 

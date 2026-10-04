@@ -3,6 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { getArchitecture } from '@/constants/data';
 import type { ArchitectureLayer } from '@/types';
 import Reveal from '@/components/ui/Reveal';
+import SectionCover from '@/components/ui/SectionCover';
 import SectionHeading from '@/components/ui/SectionHeading';
 
 /** Full class names, so Tailwind sees them. */
@@ -135,43 +136,46 @@ const Architecture = () => {
   return (
     <section
       id="arquitectura"
-      className="sec-arquitectura border-t border-line px-4 py-24 sm:px-6 lg:px-8 lg:py-32"
+      className="sec-arquitectura chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="arquitectura-heading"
     >
-      <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
-        <div>
-          <SectionHeading
-            id="arquitectura-heading"
-            eyebrow={t('eyebrow')}
-            title={t.rich('title', { hl: (chunks) => <em className="hl">{chunks}</em> })}
-          >
-            <p>{t('body')}</p>
-          </SectionHeading>
+      <div className="mx-auto max-w-7xl">
+        <SectionCover id="arquitectura" note={t('note')} />
+        <div className="mt-14 grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+          <div>
+            <SectionHeading
+              id="arquitectura-heading"
+              title={t.rich('title', { hl: (chunks) => <em className="hl">{chunks}</em> })}
+            >
+              <p>{t('body')}</p>
+            </SectionHeading>
 
-          <Reveal delay={120} className="mt-12">
-            <Hexagon />
-            <Link href="#ia" className="meta link-underline mt-4 inline-block text-muted hover:text-text">
-              {t('skill')} →
-            </Link>
+            <Reveal delay={120} className="mt-12">
+              <Hexagon />
+              <Link href="#ia" className="meta link-underline mt-4 inline-block text-muted hover:text-text">
+                {t('skill')} →
+              </Link>
+            </Reveal>
+          </div>
+
+          <Reveal delay={80}>
+            {/* The name column is as wide as the longest name (subgrid), in either language. */}
+            <ol className="grid border-t border-line sm:grid-cols-[max-content_1fr] sm:gap-x-8" aria-label={t('layers')}>
+              {layers.map((layer) => (
+                <li key={layer.id} className="col-span-full grid gap-y-2 border-b border-line py-6 sm:grid-cols-subgrid">
+                  <h3 className="flex items-center gap-2.5 text-lg">
+                    <span className={`swatch ${CHANNEL[layer.channel]}`} aria-hidden="true" />
+                    {layer.name}
+                  </h3>
+                  <div>
+                    <p className="leading-relaxed text-muted">{layer.role}</p>
+                    <p className="meta mt-3 text-accent">{layer.tools.join(' · ')}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </Reveal>
         </div>
-
-        <Reveal delay={80}>
-          <ol className="border-t border-line" aria-label={t('layers')}>
-            {layers.map((layer) => (
-              <li key={layer.id} className="grid gap-2 border-b border-line py-6 sm:grid-cols-[9rem_1fr] sm:gap-6">
-                <h3 className="flex items-center gap-2.5 text-xl">
-                  <span className={`swatch ${CHANNEL[layer.channel]}`} aria-hidden="true" />
-                  {layer.name}
-                </h3>
-                <div>
-                  <p className="leading-relaxed text-muted">{layer.role}</p>
-                  <p className="meta mt-3 text-accent">{layer.tools.join(' · ')}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
       </div>
     </section>
   );

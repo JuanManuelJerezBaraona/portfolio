@@ -90,7 +90,8 @@ export const TIMELINE: TimelineEntryData[] = [
   },
   {
     period: { es: '2024 – hoy', en: '2024 – present' },
-    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
+    // His official title at Tsoft.
+    role: { es: 'Desarrollador full-stack semi\u00a0senior', en: 'Mid-level full-stack developer' },
     place: 'Tsoft · Seguros Falabella',
     detail: {
       es: 'Cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia.',

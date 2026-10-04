@@ -87,7 +87,7 @@ const LocaleLayout = async ({ children, params }: LayoutProps) => {
         {/* Without JS the reveal elements would stay hidden, so force them visible. */}
         <noscript
           dangerouslySetInnerHTML={{
-            __html: `<style>.reveal{opacity:1!important;filter:none!important;transform:none!important}</style>`,
+            __html: `<style>.reveal,.cover-name{opacity:1!important;filter:none!important;transform:none!important}</style>`,
           }}
         />
       </head>

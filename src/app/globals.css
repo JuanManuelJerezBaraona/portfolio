@@ -799,7 +799,8 @@
     scroll-behavior: auto !important;
   }
 
-  .reveal-ready .reveal {
+  .reveal-ready .reveal,
+  .reveal-ready .cover .cover-name {
     opacity: 1 !important;
     filter: none !important;
     transform: none !important;
@@ -1179,6 +1180,69 @@
     .mode-label {
       display: inline;
     }
+  }
+}
+
+/* ============================================================
+   CHAPTERS  —  every section after the hero opens like a chapter:
+   a rule in its color across the page, its light coming in from
+   one corner (alternating sides, like moving to another field),
+   and a cover with its number and its name set across the width.
+   The name comes into focus as the section enters.
+   ============================================================ */
+@layer components {
+  .chapter {
+    --light-x: 0%;
+    --bounce-x: 100%;
+    border-top: 3px solid var(--accent);
+    background-image:
+      radial-gradient(
+        ellipse 90% 70% at var(--light-x) 0%,
+        color-mix(in oklab, var(--accent) 22%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60% 55% at var(--bounce-x) 100%,
+        color-mix(in oklab, var(--accent) 8%, transparent),
+        transparent 70%
+      );
+  }
+  .chapter:nth-of-type(even) {
+    --light-x: 100%;
+    --bounce-x: 0%;
+  }
+
+  /* Sized against its own width, so the longest name (ARQUITECTURA)
+     just fits on a phone and caps out on a desktop. */
+  .cover {
+    container-type: inline-size;
+  }
+  .cover-name {
+    font-size: min(8.5rem, 9.3cqi);
+    line-height: 0.9;
+    text-transform: uppercase;
+    color: var(--accent);
+    transform-origin: 0 60%;
+  }
+
+  .reveal-ready .reveal.cover {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+  .reveal-ready .cover .cover-name {
+    opacity: 0.35;
+    filter: blur(14px);
+    transform: scale(1.04);
+    transition:
+      opacity 1.1s var(--ease-out),
+      filter 1.4s var(--ease-out),
+      transform 1.4s var(--ease-out);
+  }
+  .reveal-ready .cover.is-in .cover-name {
+    opacity: 1;
+    filter: none;
+    transform: none;
   }
 }
 

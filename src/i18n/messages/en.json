@@ -68,20 +68,21 @@
     "download": "Download CV"
   },
   "About": {
-    "eyebrow": "Background",
+    "note": "2009 – present",
+    "timeline": "Background",
     "title": "From the lab to web development.",
     "lab": "I studied biotechnology engineering and spent three years in a neurobiology lab doing statistics, data analysis and bioinformatics. That’s where I learned not to trust a result until I can reproduce it.",
     "code": "In 2016 I started building online stores, and since 2022 I’ve worked as a full-stack developer. The lab habit came with me: I test, measure and review before I call anything done.",
     "portrait": "Portrait of {name}"
   },
   "Projects": {
-    "eyebrow": "Projects · Seguros Falabella",
+    "note": "Seguros Falabella · CL · PE · CO",
     "title": "Five stages, <hl>one customer</hl>.",
     "body": "Five applications that, in order, cover what a person does with their insurance: get a quote, buy it, pay for it, sign in to their account and handle requests.",
     "empty": "No projects published yet."
   },
   "Architecture": {
-    "eyebrow": "Architecture",
+    "note": "From Figma to production",
     "title": "Under the hood, <hl>one architecture</hl>.",
     "body": "The five applications share the same layers: a front end in Next.js or React, NestJS services with hexagonal architecture, content in Strapi and data in MongoDB. Each layer has a single job, so a front end can be migrated or an integration swapped without touching the business rules.",
     "figure": "NestJS services · hexagonal architecture",
@@ -131,17 +132,18 @@
     "neighbours": "Previous and next stage"
   },
   "Ai": {
-    "eyebrow": "AI-ready profile",
+    "note": "AI-ready profile",
     "title": "I use AI every day. And I <hl>review everything</hl> it writes.",
     "body": "I come from analyzing data in a lab, so I treat a language model like any other instrument: fast and useful, but I don’t trust it until I’ve checked.",
     "skill": "One of my skills"
   },
   "Skills": {
+    "note": "{count} technologies",
     "title": "What I work with.",
     "body": "Each well is a technology I use, sorted by channel: frontend, backend, AI, data and tools."
   },
   "Contact": {
-    "eyebrow": "Contact · Open to new opportunities",
+    "note": "Open to new opportunities",
     "title": "Let’s talk.",
     "body": "Looking for a full-stack developer for your team? Email me: it’s the most direct way to reach me, and I reply quickly.",
     "level": "Level",

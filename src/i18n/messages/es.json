@@ -68,20 +68,21 @@
     "download": "Descargar CV"
   },
   "About": {
-    "eyebrow": "Trayectoria",
+    "note": "2009 – hoy",
+    "timeline": "Trayectoria",
     "title": "Del laboratorio al desarrollo web.",
     "lab": "Estudié Ingeniería en Biotecnología y pasé tres años en un laboratorio de neurobiología haciendo estadística, análisis de datos y bioinformática. Ahí aprendí a no creerle a un resultado hasta poder reproducirlo.",
     "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como full-stack. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
     "portrait": "Retrato de {name}"
   },
   "Projects": {
-    "eyebrow": "Proyectos · Seguros Falabella",
+    "note": "Seguros Falabella · CL · PE · CO",
     "title": "Cinco etapas del <hl>mismo cliente</hl>.",
     "body": "Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites.",
     "empty": "Todavía no hay proyectos publicados."
   },
   "Architecture": {
-    "eyebrow": "Arquitectura",
+    "note": "De Figma a producción",
     "title": "Por dentro, <hl>la misma arquitectura</hl>.",
     "body": "Las cinco aplicaciones comparten capas: un front en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un front se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
     "figure": "Servicios NestJS · arquitectura hexagonal",
@@ -131,17 +132,18 @@
     "neighbours": "Etapa anterior y siguiente"
   },
   "Ai": {
-    "eyebrow": "Perfil IA-ready",
+    "note": "Perfil IA-ready",
     "title": "Uso IA todos los días. Y <hl>reviso todo</hl> lo que escribe.",
     "body": "Vengo de analizar datos en un laboratorio, así que trato a un modelo de lenguaje como a cualquier instrumento: rápido y útil, pero no le creo hasta verificarlo.",
     "skill": "Una de mis skills"
   },
   "Skills": {
+    "note": "{count} tecnologías",
     "title": "Con qué trabajo.",
     "body": "Cada pocillo es una tecnología que uso, ordenada por canal: frontend, backend, IA, datos y herramientas."
   },
   "Contact": {
-    "eyebrow": "Contacto · Disponible para nuevas oportunidades",
+    "note": "Disponible para nuevas oportunidades",
     "title": "Conversemos.",
     "body": "¿Buscas un desarrollador full-stack para tu equipo? Escríbeme: el correo es la vía más directa y respondo rápido.",
     "level": "Nivel",
