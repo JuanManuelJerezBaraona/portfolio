@@ -1,10 +1,11 @@
 {
   "Meta": {
-    "title": "Juan Manuel Jerez Baraona · Full-stack developer",
-    "description": "Full-stack developer in Santiago, Chile. A biotechnology engineer who now builds the quote, payment and after-sales flows of Seguros Falabella with React, Next.js, NestJS and Strapi, and works with AI agents every day.",
+    "title": "Juan Manuel Jerez Baraona · Mid-level full-stack developer",
+    "description": "Mid-level full-stack developer in Santiago, Chile. A biotechnology engineer who now builds the quote, payment and after-sales flows of Seguros Falabella with React, Next.js, NestJS and Strapi, and works with AI agents every day.",
     "ogLocale": "en_US",
     "keywords": [
       "full stack developer",
+      "mid-level developer",
       "react",
       "next.js",
       "typescript",
@@ -27,7 +28,7 @@
   },
   "Og": {
     "title": "I traded the microscope for code.",
-    "detail": "Full-stack developer · React, Next.js, NestJS · AI-ready",
+    "detail": "Mid-level full-stack · React, Next.js, NestJS · AI-ready",
     "footer": "Santiago, Chile · Seguros Falabella · CL PE CO"
   },
   "Nav": {

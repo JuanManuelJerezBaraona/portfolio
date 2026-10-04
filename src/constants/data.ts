@@ -32,7 +32,8 @@ export const NAV_LINKS: NavLinkData[] = [
 export const PERSONAL_INFO: PersonalInfoData = {
   name: 'Juan Manuel Jerez Baraona',
   shortName: 'Juan Manuel Jerez',
-  title: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
+  // "Semi senior" is the Latin American level; "mid-level" is how the US and Europe say it.
+  title: { es: 'Desarrollador full-stack semi senior', en: 'Mid-level full-stack developer' },
   location: { es: 'Santiago de Chile', en: 'Santiago, Chile' },
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',
@@ -169,15 +170,19 @@ export const SKILLS: SkillData[] = [
   { id: 'postman', name: 'Postman', category: 'tools' },
   { id: 'playwright', name: 'Playwright', category: 'tools' },
   { id: 'docker', name: 'Docker', category: 'tools' },
+  { id: 'github-actions', name: 'GitHub Actions', category: 'tools' },
+  { id: 'gcp', name: 'Google Cloud', category: 'tools' },
   { id: 'datadog', name: 'Datadog', category: 'tools' },
   { id: 'kibana', name: 'Kibana', category: 'tools' },
 ];
 
 /**
  * The layers the five Seguros Falabella apps share, top to bottom. Only what
- * the CV and his confirmed AI skill say: Tomaco documented in Storybook from
- * Figma, Next.js/React with Zustand, NestJS with hexagonal architecture,
- * Strapi 5 as headless CMS, MongoDB and Playwright end-to-end tests.
+ * the CV, his confirmed AI skill and he himself say: Tomaco documented in
+ * Storybook from Figma, Next.js/React with Zustand, NestJS with hexagonal
+ * architecture behind Apigee, Strapi 5 as headless CMS, MongoDB, Playwright
+ * end-to-end tests, GitHub Actions and GitLab CI deploying to Google Cloud,
+ * and Datadog and Kibana in production.
  */
 export const ARCHITECTURE: ArchitectureLayerData[] = [
   {
@@ -205,10 +210,10 @@ export const ARCHITECTURE: ArchitectureLayerData[] = [
     channel: 'gfp',
     name: { es: 'Servicios', en: 'Services' },
     role: {
-      es: 'APIs con arquitectura hexagonal: endpoints, casos de uso y servicios HTTP en capas separadas.',
-      en: 'APIs with hexagonal architecture: endpoints, use cases and HTTP services in separate layers.',
+      es: 'APIs con arquitectura hexagonal (endpoints, casos de uso y servicios HTTP en capas separadas), expuestas a través de Apigee.',
+      en: 'APIs with hexagonal architecture (endpoints, use cases and HTTP services in separate layers), exposed through Apigee.',
     },
-    tools: ['NestJS', 'TypeScript'],
+    tools: ['NestJS', 'TypeScript', 'Apigee'],
   },
   {
     id: 'content',
@@ -236,6 +241,26 @@ export const ARCHITECTURE: ArchitectureLayerData[] = [
       en: 'Automated end-to-end tests that walk through complete flows.',
     },
     tools: ['Playwright'],
+  },
+  {
+    id: 'delivery',
+    channel: 'text',
+    name: { es: 'Entrega', en: 'Delivery' },
+    role: {
+      es: 'Pipelines de CI/CD que llevan cada cambio hasta Google Cloud.',
+      en: 'CI/CD pipelines that take every change to Google Cloud.',
+    },
+    tools: ['GitHub Actions', 'GitLab CI', 'Google Cloud'],
+  },
+  {
+    id: 'observability',
+    channel: 'text',
+    name: { es: 'Observabilidad', en: 'Observability' },
+    role: {
+      es: 'Monitoreo y logs de los servicios en producción.',
+      en: 'Monitoring and logs for the services in production.',
+    },
+    tools: ['Datadog', 'Kibana'],
   },
 ];
 

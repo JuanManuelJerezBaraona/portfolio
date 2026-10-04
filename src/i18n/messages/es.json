@@ -1,10 +1,11 @@
 {
   "Meta": {
-    "title": "Juan Manuel Jerez Baraona · Desarrollador full-stack",
-    "description": "Desarrollador full-stack en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.",
+    "title": "Juan Manuel Jerez Baraona · Desarrollador full-stack semi senior",
+    "description": "Desarrollador full-stack semi senior en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.",
     "ogLocale": "es_CL",
     "keywords": [
       "desarrollador full stack",
+      "desarrollador semi senior",
       "react",
       "next.js",
       "typescript",
@@ -27,7 +28,7 @@
   },
   "Og": {
     "title": "Pasé del microscopio al código.",
-    "detail": "Desarrollador full-stack · React, Next.js, NestJS · IA-ready",
+    "detail": "Full-stack semi senior · React, Next.js, NestJS · IA-ready",
     "footer": "Santiago de Chile · Seguros Falabella · CL PE CO"
   },
   "Nav": {
