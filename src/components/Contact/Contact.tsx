@@ -25,8 +25,8 @@ const Contact = () => {
               Conversemos.
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              Si buscas un desarrollador full-stack para tu equipo, escríbeme. El correo es la forma
-              más rápida de llegar a mí.
+              ¿Buscas un desarrollador full-stack para tu equipo? Escríbeme: el correo es la vía más
+              directa y respondo rápido.
             </p>
           </Reveal>
 

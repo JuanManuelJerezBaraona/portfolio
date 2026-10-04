@@ -30,9 +30,9 @@ const Header = () => {
           >
             Soy <span className="text-text">{PERSONAL_INFO.shortName}</span>. Estudié Ingeniería en
             Biotecnología y trabajé en un laboratorio de neurobiología antes de dedicarme al
-            software. Hoy desarrollo los flujos de cotización, pago y postventa de{' '}
+            software. Hoy construyo los flujos de cotización, pago y postventa de{' '}
             <span className="text-text">Seguros Falabella</span> con React, Next.js, NestJS y Strapi, y
-            trabajo a diario con agentes de IA.
+            la IA es parte de mi día a día.
           </p>
 
           <div className="rise mt-10 flex flex-col gap-3 sm:flex-row" style={delay(240)}>

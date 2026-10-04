@@ -171,7 +171,7 @@ const Skills = () => {
       <div className="mx-auto max-w-7xl">
         <SectionHeading id="skills-heading" eyebrow="Stack" title="Con qué trabajo.">
           <p>
-            Cada pocillo es una tecnología con la que trabajo, ordenada por canal: frontend,
+            Cada pocillo es una tecnología que uso, ordenada por canal: frontend,
             backend, IA, datos y herramientas.
           </p>
         </SectionHeading>
