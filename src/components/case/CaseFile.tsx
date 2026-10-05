@@ -3,9 +3,9 @@ import { useTranslations } from 'next-intl';
 import { groupTechStack } from '@/constants/data';
 import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
-import Loupe from '@/components/ui/Loupe';
 import { Countries, Status, hostname } from '@/components/ui/ProjectMeta';
 import Reveal from '@/components/ui/Reveal';
+import ShotCycle from '@/components/ui/ShotCycle';
 
 interface CaseFileProps {
   project: Project;
@@ -76,7 +76,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
           </div>
         </header>
 
-        {project.screenshots?.desktop && (
+        {project.screenshots && (
           <Reveal as="figure" className="mt-14 border border-line bg-stage">
             <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5">
               <span className="meta truncate text-muted">
@@ -84,12 +84,11 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               </span>
               <span className="meta hidden flex-none text-muted/70 sm:inline">{tProject('hover')}</span>
             </div>
-            <Loupe
-              src={project.screenshots.desktop}
-              alt={tProject('desktopShot', { title: project.title })}
-              width={2530}
-              height={1140}
+            <ShotCycle
+              shots={project.screenshots.desktop}
+              title={project.title}
               sizes="(min-width: 1152px) 1152px, 100vw"
+              loupe
               priority
             />
           </Reveal>

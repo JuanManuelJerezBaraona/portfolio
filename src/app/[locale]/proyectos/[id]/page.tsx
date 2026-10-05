@@ -35,7 +35,7 @@ export const generateMetadata = async ({
       title,
       description: project.summary,
       images: project.screenshots?.desktop
-        ? [{ url: project.screenshots.desktop }]
+        ? [{ url: project.screenshots.desktop[0] }]
         : undefined,
     },
   };

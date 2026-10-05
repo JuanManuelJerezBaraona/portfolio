@@ -5,8 +5,8 @@ import { useTranslations } from 'next-intl';
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
-import Loupe from '@/components/ui/Loupe';
 import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
+import ShotCycle from '@/components/ui/ShotCycle';
 
 interface ProjectViewerProps {
   projects: Project[];
@@ -90,13 +90,12 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                 <span className="meta truncate text-muted">{hostname(project) ?? t('internalAddress')}</span>
                 <span className="meta flex-none text-muted/70">{t('hover')}</span>
               </div>
-              {project.screenshots?.desktop && (
-                <Loupe
-                  src={project.screenshots.desktop}
-                  alt={t('desktopShot', { title: project.title })}
-                  width={2530}
-                  height={1140}
+              {project.screenshots && (
+                <ShotCycle
+                  shots={project.screenshots.desktop}
+                  title={project.title}
                   sizes="(min-width: 1280px) 720px, 60vw"
+                  loupe
                 />
               )}
             </div>

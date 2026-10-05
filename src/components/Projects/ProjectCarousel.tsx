@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from
 import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
 import { Countries, hostname, stageLabel } from '@/components/ui/ProjectMeta';
+import ShotCycle from '@/components/ui/ShotCycle';
 
 interface ProjectCarouselProps {
   projects: Project[];
@@ -142,14 +143,12 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                           <span className="flex-1 truncate">{host}</span>
                         </p>
                       )}
-                      {project.screenshots?.desktop && (
-                        <Image
-                          src={project.screenshots.desktop}
-                          alt={t('desktopShot', { title: project.title })}
-                          width={2530}
-                          height={1140}
+                      {project.screenshots && (
+                        <ShotCycle
+                          shots={project.screenshots.desktop}
+                          title={project.title}
                           sizes="(min-width: 640px) 384px, 80vw"
-                          className="block h-auto w-full"
+                          active={focus === 'in'}
                         />
                       )}
                     </div>

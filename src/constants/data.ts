@@ -404,7 +404,12 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Strapi 5', 'MongoDB'],
     url: 'https://www.segurosfalabella.com',
     screenshots: {
-      desktop: '/project-shots/desktop/seguros-falabella-landing-desktop.png',
+      desktop: [
+        '/project-shots/desktop/seguros-falabella-landing-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-auto-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-promociones-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-automotriz-desktop.png',
+      ],
       mobile: '/project-shots/mobile/seguros-falabella-landing-mobile.png',
     },
   },
@@ -480,7 +485,7 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://aceptacion.segurosfalabella.com/',
     screenshots: {
-      desktop: '/project-shots/desktop/seguros-falabella-aceptacion-digital-desktop.png',
+      desktop: ['/project-shots/desktop/seguros-falabella-aceptacion-digital-desktop.png'],
       mobile: '/project-shots/mobile/seguros-falabella-aceptacion-digital-mobile.png',
     },
   },
@@ -550,7 +555,7 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://pago.segurosfalabella.com/',
     screenshots: {
-      desktop: '/project-shots/desktop/seguros-falabella-boton-pago-desktop.png',
+      desktop: ['/project-shots/desktop/seguros-falabella-boton-pago-desktop.png'],
       mobile: '/project-shots/mobile/seguros-falabella-boton-pago-mobile.png',
     },
   },
@@ -620,7 +625,7 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
-      desktop: '/project-shots/desktop/seguros-falabella-login-postventa-desktop.png',
+      desktop: ['/project-shots/desktop/seguros-falabella-login-postventa-desktop.png'],
       mobile: '/project-shots/mobile/seguros-falabella-login-postventa-mobile.png',
     },
   },
@@ -683,7 +688,7 @@ export const PROJECTS: ProjectData[] = [
     ],
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
-      desktop: '/project-shots/desktop/seguros-falabella-postventa-desktop.png',
+      desktop: ['/project-shots/desktop/seguros-falabella-postventa-desktop.png'],
       mobile: '',
     },
   },

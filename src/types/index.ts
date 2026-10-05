@@ -39,7 +39,8 @@ export interface ProjectData {
   techStack: string[];
   url?: string;
   screenshots?: {
-    desktop: string;
+    /** All 2530×1140. With more than one, the frame cycles through them; the first is the poster. */
+    desktop: string[];
     mobile: string;
   };
 
