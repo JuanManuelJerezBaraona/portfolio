@@ -646,8 +646,14 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
-      desktop: ['/project-shots/desktop/seguros-falabella-login-postventa-desktop.png'],
-      mobile: ['/project-shots/mobile/seguros-falabella-login-postventa-mobile.png'],
+      desktop: [
+        '/project-shots/desktop/seguros-falabella-login-postventa-sucursal-desktop.png',
+        '/project-shots/desktop/seguros-falabella-login-postventa-documento-desktop.png',
+      ],
+      mobile: [
+        '/project-shots/mobile/seguros-falabella-login-postventa-sucursal-mobile.png',
+        '/project-shots/mobile/seguros-falabella-login-postventa-documento-mobile.png',
+      ],
     },
   },
   {
