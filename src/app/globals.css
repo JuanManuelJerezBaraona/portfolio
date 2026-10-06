@@ -1448,3 +1448,234 @@
     clip-path: circle(150vmax at var(--vt-x, 100%) var(--vt-y, 0));
   }
 }
+
+/* ============================================================
+   DECK  —  the interview presentation (/presentacion). A 16:9
+   stage letterboxed on the black field; type is sized from the
+   stage width (cqw), so a slide reads the same on a laptop or a
+   projector. Each slide comes into focus as the last one blurs.
+   On a portrait phone the stage fills the screen and scrolls.
+   ============================================================ */
+@layer components {
+  .deck {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: grid;
+    place-items: center;
+    background: var(--void);
+  }
+  .deck-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(var(--p) * 100%);
+    height: 3px;
+    background: var(--gfp);
+    box-shadow: 0 0 var(--glow) var(--gfp);
+    transition: width 0.4s var(--ease-out);
+  }
+  .deck-stage {
+    position: relative;
+    width: min(100vw, calc((100dvh - 3.5rem) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    container-type: size;
+    border-block: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .deck-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5cqw 6cqw;
+    font-size: clamp(14px, 1.35cqw, 30px);
+    line-height: 1.45;
+    opacity: 0;
+    visibility: hidden;
+    filter: blur(10px);
+    transition:
+      opacity 0.5s var(--ease-out),
+      filter 0.5s var(--ease-out),
+      visibility 0.5s;
+  }
+  .deck-slide[data-current] {
+    opacity: 1;
+    visibility: visible;
+    filter: none;
+  }
+  .deck-slide .meta {
+    font-size: 0.82em;
+  }
+
+  .deck-mark {
+    font-size: 5em;
+    line-height: 1;
+  }
+  .deck-display {
+    font-family: var(--font-archivo), system-ui, sans-serif;
+    font-variation-settings: "wdth" 125;
+    font-weight: 820;
+    font-size: 4.4em;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+  .deck-h2 {
+    font-size: 2.7em;
+    line-height: 1.02;
+  }
+  .deck-lead {
+    font-size: 1.2em;
+    line-height: 1.5;
+  }
+  .deck-label {
+    font-size: 0.95em;
+    color: var(--text);
+  }
+
+  .deck-cover {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .deck-split {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 4em;
+    align-items: center;
+  }
+  .deck-split--case {
+    grid-template-columns: 1fr 1.15fr;
+    gap: 3.5em;
+  }
+  .deck-list {
+    display: grid;
+    gap: 0.9em;
+    border-left: 1px solid var(--line-strong);
+    padding-left: 1.6em;
+  }
+  .deck-journey {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+  .deck-journey > li {
+    padding: 1.1em 1.2em 0 0;
+  }
+  .deck-journey > li + li {
+    padding-left: 1.2em;
+    border-left: 1px solid var(--line);
+  }
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.4em 2.4em;
+  }
+  .deck-grid > li {
+    padding-top: 0.9em;
+    border-top: 1px solid var(--line);
+  }
+  .deck-bullets > li {
+    position: relative;
+    padding-left: 1.1em;
+    color: var(--muted);
+  }
+  .deck-bullets > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.35em;
+    height: 0.35em;
+    background: var(--accent);
+  }
+  .deck-shot {
+    position: relative;
+    padding: 0 1.4em 1.8em 0;
+  }
+  .deck-phone {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22%;
+    padding: 3px;
+    border: 1px solid var(--line-strong);
+    background: var(--void);
+    box-shadow: 0 18px 36px -12px var(--shade);
+  }
+
+  .deck-controls {
+    position: fixed;
+    inset: auto 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 3.5rem;
+    padding: 0 1rem;
+    color: var(--muted);
+  }
+  .deck-exit {
+    padding: 0.75rem 0;
+  }
+  .deck-btn {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .deck-btn:disabled {
+    color: var(--line-strong);
+    cursor: default;
+  }
+
+  @media (orientation: portrait) {
+    .deck {
+      place-items: stretch;
+    }
+    .deck-stage {
+      width: 100vw;
+      height: calc(100dvh - 3.5rem);
+      aspect-ratio: auto;
+      container-type: inline-size;
+      border-block: 0;
+    }
+    .deck-slide {
+      justify-content: flex-start;
+      padding: 2.5rem 1.25rem 2rem;
+      overflow-y: auto;
+      font-size: 15px;
+    }
+    .deck-split,
+    .deck-split--case {
+      grid-template-columns: 1fr;
+      gap: 2.2em;
+    }
+    .deck-journey,
+    .deck-grid {
+      grid-template-columns: 1fr;
+    }
+    .deck-journey > li,
+    .deck-journey > li + li {
+      padding: 0.9em 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .deck-display {
+      font-size: 2.8em;
+    }
+    .deck-h2 {
+      font-size: 2em;
+    }
+    .deck-mark {
+      font-size: 3.4em;
+    }
+    .deck-hint {
+      display: none;
+    }
+  }
+}

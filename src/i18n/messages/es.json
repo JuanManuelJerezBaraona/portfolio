@@ -235,5 +235,21 @@
   },
   "Footer": {
     "system": "Sistema de diseño"
+  },
+  "Deck": {
+    "metaTitle": "Presentación — Juan Manuel Jerez",
+    "metaDescription": "Mis cinco proyectos en Seguros Falabella, en el orden del recorrido del cliente.",
+    "label": "Presentación",
+    "prev": "Lámina anterior",
+    "next": "Lámina siguiente",
+    "exit": "Salir",
+    "hint": "Usa ← → para avanzar",
+    "counter": "Lámina {n} de {total}",
+    "about": "Quién soy",
+    "journey": "El recorrido",
+    "ai": "Cómo trabajo con IA",
+    "contact": "Contacto",
+    "site": "Sitio",
+    "cv": "CV"
   }
 }

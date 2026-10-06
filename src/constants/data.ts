@@ -39,6 +39,7 @@ export const PERSONAL_INFO: PersonalInfoData = {
   location: 'Santiago, Chile',
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',
+  site: 'juanmanueljerezportfolio.vercel.app',
   cv: { es: '/CV-Juan-Manuel-Jerez-Baraona.pdf', en: '/CV-Juan-Manuel-Jerez-Baraona-EN.pdf' },
   profileImage: '/juan-manuel-jerez.jpg',
 };

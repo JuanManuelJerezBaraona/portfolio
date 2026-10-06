@@ -116,6 +116,8 @@ export interface PersonalInfoData {
   /** Year he started working as a Full Stack developer. */
   fullStackSince: number;
   email: string;
+  /** The portfolio's address as the CV prints it, without the protocol. */
+  site: string;
   /** PDF in each language. */
   cv: Text;
   profileImage: string;
