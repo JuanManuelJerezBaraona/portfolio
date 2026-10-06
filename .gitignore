@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Skills de Claude Code instalados localmente (de terceros, no son parte del sitio)
+/.claude/skills/
