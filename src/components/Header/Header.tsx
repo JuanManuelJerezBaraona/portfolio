@@ -23,7 +23,6 @@ const Header = () => {
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
         <div>
           {/* Who he is before the hook: role and level, readable at a glance. */}
-          {/* Plain wrapping, not balanced: balancing would split "full-stack" at its hyphen. */}
           <p className="rise wide text-wrap text-xl leading-snug sm:text-2xl">{info.title}</p>
           <p className="rise meta mt-2 text-muted">{info.location}</p>
 

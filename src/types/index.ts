@@ -23,14 +23,6 @@ export type Skill = InLocale<SkillData>;
 
 export type CountryCode = 'CL' | 'PE' | 'CO';
 
-/** One figure in a case's result, read as a sentence: value + label. */
-export interface MetricData {
-  /** Short enough to read at a glance, e.g. "54 → 90" or "~3 min". */
-  value: Text;
-  /** Continues the value, e.g. "de las contrataciones en tienda…". */
-  label: Text;
-}
-
 export interface ProjectData {
   id: string;
   title: Text;
@@ -61,10 +53,8 @@ export interface ProjectData {
   challenge: Text;
   /** Concrete contributions, grounded in the real stack. */
   contributions: Text[];
-  /** What changed after the work, in one sentence. */
+  /** What the application does for its users, in one sentence, with no figures. */
   outcome: Text;
-  /** The figures behind the outcome. */
-  metrics: MetricData[];
 }
 export type Project = InLocale<ProjectData>;
 
@@ -123,7 +113,7 @@ export interface PersonalInfoData {
   /** Seniority on its own, for the fact rows. */
   level: Text;
   location: Text;
-  /** Year he started working as a full-stack developer. */
+  /** Year he started working as a Full Stack developer. */
   fullStackSince: number;
   email: string;
   /** PDF in each language. */

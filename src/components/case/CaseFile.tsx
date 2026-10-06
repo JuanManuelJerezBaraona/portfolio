@@ -116,18 +116,6 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
             <Reveal as="section">
               <h2 className="text-2xl">{t('outcome')}</h2>
               <p className="mt-4 text-lg leading-relaxed text-muted">{project.outcome}</p>
-              <ul className="mt-8 grid border-t border-line sm:grid-cols-3 sm:border-b">
-                {project.metrics.map((metric) => (
-                  <li
-                    key={metric.label}
-                    className="border-b border-line py-5 sm:border-b-0 sm:border-l sm:px-5 sm:first:border-l-0 sm:first:pl-0"
-                  >
-                    <span className="wide display block whitespace-nowrap text-[2.1rem] text-accent">{metric.value}</span>
-                    <span className="mt-3 block leading-snug text-muted">{metric.label}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="meta mt-4 text-muted">{t('approximate')}</p>
             </Reveal>
 
             {mobileShots.length > 0 && (

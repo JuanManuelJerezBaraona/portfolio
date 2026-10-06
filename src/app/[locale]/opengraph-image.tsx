@@ -6,7 +6,7 @@ import { DAPI, GFP, MCHERRY, OG_MARK, OG_NAME, OgShareImage, type OgCopy } from 
 import { routing } from '@/i18n/routing';
 
 // `alt` can't vary per route, so it stays readable in both languages.
-export const alt = 'Juan Manuel Jerez Baraona · Full-stack · React, Next.js, NestJS';
+export const alt = 'Juan Manuel Jerez Baraona · Full Stack · React, Next.js, NestJS';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

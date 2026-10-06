@@ -34,9 +34,9 @@ export const PERSONAL_INFO: PersonalInfoData = {
   shortName: 'Juan Manuel Jerez',
   // "Semi senior" is the Latin American level; "mid-level" is how the US and Europe say it.
   // The non-breaking space keeps "semi senior" on one line in the hero.
-  title: { es: 'Desarrollador full-stack semi\u00a0senior', en: 'Mid-level full-stack developer' },
+  title: { es: 'Desarrollador Full Stack semi\u00a0senior', en: 'Mid-level Full Stack developer' },
   level: { es: 'Semi senior', en: 'Mid-level' },
-  location: { es: 'Santiago de Chile', en: 'Santiago, Chile' },
+  location: 'Santiago, Chile',
   fullStackSince: 2022,
   email: 'jjerezbaraona@gmail.com',
   cv: { es: '/CV-Juan-Manuel-Jerez-Baraona.pdf', en: '/CV-Juan-Manuel-Jerez-Baraona-EN.pdf' },
@@ -61,13 +61,13 @@ export const TIMELINE: TimelineEntryData[] = [
   },
   {
     period: '2016 – 2022',
-    role: { es: 'Desarrollador front-end', en: 'Front-end developer' },
+    role: { es: 'Desarrollador Frontend', en: 'Frontend developer' },
     place: 'Farmacia Veterinaria Los Pingos',
     detail: { es: 'E-commerce con JavaScript y React.', en: 'E-commerce with JavaScript and React.' },
   },
   {
     period: '2022 – 2024',
-    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
+    role: { es: 'Desarrollador Full Stack', en: 'Full Stack developer' },
     place: 'SUPER CBD',
     detail: {
       es: 'E-commerce con React, Node.js, Express y PostgreSQL.',
@@ -76,12 +76,12 @@ export const TIMELINE: TimelineEntryData[] = [
   },
   {
     period: '2023 – 2024',
-    role: { es: 'Bootcamp Full-Stack JavaScript', en: 'Full-Stack JavaScript Bootcamp' },
+    role: { es: 'Bootcamp Desarrollador Full Stack JavaScript', en: 'Full Stack JavaScript Developer Bootcamp' },
     place: 'Academia Desafío Latam',
   },
   {
     period: '2024',
-    role: { es: 'Desarrollador full-stack', en: 'Full-stack developer' },
+    role: { es: 'Desarrollador Full Stack', en: 'Full Stack developer' },
     place: 'ABO Consultores',
     detail: {
       es: 'React, TypeScript, Node.js y MongoDB.',
@@ -91,7 +91,7 @@ export const TIMELINE: TimelineEntryData[] = [
   {
     period: { es: '2024 – hoy', en: '2024 – present' },
     // His official title at Tsoft.
-    role: { es: 'Desarrollador full-stack semi\u00a0senior', en: 'Mid-level full-stack developer' },
+    role: { es: 'Desarrollador Full Stack semi\u00a0senior', en: 'Mid-level Full Stack developer' },
     place: 'Tsoft · Seguros Falabella',
     detail: {
       es: 'Cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia.',
@@ -201,7 +201,7 @@ export const ARCHITECTURE: ArchitectureLayerData[] = [
   {
     id: 'front',
     channel: 'dapi',
-    name: { es: 'Front', en: 'Front end' },
+    name: 'Frontend',
     role: {
       es: 'Una app por etapa del recorrido, en TypeScript, con Zustand donde el flujo guarda estado entre pasos.',
       en: 'One app per stage of the journey, in TypeScript, with Zustand where a flow keeps state between steps.',
@@ -305,10 +305,10 @@ export const AI_PRACTICES: AiPracticeData[] = [
     id: 'mcp',
     title: { es: 'Lo conecto a herramientas reales', en: 'I connect it to real tools' },
     body: {
-      es: 'Configuro servidores MCP para que el agente lea diseños de Figma, colecciones de Postman, documentación actualizada y el design system, en lugar de trabajar con supuestos.',
-      en: 'I set up MCP servers so the agent reads Figma designs, Postman collections, up-to-date documentation and the design system instead of working from assumptions.',
+      es: 'Configuro servidores MCP para que el agente consulte el design system Tomaco, los diseños de Figma, las colecciones de Postman, la documentación del equipo en Notion y la de las librerías al día, en lugar de trabajar con supuestos.',
+      en: 'I set up MCP servers so the agent checks the Tomaco design system, Figma designs, Postman collections, the team’s docs in Notion and up-to-date library docs instead of working from assumptions.',
     },
-    tools: ['MCP', 'Figma', 'Postman', 'Context7'],
+    tools: ['MCP', 'Tomaco', 'Figma', 'Postman', 'Notion', 'Context7'],
   },
   {
     id: 'llm',
@@ -335,23 +335,22 @@ export const AI_PRACTICES: AiPracticeData[] = [
  * Cotización → Aceptación → Pago → Acceso → Postventa.
  * Countries follow the CV. `role`, `summary`, `challenge` and
  * `contributions` were seeded from the descriptions and real stacks;
- * review before treating them as verified. `outcome` and `metrics` are
- * plausible estimates written as placeholders, not measured figures:
- * replace each one with his real number (or his best estimate) before
- * relying on it.
+ * review before treating them as verified. `outcome` states what the
+ * application does for its users, with no figures: he chose not to show
+ * numbers he can't back. Don't add metrics unless he gives real ones.
  */
 export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-landing',
-    title: { es: 'Landing Seguros Falabella', en: 'Seguros Falabella Landing' },
+    title: { es: 'Portal Seguros Falabella', en: 'Seguros Falabella Portal' },
     category: 'Seguros Falabella',
     stage: 1,
     flow: { es: 'Cotización', en: 'Quote' },
     countries: ['CL', 'PE', 'CO'],
     status: 'live',
     role: {
-      es: 'Desarrollo full-stack del sitio regional de cotización y contratación.',
-      en: 'Full-stack development of the regional quote and purchase site.',
+      es: 'Desarrollo full stack del sitio regional de cotización y contratación.',
+      en: 'Full stack development of the regional quote and purchase site.',
     },
     description: {
       es: 'Cotización y contratación de seguros 100% online para Chile, Perú y Colombia.',
@@ -378,29 +377,9 @@ export const PROJECTS: ProjectData[] = [
       },
     ],
     outcome: {
-      es: 'Desde la migración a Next.js el sitio carga bastante más rápido en móvil, y las campañas ya no esperan a un desarrollador: el equipo de negocio las publica por su cuenta.',
-      en: 'Since the move to Next.js the site loads much faster on mobile, and campaigns no longer wait for a developer: the business team publishes them on its own.',
+      es: 'Un solo sitio atiende a Chile, Perú y Colombia, y el equipo de negocio publica campañas y textos desde Strapi, sin esperar un despliegue.',
+      en: 'One site serves Chile, Peru and Colombia, and the business team publishes campaigns and copy from Strapi without waiting for a deployment.',
     },
-    metrics: [
-      {
-        value: '54 → 90',
-        label: {
-          es: 'en Lighthouse móvil, antes y después de pasar de Nuxt a Next.js',
-          en: 'on mobile Lighthouse, before and after moving from Nuxt to Next.js',
-        },
-      },
-      {
-        value: '~1 h',
-        label: {
-          es: 'para publicar una campaña desde Strapi; antes dependía de un despliegue de ~3 días',
-          en: 'to publish a campaign from Strapi; it used to wait on a ~3-day deployment',
-        },
-      },
-      {
-        value: { es: '3 países', en: '3 countries' },
-        label: { es: 'servidos desde una sola base de código', en: 'served from a single codebase' },
-      },
-    ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Strapi 5', 'MongoDB'],
     url: 'https://www.segurosfalabella.com',
     screenshots: {
@@ -459,32 +438,9 @@ export const PROJECTS: ProjectData[] = [
       },
     ],
     outcome: {
-      es: 'El papel prácticamente desapareció del mesón, cada venta toma menos tiempo y un corte a mitad de camino ya no obliga a empezar de cero.',
-      en: 'Paper has all but disappeared from the sales counter, each sale takes less time, and an interruption halfway through no longer means starting over.',
+      es: 'La contratación en tienda se hace en un flujo digital guiado, sin formularios en papel, y una venta interrumpida se retoma en el paso donde quedó.',
+      en: 'In-store sales run through a guided digital flow with no paper forms, and an interrupted sale picks up at the step where it stopped.',
     },
-    metrics: [
-      {
-        value: '85%',
-        label: {
-          es: 'de las contrataciones en tienda se cierran en digital',
-          en: 'of in-store sales are now closed digitally',
-        },
-      },
-      {
-        value: '−40%',
-        label: {
-          es: 'en el tiempo por venta: de unos 20 minutos a unos 12',
-          en: 'in time per sale: from about 20 minutes to about 12',
-        },
-      },
-      {
-        value: { es: '7 de 10', en: '7 in 10' },
-        label: {
-          es: 'procesos interrumpidos se retoman en el paso donde quedaron',
-          en: 'interrupted sales pick up at the step where they stopped',
-        },
-      },
-    ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://aceptacion.segurosfalabella.com/',
     screenshots: {
@@ -537,32 +493,9 @@ export const PROJECTS: ProjectData[] = [
       },
     ],
     outcome: {
-      es: 'Ponerse al día con una cuota dejó de depender del horario de cobranza: se resuelve en minutos desde el teléfono, y casi ningún pago queda en un estado dudoso.',
-      en: 'Catching up on an installment no longer depends on collections office hours: it takes minutes from a phone, and almost no payment is left in an uncertain state.',
+      es: 'El cliente se pone al día con sus cuotas en línea y por su cuenta, y en cada momento sabe en qué estado está su pago: consulta, pago o confirmación.',
+      en: 'Customers catch up on their installments online and on their own, and always know where their payment stands: lookup, payment or confirmation.',
     },
-    metrics: [
-      {
-        value: '~3 min',
-        label: {
-          es: 'entre consultar la deuda y ver el pago confirmado',
-          en: 'from checking the balance to seeing the payment confirmed',
-        },
-      },
-      {
-        value: '−30%',
-        label: {
-          es: 'en llamadas al call center por cuotas atrasadas',
-          en: 'in call-center calls about overdue installments',
-        },
-      },
-      {
-        value: '<1%',
-        label: {
-          es: 'de los pagos termina en revisión manual por quedar sin confirmar',
-          en: 'of payments end up in manual review for lack of a confirmation',
-        },
-      },
-    ],
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://pago.segurosfalabella.com/',
     screenshots: {
@@ -621,32 +554,9 @@ export const PROJECTS: ProjectData[] = [
       { es: 'Servicios de sesión con NestJS.', en: 'Session services in NestJS.' },
     ],
     outcome: {
-      es: 'Chile, Perú y Colombia entran por la misma puerta, y cada cambio al login se prueba de punta a punta antes de llegar a QA.',
-      en: 'Chile, Peru and Colombia come in through the same door, and every change to the login is tested end to end before it reaches QA.',
+      es: 'Los clientes de Chile, Perú y Colombia y los ejecutivos de sucursal entran por un mismo acceso, con una sola autenticación para todos los productos.',
+      en: 'Customers in Chile, Peru and Colombia and branch agents come in through the same sign-in, with one authentication for every product.',
     },
-    metrics: [
-      {
-        value: '3 → 1',
-        label: {
-          es: 'accesos: el de cada país quedó en un solo inicio de sesión',
-          en: 'sign-ins: one per country became a single one',
-        },
-      },
-      {
-        value: '45',
-        label: {
-          es: 'escenarios end-to-end en Playwright, que corren en cada pull request',
-          en: 'end-to-end scenarios in Playwright, run on every pull request',
-        },
-      },
-      {
-        value: '−40%',
-        label: {
-          es: 'en bugs de acceso reportados por QA desde que existe la suite',
-          en: 'in login bugs reported by QA since the suite was added',
-        },
-      },
-    ],
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
@@ -688,37 +598,14 @@ export const PROJECTS: ProjectData[] = [
     },
     contributions: [
       { es: 'Plataforma de autogestión de trámites.', en: 'Self-service platform for requests.' },
-      { es: 'Front-end multi-país con React.', en: 'Multi-country front end in React.' },
+      { es: 'Frontend multi-país con React.', en: 'Multi-country frontend in React.' },
       { es: 'Servicios de dominio con NestJS.', en: 'Domain services in NestJS.' },
       { es: 'Configuración por país.', en: 'Per-country configuration.' },
     ],
     outcome: {
-      es: 'Llevar un trámite a otro país ya no es un desarrollo nuevo, es configuración. Y el panel, que arrastraba código heredado, carga en menos de la mitad del tiempo.',
-      en: 'Taking a request type to another country is no longer new development, it’s configuration. And the dashboard, which carried legacy code, loads in less than half the time.',
+      es: 'Clientes y ejecutivos de los tres países hacen sus trámites postventa en una misma plataforma de autogestión.',
+      en: 'Customers and agents in all three countries handle their after-sales requests on the same self-service platform.',
     },
-    metrics: [
-      {
-        value: { es: '2,5×', en: '2.5×' },
-        label: {
-          es: 'más rápida la carga inicial del panel tras optimizar el código heredado',
-          en: 'faster initial dashboard load after optimizing the legacy code',
-        },
-      },
-      {
-        value: '~20',
-        label: {
-          es: 'trámites en autogestión, compartidos por los tres países',
-          en: 'self-service request types, shared by all three countries',
-        },
-      },
-      {
-        value: { es: '~2 días', en: '~2 days' },
-        label: {
-          es: 'para habilitar en otro país un trámite que ya existe, sin código nuevo',
-          en: 'to enable an existing request type in another country, with no new code',
-        },
-      },
-    ],
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
       desktop: [

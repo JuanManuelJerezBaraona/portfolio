@@ -1,10 +1,11 @@
 {
   "Meta": {
-    "title": "Juan Manuel Jerez Baraona · Desarrollador full-stack semi senior",
-    "description": "Desarrollador full-stack semi senior en Santiago de Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.",
+    "title": "Juan Manuel Jerez Baraona · Desarrollador Full Stack semi senior",
+    "description": "Desarrollador Full Stack semi senior en Santiago, Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.",
     "ogLocale": "es_CL",
     "keywords": [
       "desarrollador full stack",
+      "desarrollador full-stack",
       "desarrollador semi senior",
       "react",
       "next.js",
@@ -28,8 +29,8 @@
   },
   "Og": {
     "title": "Pasé del microscopio al código.",
-    "detail": "Full-stack semi senior · React, Next.js, NestJS · IA-ready",
-    "footer": "Santiago de Chile · Seguros Falabella · CL PE CO"
+    "detail": "Full Stack semi senior · React, Next.js, NestJS · IA-ready",
+    "footer": "Santiago, Chile · Seguros Falabella · CL PE CO"
   },
   "Nav": {
     "skipToContent": "Saltar al contenido",
@@ -59,7 +60,7 @@
     "intro": "Soy <b>{name}</b>. Estudié Ingeniería en Biotecnología y trabajé en un laboratorio de neurobiología antes de dedicarme al software. Hoy construyo los flujos de cotización, pago y postventa de <b>Seguros Falabella</b> con React, Next.js, NestJS y Strapi, y la IA es parte de mi día a día.",
     "seeProjects": "Ver proyectos",
     "level": "Nivel",
-    "fullStackSince": "Full-stack desde",
+    "fullStackSince": "Full Stack desde",
     "inProduction": "En producción",
     "profile": "Perfil",
     "aiReady": "IA-ready",
@@ -73,7 +74,7 @@
     "timeline": "Trayectoria",
     "title": "Del laboratorio al desarrollo web.",
     "lab": "Estudié Ingeniería en Biotecnología y pasé tres años en un laboratorio de neurobiología haciendo estadística, análisis de datos y bioinformática. Ahí aprendí a no creerle a un resultado hasta poder reproducirlo.",
-    "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como full-stack. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
+    "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como desarrollador full stack. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
     "portrait": "Retrato de {name}"
   },
   "Projects": {
@@ -85,7 +86,7 @@
   "Architecture": {
     "note": "De Figma a producción",
     "title": "Por dentro, <hl>la misma arquitectura</hl>.",
-    "body": "Las cinco aplicaciones comparten capas: un front en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un front se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
+    "body": "Las cinco aplicaciones comparten capas: un frontend en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un frontend se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
     "figure": "Servicios NestJS · arquitectura hexagonal",
     "domain": "Dominio",
     "domainNote": "reglas de negocio",
@@ -129,7 +130,6 @@
     "problem": "El problema",
     "did": "Qué hice",
     "outcome": "Resultado",
-    "approximate": "Cifras aproximadas: los datos exactos son confidenciales.",
     "phone": "En el teléfono",
     "sheet": "Ficha técnica",
     "stage": "Etapa",
@@ -152,12 +152,12 @@
   "Contact": {
     "note": "Disponible para nuevas oportunidades",
     "title": "Conversemos.",
-    "body": "¿Buscas un desarrollador full-stack para tu equipo? Escríbeme: el correo es la vía más directa y respondo rápido.",
+    "body": "¿Buscas un desarrollador full stack para tu equipo? Escríbeme: el correo es la vía más directa y respondo rápido.",
     "level": "Nivel",
     "location": "Ubicación",
     "languages": "Idiomas",
     "languagesValue": "Español nativo · Inglés B2",
-    "fullStackSince": "Full-stack desde"
+    "fullStackSince": "Full Stack desde"
   },
   "NotFound": {
     "title": "Esta página está fuera de foco.",
