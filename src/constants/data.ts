@@ -582,27 +582,27 @@ export const PROJECTS: ProjectData[] = [
   },
   {
     id: 'seguros-falabella-login-postventa',
-    title: { es: 'Login Postventa', en: 'Customer Login' },
+    title: { es: 'Login Postventa', en: 'After-sales Login' },
     category: 'Seguros Falabella',
     stage: 4,
     flow: { es: 'Acceso', en: 'Access' },
     countries: ['CL', 'PE', 'CO'],
     status: 'live',
     role: {
-      es: 'Desarrollo del acceso unificado a la zona de clientes.',
-      en: 'Development of the unified sign-in to the customer area.',
+      es: 'Desarrollo del acceso unificado a la zona de clientes y al portal de ejecutivos.',
+      en: 'Development of the unified sign-in to the customer area and the agent portal.',
     },
     description: {
-      es: 'Un solo inicio de sesión para la zona de clientes en Chile, Perú y Colombia.',
-      en: 'One sign-in for the customer area in Chile, Peru and Colombia.',
+      es: 'Un solo inicio de sesión para los clientes de Chile, Perú y Colombia, y el portal de los ejecutivos.',
+      en: 'One sign-in for customers in Chile, Peru and Colombia, and the portal for sales agents.',
     },
     summary: {
-      es: 'El acceso a la zona de clientes: un único inicio de sesión, el mismo para Chile, Perú y Colombia, que da paso a todos los trámites postventa.',
-      en: 'The way into the customer area: a single sign-in, the same for Chile, Peru and Colombia, that leads to every after-sales request.',
+      es: 'El acceso a la postventa: un único inicio de sesión, el mismo para Chile, Perú y Colombia, que da paso a todos los trámites. También es la puerta del portal de ejecutivos, que entran con su correo corporativo y la sucursal donde trabajan para gestionar los seguros de sus clientes, retomar cotizaciones activas y vender seguros en línea.',
+      en: 'The way into after-sales: a single sign-in, the same for Chile, Peru and Colombia, that leads to every request. It is also the door to the agent portal, where sales agents sign in with their corporate email and their branch to manage their customers\' policies, pick up active quotes and sell insurance online.',
     },
     challenge: {
-      es: 'Centralizar el acceso de tres países en una sola autenticación, segura y consistente para todos los productos.',
-      en: 'Centralize access for three countries in a single authentication, secure and consistent across every product.',
+      es: 'Centralizar en una sola autenticación el acceso de clientes de tres países y el de los ejecutivos, segura y consistente para todos los productos.',
+      en: 'Centralize customer access for three countries and agent access in a single authentication, secure and consistent across every product.',
     },
     contributions: [
       {
@@ -610,6 +610,10 @@ export const PROJECTS: ProjectData[] = [
         en: 'Centralized authentication for the customer area.',
       },
       { es: 'Acceso multi-país (CL · PE · CO).', en: 'Multi-country access (CL · PE · CO).' },
+      {
+        es: 'Ingreso de ejecutivos con correo corporativo, sucursal y documento.',
+        en: 'Agent sign-in with corporate email, branch and ID document.',
+      },
       {
         es: 'Componentes Tomaco y documentación en Storybook.',
         en: 'Tomaco components documented in Storybook.',
