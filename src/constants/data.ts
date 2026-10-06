@@ -458,7 +458,7 @@ export const PROJECTS: ProjectData[] = [
   },
   {
     id: 'seguros-falabella-boton-pago',
-    title: { es: 'Botón de Pago', en: 'Payment Portal' },
+    title: { es: 'Botón de Pago', en: 'Payment Button' },
     category: 'Seguros Falabella',
     stage: 3,
     flow: { es: 'Pago', en: 'Payment' },

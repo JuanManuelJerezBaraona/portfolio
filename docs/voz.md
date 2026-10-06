@@ -28,6 +28,7 @@ Cómo suenan los textos del portafolio y del CV, en español y en inglés. Sirve
 | Desarrollador Full Stack semi senior · Mid-level Full Stack developer | otras combinaciones del nivel |
 | Santiago, Chile | Santiago de Chile |
 | Portal Seguros Falabella · Seguros Falabella Portal | Landing Seguros Falabella, Sitio regional de cotización |
+| Botón de Pago · Payment Button | Payment Portal (choca con Seguros Falabella Portal) |
 | IA-ready / AI-ready | (se mantiene en inglés a propósito, como palabra clave) |
 
 "Full Stack" sin guion es la forma más común en los títulos de las ofertas, en Chile y en inglés. Las variantes con guion quedan solo como palabras clave en los metadatos, para que una búsqueda con guion también encuentre el sitio.
