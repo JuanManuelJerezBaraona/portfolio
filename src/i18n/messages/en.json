@@ -113,6 +113,7 @@
     "pauseShots": "Pause the screenshots",
     "playShots": "Resume the screenshots",
     "mobileShot": "{title} on mobile",
+    "mobileShotOf": "{title} on mobile, {n} of {total}",
     "fullCase": "Read the full case",
     "openSite": "Visit site",
     "openSiteAt": "Visit site: {host}",

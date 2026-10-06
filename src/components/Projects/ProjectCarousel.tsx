@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
 import { Link } from '@/i18n/navigation';
@@ -149,21 +148,10 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                           title={project.title}
                           sizes="(min-width: 640px) 384px, 80vw"
                           active={focus === 'in'}
+                          phone={{ shots: project.screenshots.mobile, className: 'slide-phone', sizes: '110px' }}
                         />
                       )}
                     </div>
-                    {project.screenshots?.mobile && (
-                      <div className="slide-phone">
-                        <Image
-                          src={project.screenshots.mobile}
-                          alt={t('mobileShot', { title: project.title })}
-                          width={659}
-                          height={1024}
-                          sizes="110px"
-                          className="block h-auto w-full"
-                        />
-                      </div>
-                    )}
                   </figure>
 
                   <div className="flex flex-1 flex-col p-5">

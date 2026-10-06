@@ -405,12 +405,15 @@ export const PROJECTS: ProjectData[] = [
     url: 'https://www.segurosfalabella.com',
     screenshots: {
       desktop: [
-        '/project-shots/desktop/seguros-falabella-landing-desktop.png',
-        '/project-shots/desktop/seguros-falabella-landing-auto-desktop.png',
-        '/project-shots/desktop/seguros-falabella-landing-promociones-desktop.png',
-        '/project-shots/desktop/seguros-falabella-landing-automotriz-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-cyber-auto-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-viajes-desktop.png',
+        '/project-shots/desktop/seguros-falabella-landing-vida-desktop.png',
       ],
-      mobile: '/project-shots/mobile/seguros-falabella-landing-mobile.png',
+      mobile: [
+        '/project-shots/mobile/seguros-falabella-landing-cyber-auto-mobile.png',
+        '/project-shots/mobile/seguros-falabella-landing-viajes-mobile.png',
+        '/project-shots/mobile/seguros-falabella-landing-vida-mobile.png',
+      ],
     },
   },
   {
@@ -486,7 +489,7 @@ export const PROJECTS: ProjectData[] = [
     url: 'https://aceptacion.segurosfalabella.com/',
     screenshots: {
       desktop: ['/project-shots/desktop/seguros-falabella-aceptacion-digital-desktop.png'],
-      mobile: '/project-shots/mobile/seguros-falabella-aceptacion-digital-mobile.png',
+      mobile: ['/project-shots/mobile/seguros-falabella-aceptacion-digital-mobile.png'],
     },
   },
   {
@@ -556,7 +559,7 @@ export const PROJECTS: ProjectData[] = [
     url: 'https://pago.segurosfalabella.com/',
     screenshots: {
       desktop: ['/project-shots/desktop/seguros-falabella-boton-pago-desktop.png'],
-      mobile: '/project-shots/mobile/seguros-falabella-boton-pago-mobile.png',
+      mobile: ['/project-shots/mobile/seguros-falabella-boton-pago-mobile.png'],
     },
   },
   {
@@ -626,7 +629,7 @@ export const PROJECTS: ProjectData[] = [
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
       desktop: ['/project-shots/desktop/seguros-falabella-login-postventa-desktop.png'],
-      mobile: '/project-shots/mobile/seguros-falabella-login-postventa-mobile.png',
+      mobile: ['/project-shots/mobile/seguros-falabella-login-postventa-mobile.png'],
     },
   },
   {
@@ -689,7 +692,7 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
       desktop: ['/project-shots/desktop/seguros-falabella-postventa-desktop.png'],
-      mobile: '',
+      mobile: [],
     },
   },
 ];

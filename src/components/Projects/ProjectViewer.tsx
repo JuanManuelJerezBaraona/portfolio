@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useRef, useState, type KeyboardEvent } from 'react';
 import { Link } from '@/i18n/navigation';
@@ -96,21 +95,15 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                   title={project.title}
                   sizes="(min-width: 1280px) 720px, 60vw"
                   loupe
+                  phone={{
+                    shots: project.screenshots.mobile,
+                    className:
+                      'pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.8)]',
+                    sizes: '140px',
+                  }}
                 />
               )}
             </div>
-            {project.screenshots?.mobile && (
-              <div className="pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.8)]">
-                <Image
-                  src={project.screenshots.mobile}
-                  alt={t('mobileShot', { title: project.title })}
-                  width={659}
-                  height={1024}
-                  sizes="140px"
-                  className="block h-auto w-full"
-                />
-              </div>
-            )}
           </figure>
 
           <div className="mt-12 max-w-[34rem]">

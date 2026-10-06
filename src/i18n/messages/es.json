@@ -113,6 +113,7 @@
     "pauseShots": "Pausar las capturas",
     "playShots": "Reanudar las capturas",
     "mobileShot": "Captura de {title} en móvil",
+    "mobileShotOf": "Captura {n} de {total} de {title} en móvil",
     "fullCase": "Ver caso completo",
     "openSite": "Abrir sitio",
     "openSiteAt": "Abrir sitio: {host}",

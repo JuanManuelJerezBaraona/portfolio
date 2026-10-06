@@ -22,7 +22,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
   const tProject = useTranslations('Project');
   const tStack = useTranslations('Stack');
   const stackGroups = groupTechStack(project.techStack);
-  const mobileShot = project.screenshots?.mobile;
+  const mobileShots = project.screenshots?.mobile ?? [];
 
   return (
     <article className="sec-projects px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-32">
@@ -130,19 +130,27 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               <p className="meta mt-4 text-muted/70">{t('approximate')}</p>
             </Reveal>
 
-            {mobileShot && (
+            {mobileShots.length > 0 && (
               <Reveal as="section">
                 <h2 className="text-2xl">{t('phone')}</h2>
-                <figure className="mt-6 w-[240px] border border-line-strong bg-void p-1.5">
-                  <Image
-                    src={mobileShot}
-                    alt={tProject('mobileShot', { title: project.title })}
-                    width={659}
-                    height={1024}
-                    sizes="240px"
-                    className="block h-auto w-full"
-                  />
-                </figure>
+                <div className="mt-6 flex flex-wrap gap-4">
+                  {mobileShots.map((src, index) => (
+                    <figure key={src} className="w-[240px] border border-line-strong bg-void p-1.5">
+                      <Image
+                        src={src}
+                        alt={
+                          mobileShots.length > 1
+                            ? tProject('mobileShotOf', { title: project.title, n: index + 1, total: mobileShots.length })
+                            : tProject('mobileShot', { title: project.title })
+                        }
+                        width={659}
+                        height={1024}
+                        sizes="240px"
+                        className="block h-auto w-full"
+                      />
+                    </figure>
+                  ))}
+                </div>
               </Reveal>
             )}
           </div>

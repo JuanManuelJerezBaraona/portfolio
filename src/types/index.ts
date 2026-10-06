@@ -41,7 +41,8 @@ export interface ProjectData {
   screenshots?: {
     /** All 2530×1140. With more than one, the frame cycles through them; the first is the poster. */
     desktop: string[];
-    mobile: string;
+    /** All 659×1024, paired by index with `desktop` (the phone follows the cycle). */
+    mobile: string[];
   };
 
   /** Position in the customer journey (1 = entry). */
