@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import { useRef, useState, type PointerEvent } from 'react';
 
 const LENS_SIZE = 184;
@@ -25,6 +25,9 @@ interface LoupeProps {
 const Loupe = ({ src, alt, width, height, sizes, priority, zoom = 2.4, className = '' }: LoupeProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
+  // The lens needs ~2.4× the shown width: the optimized 3840px WebP/AVIF
+  // (the 2× of 1920), not the original file, which can weigh 1.5 MB+.
+  const lensSrc = getImageProps({ src, alt: '', width: 1920, height: Math.round((1920 * height) / width) }).props.src;
 
   const handleMove = (event: PointerEvent<HTMLDivElement>) => {
     const el = ref.current;
@@ -65,7 +68,7 @@ const Loupe = ({ src, alt, width, height, sizes, priority, zoom = 2.4, className
           aria-hidden="true"
           className="loupe-lens"
           style={{
-            backgroundImage: `url(${src})`,
+            backgroundImage: `url(${lensSrc})`,
             backgroundSize: 'var(--bs) auto',
             backgroundPosition: 'var(--bp)',
           }}

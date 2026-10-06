@@ -44,11 +44,15 @@ interface ShotCycleProps {
  * holds while the mouse is over the shot (the loupe never loses its
  * subject) or the frame is off screen, and for good once someone picks a
  * shot or presses pause. With reduced motion, or without JS, it stays put.
+ *
+ * Only the shots reached so far plus the next one are mounted: stacked in
+ * the same spot, lazy loading would otherwise fetch every shot at once.
  */
 const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true, phone }: ShotCycleProps) => {
   const t = useTranslations('Project');
   const frame = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
+  const [reached, setReached] = useState(0);
   const [stopped, setStopped] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -73,8 +77,14 @@ const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true
     if (event.pointerType === 'mouse') setHovered(value);
   };
 
-  const choose = (index: number) => {
+  const go = (index: number) => {
     setCurrent(index);
+    setReached((value) => Math.max(value, index));
+  };
+  const mounted = (index: number) => index <= reached + 1 || index === current;
+
+  const choose = (index: number) => {
+    go(index);
     setStopped(true);
   };
 
@@ -86,6 +96,7 @@ const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true
       <div ref={frame} className="shots">
         <div className="shots-stack" onPointerEnter={hover(true)} onPointerLeave={hover(false)}>
           {shots.map((src, index) => {
+            if (!mounted(index)) return null;
             const isCurrent = index === current;
             const alt = many ? t('desktopShotOf', { title, n: index + 1, total }) : t('desktopShot', { title });
             return (
@@ -140,7 +151,7 @@ const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true
                           className="shot-fill"
                           data-timing={timing || undefined}
                           style={{ animationPlayState: running ? 'running' : 'paused' }}
-                          onAnimationEnd={() => setCurrent((index + 1) % total)}
+                          onAnimationEnd={() => go((index + 1) % total)}
                         />
                       )}
                     </span>
@@ -160,6 +171,7 @@ const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true
         <div className={phone.className}>
           <div className="shots-stack">
             {phoneShots.map((src, index) => {
+              if (!mounted(index)) return null;
               const isCurrent = index === phoneCurrent;
               const alt =
                 phoneShots.length > 1
