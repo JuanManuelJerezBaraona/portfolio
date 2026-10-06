@@ -488,8 +488,16 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://aceptacion.segurosfalabella.com/',
     screenshots: {
-      desktop: ['/project-shots/desktop/seguros-falabella-aceptacion-digital-desktop.png'],
-      mobile: ['/project-shots/mobile/seguros-falabella-aceptacion-digital-mobile.png'],
+      desktop: [
+        '/project-shots/desktop/seguros-falabella-aceptacion-digital-seleccion-desktop.png',
+        '/project-shots/desktop/seguros-falabella-aceptacion-digital-formulario-desktop.png',
+        '/project-shots/desktop/seguros-falabella-aceptacion-digital-confirmacion-desktop.png',
+      ],
+      mobile: [
+        '/project-shots/mobile/seguros-falabella-aceptacion-digital-seleccion-mobile.png',
+        '/project-shots/mobile/seguros-falabella-aceptacion-digital-formulario-mobile.png',
+        '/project-shots/mobile/seguros-falabella-aceptacion-digital-confirmacion-mobile.png',
+      ],
     },
   },
   {
