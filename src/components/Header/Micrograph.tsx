@@ -27,6 +27,9 @@ const createRandom = (seed: number) => {
 
 const round = (n: number) => Math.round(n * 10) / 10;
 
+/** A path number at 0.1 precision without the leading zero (`-.4`, `.7`). */
+const num = (n: number) => String(round(n)).replace(/^(-?)0\./, '$1.');
+
 interface Point {
   x: number;
   y: number;
@@ -87,8 +90,20 @@ const generate = () => {
     return { points, heading };
   };
 
-  const toPath = (points: Point[]) =>
-    points.map((p, i) => `${i === 0 ? 'M' : 'L'}${round(p.x)} ${round(p.y)}`).join('');
+  // Relative steps from the rounded points (`M x y l dx dy dx dy…`): the same
+  // line as absolute `L x y` per point in about half the characters, which
+  // matters because the markup ships twice (HTML + RSC payload).
+  const toPath = (points: Point[]) => {
+    const [first, ...rest] = points.map((p) => ({ x: round(p.x), y: round(p.y) }));
+    let previous = first;
+    const steps = rest.map((p) => {
+      const step = `${num(p.x - previous.x)} ${num(p.y - previous.y)}`;
+      previous = p;
+      return step;
+    });
+    // A minus sign already separates two numbers.
+    return `M${first.x} ${first.y}l${steps.join(' ')}`.replace(/ -/g, '-');
+  };
 
   const grow = (start: Point, angle: number, length: number, order: number, maxOrder: number) => {
     const { points, heading } = walk(start, angle, length, 5, 0.28);

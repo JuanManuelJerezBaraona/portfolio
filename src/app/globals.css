@@ -831,18 +831,19 @@
      state is gated behind `.reveal-ready` (set on <html>) so the
      page stays fully visible if JavaScript never runs.
      ============================================================ */
+  /* No fade from opacity 0: Chrome doesn't count that text as painted until
+     the animation ends, which held the hero's LCP back by about a second.
+     Blurred text at full opacity is painted from the first frame. */
   .rise {
     animation: rise 0.9s var(--ease-out) both;
     animation-delay: var(--rise-delay, 0ms);
   }
   @keyframes rise {
     from {
-      opacity: 0;
       filter: blur(6px);
       transform: translateY(10px);
     }
     to {
-      opacity: 1;
       filter: none;
       transform: none;
     }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Archivo, Martian_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Footer, Navbar } from '@/components';
 import ScrollReset from '@/components/ui/ScrollReset';
 import { MODE_INIT_SCRIPT } from '@/components/ui/scopeMode';
@@ -28,6 +28,13 @@ const martianMono = Martian_Mono({
   variable: '--font-martian',
   display: 'swap',
 });
+
+/**
+ * The only namespaces read by client components (Navbar, ModeToggle,
+ * LocaleSwitch, the project viewer and carousel, Deck). Server components read
+ * the rest on the server, so it stays out of the page's RSC payload.
+ */
+const CLIENT_NAMESPACES = ['Nav', 'Mode', 'Project', 'Deck'] as const;
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -72,6 +79,8 @@ const LocaleLayout = async ({ children, params }: LayoutProps) => {
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'Nav' });
+  const messages = await getMessages();
+  const clientMessages = Object.fromEntries(CLIENT_NAMESPACES.map((ns) => [ns, messages[ns]]));
 
   return (
     <html
@@ -93,7 +102,7 @@ const LocaleLayout = async ({ children, params }: LayoutProps) => {
         />
       </head>
       <body className="antialiased">
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={clientMessages}>
           <div className="relative min-h-screen overflow-x-clip">
             <ScrollReset />
             <a href="#main" className="skip-link meta">

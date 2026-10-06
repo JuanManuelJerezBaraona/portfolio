@@ -1,99 +1,12 @@
 import type { CSSProperties } from 'react';
-import {
-  siAngular,
-  siAxios,
-  siBootstrap,
-  siClaude,
-  siCss,
-  siDatadog,
-  siDocker,
-  siExpress,
-  siFastify,
-  siFigma,
-  siGit,
-  siGithub,
-  siGithubactions,
-  siGithubcopilot,
-  siGitlab,
-  siGooglecloud,
-  siHtml5,
-  siJest,
-  siKibana,
-  siModelcontextprotocol,
-  siMongodb,
-  siMui,
-  siN8n,
-  siNestjs,
-  siNextdotjs,
-  siNodedotjs,
-  siNuxt,
-  siOpencode,
-  siPostgresql,
-  siPostman,
-  siReactivex,
-  siReact,
-  siSass,
-  siStorybook,
-  siStrapi,
-  siSwagger,
-  siTailwindcss,
-  siTypescript,
-  siJavascript,
-  siVite,
-  siVuedotjs,
-  type SimpleIcon,
-} from 'simple-icons';
 import { useLocale, useTranslations } from 'next-intl';
 import { getSkills } from '@/constants/data';
 import { Skill, SkillCategory } from '@/types';
 import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { ICONS, STACK_SPRITE } from './icons';
 
-/** Brand marks from Simple Icons (CC0), drawn single-color in the channel. */
-const ICONS: Record<string, SimpleIcon> = {
-  ts: siTypescript,
-  js: siJavascript,
-  react: siReact,
-  next: siNextdotjs,
-  tailwind: siTailwindcss,
-  bootstrap: siBootstrap,
-  mui: siMui,
-  html: siHtml5,
-  css: siCss,
-  sass: siSass,
-  vite: siVite,
-  vue: siVuedotjs,
-  nuxt: siNuxt,
-  angular: siAngular,
-  nest: siNestjs,
-  node: siNodedotjs,
-  strapi: siStrapi,
-  express: siExpress,
-  fastify: siFastify,
-  jest: siJest,
-  rxjs: siReactivex,
-  axios: siAxios,
-  swagger: siSwagger,
-  mongodb: siMongodb,
-  postgresql: siPostgresql,
-  'claude-code': siClaude,
-  opencode: siOpencode,
-  copilot: siGithubcopilot,
-  mcp: siModelcontextprotocol,
-  n8n: siN8n,
-  git: siGit,
-  github: siGithub,
-  gitlab: siGitlab,
-  storybook: siStorybook,
-  figma: siFigma,
-  postman: siPostman,
-  docker: siDocker,
-  'github-actions': siGithubactions,
-  gcp: siGooglecloud,
-  datadog: siDatadog,
-  kibana: siKibana,
-};
 
 /** Practices, services and libraries without a brand mark get a monogram instead. */
 const MONOGRAMS: Record<string, string> = {
@@ -154,8 +67,8 @@ const Well = ({ skill, column }: { skill: Skill; column: number }) => {
     <li className="well-cell" style={{ '--col': column } as CSSProperties}>
       <span className="well" aria-hidden="true">
         {icon ? (
-          <svg viewBox="0 0 24 24" className="well-mark">
-            <path d={icon.path} fill="currentColor" />
+          <svg viewBox="0 0 24 24" className="well-mark" fill="currentColor">
+            <use href={`${STACK_SPRITE}#${skill.id}`} />
           </svg>
         ) : (
           <span className="well-mark well-monogram">{MONOGRAMS[skill.id]}</span>
