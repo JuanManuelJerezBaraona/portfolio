@@ -95,11 +95,12 @@ const Header = () => {
           </div>
 
           <figcaption className="mt-8">
-            <fieldset>
+            <fieldset className="@container">
               <legend className="meta text-muted">
                 {t('channels')}
               </legend>
-              <div className="mt-3 grid grid-cols-3 gap-2">
+              {/* Three across only when each box fits "C1 Frontend"; otherwise one per row. */}
+              <div className="mt-3 grid grid-cols-1 gap-2 @md:grid-cols-3">
                 {CHANNELS.map((channel) => (
                   <label key={channel.id} htmlFor={channel.id} className="channel">
                     <input id={channel.id} type="checkbox" defaultChecked />
