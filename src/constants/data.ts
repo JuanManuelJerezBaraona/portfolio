@@ -722,12 +722,12 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'React', 'NestJS', 'Storybook', 'Figma', 'Tailwind CSS', 'Strapi 5', 'MongoDB'],
     screenshots: {
       desktop: [
-        '/project-shots/desktop/seguros-falabella-postventa-seguros-desktop.png',
         '/project-shots/desktop/seguros-falabella-postventa-cliente-desktop.png',
+        '/project-shots/desktop/seguros-falabella-postventa-seguros-desktop.png',
       ],
       mobile: [
-        '/project-shots/mobile/seguros-falabella-postventa-seguros-mobile.png',
         '/project-shots/mobile/seguros-falabella-postventa-cliente-mobile.png',
+        '/project-shots/mobile/seguros-falabella-postventa-seguros-mobile.png',
       ],
     },
   },
