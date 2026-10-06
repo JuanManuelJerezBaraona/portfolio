@@ -177,7 +177,7 @@
   .meta {
     font-family: var(--font-martian), ui-monospace, monospace;
     font-variation-settings: "wdth" 87.5;
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     line-height: 1.4;
     letter-spacing: 0.01em;
   }
@@ -345,6 +345,7 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    min-height: 2.75rem;
     padding: 0.55rem 0.75rem;
     border: 1px solid var(--line);
     cursor: pointer;
@@ -486,9 +487,22 @@
     color: var(--muted);
   }
   .shot-tick {
+    position: relative;
     display: block;
     padding: 0.55rem 0.2rem;
     cursor: pointer;
+  }
+  /* The track stays thin; the area that takes a tap reaches ~44px tall. */
+  .shot-tick::after,
+  .shot-toggle::after {
+    content: "";
+    position: absolute;
+    inset: -0.75rem 0;
+  }
+  @media (pointer: coarse) {
+    .shot-tick .shot-track {
+      width: 2.1rem;
+    }
   }
   .shot-track {
     position: relative;
@@ -523,6 +537,7 @@
     }
   }
   .shot-toggle {
+    position: relative;
     display: grid;
     place-items: center;
     width: 1.5rem;
@@ -735,7 +750,7 @@
     grid-template-columns: repeat(var(--n), minmax(0, 1fr));
   }
   .vernier-stop {
-    padding: 0.5rem 0 0.65rem;
+    padding: 0.75rem 0 0.9rem;
     color: var(--muted);
     cursor: pointer;
     transition: color 0.3s ease;
@@ -876,6 +891,27 @@
   *:focus-visible {
     outline: 2px solid var(--text);
     outline-offset: 3px;
+  }
+  /* Sections take focus from the nav (so Tab carries on inside them), but
+     they aren't controls: no ring around a whole chapter. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  /* Hidden until a keyboard user tabs onto it, then it sits over the navbar. */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 60;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--line-strong);
+    background: var(--stage);
+    color: var(--text);
+    transform: translateY(-200%);
+  }
+  .skip-link:focus-visible {
+    transform: none;
   }
 
   ::selection {

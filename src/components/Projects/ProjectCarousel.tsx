@@ -191,7 +191,7 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
           ))}
           <span className="vernier-cursor" />
         </div>
-        <p className="meta mt-4 text-center text-muted/70">{t('swipe')}</p>
+        <p className="meta mt-4 text-center text-muted">{t('swipe')}</p>
       </div>
     </div>
   );

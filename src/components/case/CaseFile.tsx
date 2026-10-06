@@ -82,7 +82,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               <span className="meta truncate text-muted">
                 {hostname(project) ?? tProject('internalAddress')}
               </span>
-              <span className="meta hidden flex-none text-muted/70 sm:inline">{tProject('hover')}</span>
+              <span className="meta hidden flex-none text-muted sm:inline">{tProject('hover')}</span>
             </div>
             <ShotCycle
               shots={project.screenshots.desktop}
@@ -127,7 +127,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
                   </li>
                 ))}
               </ul>
-              <p className="meta mt-4 text-muted/70">{t('approximate')}</p>
+              <p className="meta mt-4 text-muted">{t('approximate')}</p>
             </Reveal>
 
             {mobileShots.length > 0 && (

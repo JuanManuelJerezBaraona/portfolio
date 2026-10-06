@@ -71,6 +71,7 @@ const LocaleLayout = async ({ children, params }: LayoutProps) => {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: 'Nav' });
 
   return (
     <html
@@ -95,8 +96,13 @@ const LocaleLayout = async ({ children, params }: LayoutProps) => {
         <NextIntlClientProvider>
           <div className="relative min-h-screen overflow-x-clip">
             <ScrollReset />
+            <a href="#main" className="skip-link meta">
+              {t('skipToContent')}
+            </a>
             <Navbar />
-            <main>{children}</main>
+            <main id="main" tabIndex={-1}>
+              {children}
+            </main>
             <Footer />
           </div>
         </NextIntlClientProvider>

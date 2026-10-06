@@ -4,7 +4,7 @@ import { NAV_LINKS, PERSONAL_INFO, getNavLinks } from '@/constants/data';
 import LocaleSwitch from '@/components/ui/LocaleSwitch';
 import ModeToggle from '@/components/ui/ModeToggle';
 import TagMark from '@/components/ui/TagMark';
-import { Link, usePathname, useRouter } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { useUIStore } from '@/store/uiStore';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useRef } from 'react';
@@ -20,35 +20,26 @@ const Navbar = () => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
-  const router = useRouter();
   const t = useTranslations('Nav');
   const links = getNavLinks(useLocale());
   const isHome = pathname === '/';
 
-  const handleNavClick = (href: string, sectionId: string) => {
+  // Real links (open in a new tab, copy the address); on the home page a
+  // click scrolls instead of navigating and hands focus to the section, so
+  // the next Tab carries on inside it rather than back in the navbar.
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     setActiveSection(sectionId);
     closeMobileMenu();
+    if (!isHome) return;
 
-    if (!isHome) {
-      router.push(`/${href}`);
-      return;
-    }
+    const element = document.getElementById(sectionId);
+    if (!element) return;
+    event.preventDefault();
 
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleKeyDown = (
-    event: React.KeyboardEvent,
-    href: string,
-    sectionId: string
-  ) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      handleNavClick(href, sectionId);
-    }
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '-1');
+    element.focus({ preventScroll: true });
   };
 
   useEffect(() => {
@@ -120,6 +111,7 @@ const Navbar = () => {
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeMobileMenu();
+        mobileMenuButtonRef.current?.focus();
       }
     };
 
@@ -152,23 +144,22 @@ const Navbar = () => {
               {links.map((link) => {
                 const isActive = isHome && activeSection === link.id;
                 return (
-                  <button
+                  <Link
                     key={link.id}
-                    onClick={() => handleNavClick(link.href, link.id)}
-                    onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
-                    className={`meta cursor-pointer py-2 transition-colors ${
+                    href={`/${link.href}`}
+                    onClick={(event) => handleNavClick(event, link.id)}
+                    className={`meta py-2 transition-colors ${
                       isActive ? 'text-text' : 'text-muted hover:text-text'
                     }`}
-                    tabIndex={0}
                     aria-label={t('goTo', { section: link.label })}
-                    aria-current={isActive ? 'page' : undefined}
+                    aria-current={isActive ? 'location' : undefined}
                   >
                     <span
                       className={`sec-${link.id} nav-dot ${isActive ? 'is-active' : ''}`}
                       aria-hidden="true"
                     />
                     {link.label}
-                  </button>
+                  </Link>
                 );
               })}
             </div>
@@ -211,23 +202,23 @@ const Navbar = () => {
       >
         <div className="flex flex-col px-4 py-3 sm:px-6">
           {links.map((link) => (
-            <button
+            <Link
               key={link.id}
-              onClick={() => handleNavClick(link.href, link.id)}
-              onKeyDown={(event) => handleKeyDown(event, link.href, link.id)}
+              href={`/${link.href}`}
+              onClick={(event) => handleNavClick(event, link.id)}
               className={`wide border-b border-line py-4 text-left text-2xl last:border-b-0 ${
                 isHome && activeSection === link.id ? 'text-text' : 'text-muted'
               }`}
               tabIndex={isMobileMenuOpen ? 0 : -1}
               aria-label={t('goTo', { section: link.label })}
-              aria-current={isHome && activeSection === link.id ? 'page' : undefined}
+              aria-current={isHome && activeSection === link.id ? 'location' : undefined}
             >
               <span
                 className={`sec-${link.id} nav-dot ${isHome && activeSection === link.id ? 'is-active' : ''}`}
                 aria-hidden="true"
               />
               {link.label}
-            </button>
+            </Link>
           ))}
         </div>
       </div>

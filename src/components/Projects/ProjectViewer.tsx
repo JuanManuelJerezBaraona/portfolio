@@ -87,7 +87,7 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
             <div className="border border-line bg-stage">
               <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5">
                 <span className="meta truncate text-muted">{hostname(project) ?? t('internalAddress')}</span>
-                <span className="meta flex-none text-muted/70">{t('hover')}</span>
+                <span className="meta flex-none text-muted">{t('hover')}</span>
               </div>
               {project.screenshots && (
                 <ShotCycle

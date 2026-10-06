@@ -32,6 +32,7 @@
     "footer": "Santiago de Chile · Seguros Falabella · CL PE CO"
   },
   "Nav": {
+    "skipToContent": "Saltar al contenido",
     "home": "Ir al inicio",
     "goTo": "Ir a {section}",
     "openMenu": "Abrir menú",
