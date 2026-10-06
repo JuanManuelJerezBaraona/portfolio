@@ -98,7 +98,7 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                   phone={{
                     shots: project.screenshots.mobile,
                     className:
-                      'pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.8)]',
+                      'pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_var(--shade)]',
                     sizes: '140px',
                   }}
                 />

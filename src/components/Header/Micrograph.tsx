@@ -191,7 +191,7 @@ const layerProps = {
  * The same image as one standalone SVG string, for places that can't use
  * CSS blending (the Open Graph card). Channels blend with `screen`.
  */
-export const micrographSvg = (colors = { c1: '#6f8cff', c2: '#4ef08f', c3: '#ff4f73' }) => {
+export const micrographSvg = (colors: { c1: string; c2: string; c3: string }) => {
   const nuclei = IMAGE.nuclei
     .map(
       (n) =>

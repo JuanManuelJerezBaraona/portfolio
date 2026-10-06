@@ -53,9 +53,6 @@
   --well-top: #0d131c;
   --well-bottom: #04070b;
 
-  --background: var(--void);
-  --foreground: var(--text);
-
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
 
   color-scheme: dark;
@@ -103,8 +100,6 @@
    :root repaints the whole page every frame, which stutters on iOS. */
 
 @theme inline {
-  --color-background: var(--void);
-  --color-foreground: var(--text);
   --color-void: var(--void);
   --color-stage: var(--stage);
   --color-stage-2: var(--stage-2);

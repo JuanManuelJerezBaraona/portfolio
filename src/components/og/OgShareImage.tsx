@@ -11,6 +11,7 @@ type OgShareImageProps = {
 };
 
 // Fluorescence-mode colors, hardcoded: ImageResponse can't read CSS variables.
+// The only copy of the palette outside globals.css (:root); keep the two in sync.
 export const VOID = '#030508';
 const TEXT = '#e6ecf2';
 const MUTED = '#8593a3';

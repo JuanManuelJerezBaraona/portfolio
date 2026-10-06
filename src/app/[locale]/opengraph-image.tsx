@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import type { Locale } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { micrographSvg } from '@/components/Header/Micrograph';
-import { OG_MARK, OG_NAME, OgShareImage, type OgCopy } from '@/components/og/OgShareImage';
+import { DAPI, GFP, MCHERRY, OG_MARK, OG_NAME, OgShareImage, type OgCopy } from '@/components/og/OgShareImage';
 import { routing } from '@/i18n/routing';
 
 // `alt` can't vary per route, so it stays readable in both languages.
@@ -52,7 +52,7 @@ const OgImage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const t = await getTranslations({ locale: locale as Locale, namespace: 'Og' });
   const copy: OgCopy = { title: t('title'), detail: t('detail'), footer: t('footer') };
   const fonts = await loadFonts(copy);
-  const micrographSrc = `data:image/svg+xml;base64,${Buffer.from(micrographSvg()).toString('base64')}`;
+  const micrographSrc = `data:image/svg+xml;base64,${Buffer.from(micrographSvg({ c1: DAPI, c2: GFP, c3: MCHERRY })).toString('base64')}`;
 
   return new ImageResponse(<OgShareImage micrographSrc={micrographSrc} copy={copy} />, {
     ...size,
