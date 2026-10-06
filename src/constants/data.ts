@@ -558,8 +558,18 @@ export const PROJECTS: ProjectData[] = [
     techStack: ['TypeScript', 'Next.js', 'NestJS', 'Zustand', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://pago.segurosfalabella.com/',
     screenshots: {
-      desktop: ['/project-shots/desktop/seguros-falabella-boton-pago-desktop.png'],
-      mobile: ['/project-shots/mobile/seguros-falabella-boton-pago-mobile.png'],
+      desktop: [
+        '/project-shots/desktop/seguros-falabella-boton-pago-consulta-desktop.png',
+        '/project-shots/desktop/seguros-falabella-boton-pago-deuda-desktop.png',
+        '/project-shots/desktop/seguros-falabella-boton-pago-medio-pago-desktop.png',
+        '/project-shots/desktop/seguros-falabella-boton-pago-exito-desktop.png',
+      ],
+      mobile: [
+        '/project-shots/mobile/seguros-falabella-boton-pago-consulta-mobile.png',
+        '/project-shots/mobile/seguros-falabella-boton-pago-deuda-mobile.png',
+        '/project-shots/mobile/seguros-falabella-boton-pago-medio-pago-mobile.png',
+        '/project-shots/mobile/seguros-falabella-boton-pago-exito-mobile.png',
+      ],
     },
   },
   {
