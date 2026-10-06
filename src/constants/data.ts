@@ -651,10 +651,12 @@ export const PROJECTS: ProjectData[] = [
     url: 'https://clientes.segurosfalabella.com/',
     screenshots: {
       desktop: [
+        '/project-shots/desktop/seguros-falabella-login-postventa-clientes-desktop.png',
         '/project-shots/desktop/seguros-falabella-login-postventa-sucursal-desktop.png',
         '/project-shots/desktop/seguros-falabella-login-postventa-documento-desktop.png',
       ],
       mobile: [
+        '/project-shots/mobile/seguros-falabella-login-postventa-clientes-mobile.png',
         '/project-shots/mobile/seguros-falabella-login-postventa-sucursal-mobile.png',
         '/project-shots/mobile/seguros-falabella-login-postventa-documento-mobile.png',
       ],
