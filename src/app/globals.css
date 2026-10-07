@@ -1584,7 +1584,7 @@
       radial-gradient(
         ellipse 90% 70% at var(--light-x) 0%,
         color-mix(in oklab, var(--accent) 22%, transparent),
-        transparent 70%
+        transparent 100%
       ),
       radial-gradient(
         ellipse 60% 55% at var(--bounce-x) 100%,
