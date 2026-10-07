@@ -86,7 +86,6 @@
     "internal": "Acceso interno",
     "internalAddress": "acceso interno",
     "stages": "Etapas del recorrido",
-    "hover": "Pasa el cursor para ampliar",
     "desktopShot": "Captura de {title} en escritorio",
     "desktopShotOf": "Captura {n} de {total} de {title} en escritorio",
     "shots": "Capturas",

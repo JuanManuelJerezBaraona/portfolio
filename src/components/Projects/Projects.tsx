@@ -30,9 +30,11 @@ const Projects = () => {
           <p className="mt-14 text-muted">{t('empty')}</p>
         ) : (
           <>
-            <Reveal className="mt-16 hidden lg:block">
+            {/* No Reveal here: the stack runs several screens tall, so a visible
+                ratio would never be reached; each project comes into focus instead. */}
+            <div className="mt-16 hidden lg:block">
               <ProjectViewer projects={projects} />
-            </Reveal>
+            </div>
 
             <Reveal className="mt-12 lg:hidden">
               <ProjectCarousel projects={projects} />

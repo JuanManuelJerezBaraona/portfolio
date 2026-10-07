@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, useSyncExternalStore, type PointerEvent } from 'react';
-import Loupe from '@/components/ui/Loupe';
 
 /** Every desktop shot is cropped to this frame, so they can sit on top of each other. */
 const WIDTH = 2530;
@@ -27,8 +26,6 @@ interface ShotCycleProps {
   /** Project title, for the alt text. */
   title: string;
   sizes: string;
-  /** Magnify under the cursor (mouse only). */
-  loupe?: boolean;
   priority?: boolean;
   /** False holds the cycle, e.g. on a carousel slide out of focus. */
   active?: boolean;
@@ -41,14 +38,14 @@ interface ShotCycleProps {
  * the next field every few seconds: the current shot drifts out of focus as
  * the next one comes in. The readout under the frame times each field (the
  * fill's animationend advances it), so pausing is just pausing the fill. It
- * holds while the mouse is over the shot (the loupe never loses its
- * subject) or the frame is off screen, and for good once someone picks a
+ * holds while the mouse is over the shot (someone is looking at it) or
+ * the frame is off screen, and for good once someone picks a
  * shot or presses pause. With reduced motion, or without JS, it stays put.
  *
  * Only the shots reached so far plus the next one are mounted: stacked in
  * the same spot, lazy loading would otherwise fetch every shot at once.
  */
-const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true, phone }: ShotCycleProps) => {
+const ShotCycle = ({ shots, title, sizes, priority, active = true, phone }: ShotCycleProps) => {
   const t = useTranslations('Project');
   const frame = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
@@ -101,19 +98,15 @@ const ShotCycle = ({ shots, title, sizes, loupe = false, priority, active = true
             const alt = many ? t('desktopShotOf', { title, n: index + 1, total }) : t('desktopShot', { title });
             return (
               <div key={src} className="shot" data-current={isCurrent || undefined} aria-hidden={isCurrent ? undefined : true}>
-                {loupe ? (
-                  <Loupe src={src} alt={alt} width={WIDTH} height={HEIGHT} sizes={sizes} priority={priority && index === 0} />
-                ) : (
-                  <Image
-                    src={src}
-                    alt={alt}
-                    width={WIDTH}
-                    height={HEIGHT}
-                    sizes={sizes}
-                    priority={priority && index === 0}
-                    className="block h-auto w-full"
-                  />
-                )}
+                <Image
+                  src={src}
+                  alt={alt}
+                  width={WIDTH}
+                  height={HEIGHT}
+                  sizes={sizes}
+                  priority={priority && index === 0}
+                  className="block h-auto w-full"
+                />
               </div>
             );
           })}

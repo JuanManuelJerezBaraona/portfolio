@@ -474,8 +474,8 @@ export const PROJECTS: ProjectData[] = [
       en: 'Online payment of overdue insurance installments, from lookup to confirmation.',
     },
     summary: {
-      es: 'Para que un cliente con cuotas atrasadas las pague solo, en pocos pasos: consulta la deuda, paga y recibe la confirmación.',
-      en: 'So a customer with overdue installments can pay them on their own in a few steps: check what they owe, pay and get a confirmation.',
+      es: 'Para que un cliente con cuotas atrasadas las pague solo y en línea, en pocos pasos: consulta la deuda, paga y recibe la confirmación, sabiendo siempre en qué estado está su pago.',
+      en: 'So a customer with overdue installments can pay them online on their own, in a few steps: check what they owe, pay and get a confirmation, always knowing where their payment stands.',
     },
     challenge: {
       es: 'Un flujo de pago donde el cliente siempre sabe en qué estado está su pago, y que se integre con el resto de los servicios.',
@@ -531,8 +531,8 @@ export const PROJECTS: ProjectData[] = [
       en: 'One sign-in for customers in Chile, Peru and Colombia, and the portal for sales agents.',
     },
     summary: {
-      es: 'El acceso a la postventa: un único inicio de sesión, el mismo para Chile, Perú y Colombia, que da paso a todos los trámites. También es la puerta del portal de ejecutivos, que entran con su correo corporativo y la sucursal donde trabajan para gestionar los seguros de sus clientes, retomar cotizaciones activas y vender seguros en línea.',
-      en: 'The way into after-sales: a single sign-in, the same for Chile, Peru and Colombia, that leads to every request. It is also the door to the agent portal, where sales agents sign in with their corporate email and their branch to manage their customers\' policies, pick up active quotes and sell insurance online.',
+      es: 'El acceso a la postventa: un único inicio de sesión para los clientes de Chile, Perú y Colombia, que también es la puerta del portal donde los ejecutivos gestionan los seguros de sus clientes.',
+      en: 'The way into after-sales: a single sign-in for customers in Chile, Peru and Colombia, which is also the door to the portal where sales agents manage their customers’ insurance.',
     },
     challenge: {
       es: 'Centralizar en una sola autenticación el acceso de clientes de tres países y el de los ejecutivos, segura y consistente para todos los productos.',
@@ -555,8 +555,8 @@ export const PROJECTS: ProjectData[] = [
       { es: 'Servicios de sesión con NestJS.', en: 'Session services in NestJS.' },
     ],
     outcome: {
-      es: 'Los clientes de Chile, Perú y Colombia y los ejecutivos de sucursal entran por un mismo acceso, con una sola autenticación para todos los productos.',
-      en: 'Customers in Chile, Peru and Colombia and branch agents come in through the same sign-in, with one authentication for every product.',
+      es: 'Los clientes de Chile, Perú y Colombia y los ejecutivos de sucursal entran por un mismo acceso, con una sola autenticación para todos los productos. Desde ahí, los ejecutivos gestionan los seguros de sus clientes, retoman cotizaciones activas y venden seguros en línea.',
+      en: 'Customers in Chile, Peru and Colombia and branch agents come in through the same sign-in, with one authentication for every product. From there, agents manage their customers’ insurance, pick up active quotes and sell insurance online.',
     },
     techStack: ['JavaScript', 'Next.js', 'NestJS', 'Storybook', 'Figma', 'Bootstrap 5', 'Tomaco Components', 'Strapi 5', 'MongoDB'],
     url: 'https://clientes.segurosfalabella.com/',
@@ -590,8 +590,8 @@ export const PROJECTS: ProjectData[] = [
       en: 'Post-purchase requests for customers and agents in Chile, Peru and Colombia.',
     },
     summary: {
-      es: 'Donde se resuelve todo lo que pasa después de contratar: una plataforma para que clientes y ejecutivos hagan sus trámites sin llamar a nadie, en tres países.',
-      en: 'Where everything after the purchase gets handled: a platform where customers and agents complete their requests without calling anyone, in three countries.',
+      es: 'Donde se resuelve todo lo que pasa después de contratar: una plataforma de autogestión para que clientes y ejecutivos hagan sus trámites sin llamar a nadie, en Chile, Perú y Colombia.',
+      en: 'Where everything after the purchase gets handled: a self-service platform where customers and agents complete their requests without calling anyone, in Chile, Peru and Colombia.',
     },
     challenge: {
       es: 'Unificar los trámites postventa de tres países en una plataforma que crezca sin reescribirse por cada mercado.',

@@ -81,13 +81,11 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               <span className="meta truncate text-muted">
                 {hostname(project) ?? tProject('internalAddress')}
               </span>
-              <span className="meta hidden flex-none text-muted sm:inline">{tProject('hover')}</span>
             </div>
             <ShotCycle
               shots={project.screenshots.desktop}
               title={project.title}
               sizes="(min-width: 1152px) 1152px, 100vw"
-              loupe
               priority
             />
           </Reveal>

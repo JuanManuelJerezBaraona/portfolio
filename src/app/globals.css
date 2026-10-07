@@ -571,58 +571,6 @@
   }
 
   /* ============================================================
-     LOUPE  —  hovering a screenshot puts it under the objective.
-     ============================================================ */
-  .loupe {
-    position: relative;
-    cursor: crosshair;
-  }
-  .loupe-lens {
-    position: absolute;
-    left: var(--lx, 50%);
-    top: var(--ly, 50%);
-    z-index: 5;
-    width: 184px;
-    height: 184px;
-    border-radius: 50%;
-    pointer-events: none;
-    background-color: var(--void);
-    background-repeat: no-repeat;
-    transform: translate(-50%, -50%);
-    box-shadow:
-      0 0 0 1px var(--line-strong),
-      0 0 0 7px color-mix(in srgb, var(--void) 82%, transparent),
-      0 0 0 8px var(--line),
-      0 24px 50px -10px var(--shade);
-  }
-  .loupe-lens::before,
-  .loupe-lens::after {
-    content: "";
-    position: absolute;
-    background: color-mix(in srgb, var(--mcherry) 70%, transparent);
-  }
-  .loupe-lens::before {
-    left: 50%;
-    top: 38%;
-    width: 1px;
-    height: 24%;
-  }
-  .loupe-lens::after {
-    top: 50%;
-    left: 38%;
-    height: 1px;
-    width: 24%;
-  }
-  @media (hover: none) {
-    .loupe {
-      cursor: auto;
-    }
-    .loupe-lens {
-      display: none;
-    }
-  }
-
-  /* ============================================================
      SHOTS  —  a project with several screenshots moves the stage
      from one field to the next: the current shot drifts out of
      focus as the next one comes in. The readout hangs just under
@@ -632,14 +580,10 @@
   .shots {
     position: relative;
   }
-  /* Clipped so a blurred shot doesn't bleed past the frame; the lens may
-     still reach over the edge (the cycle holds while it is out). */
+  /* Clipped so a blurred shot doesn't bleed past the frame. */
   .shots-stack {
     display: grid;
     overflow: hidden;
-  }
-  .shots-stack:has(.loupe-lens) {
-    overflow: visible;
   }
   .shot {
     grid-area: 1 / 1;
@@ -731,7 +675,8 @@
   }
 
   /* ============================================================
-     PROJECT LIST  —  the selected row lights up in its channel.
+     PROJECT INDEX  —  the journey pinned beside the stage on
+     desktop; the stage under the objective lights up in its row.
      ============================================================ */
   .sample-row {
     position: relative;
@@ -750,10 +695,10 @@
     transform-origin: top;
     transition: transform 0.35s var(--ease-out);
   }
-  .sample-row[aria-selected="true"] {
+  .sample-row[aria-current="true"] {
     background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
   }
-  .sample-row[aria-selected="true"]::before {
+  .sample-row[aria-current="true"]::before {
     transform: scaleY(1);
   }
   /* MAGNIFICATION. Hovering a sample brings it under a stronger objective:
@@ -770,23 +715,74 @@
       font-variation-settings: "wdth" 125;
       transition: color 0.25s ease, font-variation-settings 0.5s var(--ease-out);
     }
-    .sample-row:not([aria-selected="true"]):hover::before {
+    .sample-row:not([aria-current="true"]):hover::before {
       transform: scaleY(0.3);
     }
   }
 
-  /* Panel content re-focuses when the selection changes. */
-  .refocus {
-    animation: refocus 0.6s var(--ease-out) both;
+  /* FIELDS  —  the projects on desktop, one after another on a
+     vertical stage. Only the one crossing the middle of the screen is
+     in focus (data-focus, set by ProjectViewer); the rest sit outside
+     the focal plane until the stage reaches them, or until the pointer
+     or the keyboard does. With the page's 5rem scroll padding, a jump
+     from the index lands the project level with the pinned index (7rem). */
+  .field {
+    scroll-margin-top: 2rem;
   }
-  @keyframes refocus {
-    from {
-      filter: blur(8px);
-      opacity: 0.4;
-    }
-    to {
-      filter: none;
+  /* The rule and stage on top stay sharp, so the boundary between two
+     projects always reads; only the body leaves the focal plane. */
+  .field-body {
+    transition:
+      opacity 0.6s var(--ease-out),
+      filter 0.6s var(--ease-out);
+  }
+  .field[data-focus="out"] .field-body {
+    opacity: 0.5;
+    filter: blur(2px);
+    transition-duration: 0.4s;
+  }
+  .field[data-focus="out"]:focus-within .field-body {
+    opacity: 1;
+    filter: none;
+  }
+  @media (hover: hover) {
+    .field[data-focus="out"]:hover .field-body {
       opacity: 1;
+      filter: none;
+    }
+  }
+  /* Each project opens with a rule and its stage, so it's clear where one
+     ends and the next begins. The one under the objective lights its rule
+     in the section's color, as the slide label does on mobile. */
+  .field-head {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line-strong);
+  }
+  .field-head::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 calc(var(--glow) * 1.2) var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .field[data-current] .field-head::before {
+    transform: scaleX(1);
+  }
+  @media (hover: hover) {
+    .field[data-focus="out"]:hover {
+      opacity: 1;
+      filter: none;
     }
   }
 
