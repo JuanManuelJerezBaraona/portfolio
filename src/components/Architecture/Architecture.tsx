@@ -81,6 +81,7 @@ const Hexagon = () => {
             {RINGS.map((r, i) => (
               <polygon
                 key={r}
+                className="hex-ring"
                 points={hexagon(r)}
                 fill="currentColor"
                 fillOpacity={[0.04, 0.07, 0.13][i]}
@@ -93,7 +94,7 @@ const Hexagon = () => {
               <line key={x} x1={x} y1={bottom} x2={x} y2={H} stroke="var(--line-strong)" vectorEffect="non-scaling-stroke" />
             ))}
 
-            <g textAnchor="middle">
+            <g textAnchor="middle" pointerEvents="none">
               <text x={CX} y={band(outer, middle, -1) - 3} className="fill-text text-[12px] font-semibold">
                 {t('infrastructure')}
               </text>

@@ -256,7 +256,7 @@ const DesignSystem = () => {
             {t('principlesTitle')}
           </h2>
           <ul className="mt-8 border-t border-line">
-            {(['tokens', 'contrast', 'blend', 'motion', 'focus'] as const).map((key) => (
+            {(['tokens', 'contrast', 'blend', 'hover', 'motion', 'focus'] as const).map((key) => (
               <li key={key} className="flex gap-4 border-b border-line py-5">
                 <span className="mt-2.5 h-1.5 w-1.5 flex-none bg-accent" aria-hidden="true" />
                 <p className="max-w-3xl leading-relaxed">

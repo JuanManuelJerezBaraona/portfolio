@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useSyncExternalStore, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
 import { Link } from '@/i18n/navigation';
+import Arrow from '@/components/ui/Arrow';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -100,9 +101,7 @@ const Deck = ({ slides }: { slides: ReactNode[] }) => {
         <span className="deck-hint">{t('hint')}</span>
         <div className="flex items-center gap-1">
           <button type="button" className="deck-btn" onClick={() => go(index - 1)} disabled={index === 0} aria-label={t('prev')}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-              <path strokeLinecap="square" d="M15 5l-7 7 7 7" />
-            </svg>
+            <Arrow dir="prev" />
           </button>
           <span className="tabular-nums" aria-live="polite">
             <span aria-hidden="true">
@@ -117,9 +116,7 @@ const Deck = ({ slides }: { slides: ReactNode[] }) => {
             disabled={index === total - 1}
             aria-label={t('next')}
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-              <path strokeLinecap="square" d="M9 5l7 7-7 7" />
-            </svg>
+            <Arrow dir="next" />
           </button>
         </div>
       </div>

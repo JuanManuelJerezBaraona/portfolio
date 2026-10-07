@@ -36,7 +36,7 @@ const LocaleSwitch = () => {
               lang={code}
               aria-label={NAMES[code]}
               aria-current={isCurrent ? 'true' : undefined}
-              className={`py-2 uppercase transition-colors ${isCurrent ? 'text-text' : 'text-muted hover:text-text'}`}
+              className={`py-2 uppercase ${isCurrent ? 'text-text' : 'link-underline text-muted hover:text-text'}`}
             >
               {code}
             </a>

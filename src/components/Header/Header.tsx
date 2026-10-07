@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { getPersonalInfo } from '@/constants/data';
 import Micrograph from './Micrograph';
+import Arrow from '@/components/ui/Arrow';
 
 const CHANNELS = [
   { id: 'ch-c1', stack: 'frontend', color: 'text-dapi', code: 'C1' },
@@ -43,9 +44,7 @@ const Header = () => {
           <div className="rise mt-10 flex flex-col gap-3 sm:flex-row" style={delay(240)}>
             <Link href="#projects" className="btn btn-primary">
               {t('seeProjects')}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                <path strokeLinecap="square" d="M12 5v14m0 0 6-6m-6 6-6-6" />
-              </svg>
+              <Arrow dir="down" />
             </Link>
             <a href={info.cv} download className="btn btn-ghost">
               {tCv('download')}

@@ -6,6 +6,7 @@ import { Project } from '@/types';
 import { Countries, Status, hostname } from '@/components/ui/ProjectMeta';
 import Reveal from '@/components/ui/Reveal';
 import ShotCycle from '@/components/ui/ShotCycle';
+import Arrow from '@/components/ui/Arrow';
 
 interface CaseFileProps {
   project: Project;
@@ -40,7 +41,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
                   <Link
                     href={`/proyectos/${node.id}`}
                     aria-current={isCurrent ? 'page' : undefined}
-                    className={`meta transition-colors ${isCurrent ? 'text-accent' : 'text-muted hover:text-text'}`}
+                    className={`meta ${isCurrent ? 'text-accent' : 'link-underline text-muted hover:text-text'}`}
                   >
                     {pad(node.stage)}
                     <span className="sr-only"> · {node.flow}</span>
@@ -66,9 +67,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
             {project.url && (
               <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 {tProject('openSite')}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                  <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
-                </svg>
+                <Arrow dir="out" />
               </a>
             )}
             <Status status={project.status} />
@@ -176,9 +175,11 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
 
         <nav className="mt-24 grid border-t border-line sm:grid-cols-2" aria-label={t('neighbours')}>
           {prev ? (
-            <Link href={`/proyectos/${prev.id}`} className="group py-8 sm:pr-8">
-              <span className="meta text-muted">← {pad(prev.stage)} · {prev.flow}</span>
-              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-accent">{prev.title}</span>
+            <Link href={`/proyectos/${prev.id}`} className="case-nav group py-8 sm:pr-8" data-dir="prev">
+              <span className="meta text-muted">
+                <span className="case-nav-arrow">←</span> {pad(prev.stage)} · {prev.flow}
+              </span>
+              <span className="case-nav-title wide mt-2 block text-2xl group-hover:text-accent">{prev.title}</span>
             </Link>
           ) : (
             <span className="hidden sm:block" />
@@ -186,10 +187,13 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
           {next ? (
             <Link
               href={`/proyectos/${next.id}`}
-              className="group border-t border-line py-8 text-right sm:border-l sm:border-t-0 sm:pl-8"
+              className="case-nav group border-t border-line py-8 text-right sm:border-l sm:border-t-0 sm:pl-8"
+              data-dir="next"
             >
-              <span className="meta text-muted">{pad(next.stage)} · {next.flow} →</span>
-              <span className="wide mt-2 block text-2xl transition-colors group-hover:text-accent">{next.title}</span>
+              <span className="meta text-muted">
+                {pad(next.stage)} · {next.flow} <span className="case-nav-arrow">→</span>
+              </span>
+              <span className="case-nav-title wide mt-2 block text-2xl group-hover:text-accent">{next.title}</span>
             </Link>
           ) : (
             <span className="hidden sm:block" />

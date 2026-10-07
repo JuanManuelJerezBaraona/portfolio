@@ -99,6 +99,14 @@
    this file), not by transitioning these variables: animating them on
    :root repaints the whole page every frame, which stutters on iOS. */
 
+/* Registered so a link's underline can transition (see HOVERS). Not
+   inherited, so a link inside another never picks up its parent's scan. */
+@property --scan {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+
 @theme inline {
   --color-void: var(--void);
   --color-stage: var(--stage);
@@ -188,11 +196,17 @@
   }
 
   /* ============================================================
-     BUTTONS
-     On hover the three channels slip out of register by a couple
-     of pixels, like a badly aligned multi-channel image.
+     HOVERS  —  each kind of control answers the pointer with a
+     different technique from the microscope, so no two feel the
+     same: the primary button is a channel merge, the secondary one
+     a field diaphragm, links a sequential scan, arrows the stage
+     moving to the next field. Keyboard focus gets the same answer.
+     Entering takes longer than leaving, so nothing lags behind the
+     pointer on the way out.
      ============================================================ */
   .btn {
+    position: relative;
+    isolation: isolate;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -202,39 +216,173 @@
     font-variation-settings: "wdth" 87.5;
     font-size: 0.8rem;
     font-weight: 500;
-    transition: box-shadow 0.25s var(--ease-out), background-color 0.25s ease,
-      color 0.25s ease, border-color 0.25s ease;
+    transition: scale 0.2s var(--ease-out), border-color 0.25s ease, color 0.25s ease;
+  }
+  .btn:active {
+    scale: 0.97;
+    transition-duration: 0.08s;
   }
 
+  /* CHANNEL MERGE. The primary button's white is the three channels on
+     top of each other: GFP paints the button, DAPI and mCherry lie over it
+     and add up to white (in brightfield the stains multiply to near
+     black). On hover they slip out of register and each one shows at the
+     edge it moved towards; a press puts them back. */
   .btn-primary {
-    background: var(--text);
+    --split: 0px;
+    background: var(--gfp);
     color: var(--void);
   }
+  .btn-primary::before,
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    mix-blend-mode: var(--blend);
+    transition: translate 0.25s var(--ease-out);
+  }
+  .btn-primary::before {
+    background: var(--dapi);
+    translate: calc(var(--split) * -1) calc(var(--split) * -0.67);
+  }
+  .btn-primary::after {
+    background: var(--mcherry);
+    translate: var(--split) calc(var(--split) * 0.67);
+  }
+  @media (hover: hover) {
+    .btn-primary:hover {
+      --split: 3px;
+    }
+    .btn-primary:hover::before,
+    .btn-primary:hover::after {
+      transition: translate 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+  }
+  .btn-primary:focus-visible {
+    --split: 3px;
+  }
+  .btn-primary:active {
+    --split: 0px;
+  }
+  .btn-primary:active::before,
+  .btn-primary:active::after {
+    transition: translate 0.08s ease-out;
+  }
 
+  /* FIELD DIAPHRAGM. The secondary button opens like the diaphragm you
+     open when setting up Köhler illumination: an octagon of light grows
+     from the centre until it clears the field, in the section's color.
+     The octagon is drawn in percentages, so it always just covers the
+     button, whatever its width. */
   .btn-ghost {
+    --iris-shut: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
+    --iris-open: polygon(121% 79.4%, 79.4% 121%, 20.6% 121%, -21% 79.4%, -21% 20.6%, 20.6% -21%, 79.4% -21%, 121% 20.6%);
     border: 1px solid var(--line-strong);
     color: var(--text);
   }
-
+  .btn-ghost::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    clip-path: var(--iris-shut);
+    transition: clip-path 0.3s cubic-bezier(0.5, 0, 0.75, 0);
+  }
   @media (hover: hover) {
-    .btn-primary:hover {
-      box-shadow: -3px 0 0 var(--dapi), 3px 0 0 var(--mcherry), 0 3px 0 var(--gfp);
-    }
     .btn-ghost:hover {
-      border-color: var(--text);
+      border-color: var(--accent);
+    }
+    .btn-ghost:hover::before {
+      clip-path: var(--iris-open);
+      transition: clip-path 0.6s var(--ease-out);
     }
   }
+  .btn-ghost:focus-visible {
+    border-color: var(--accent);
+  }
+  .btn-ghost:focus-visible::before {
+    clip-path: var(--iris-open);
+  }
 
+  /* SEQUENTIAL SCAN. A confocal acquires one channel after another;
+     links underline the same way: C1, C2 and C3 sweep under the text in
+     turn and the text's own color lands last, on top. One registered
+     number (--scan, 0 → 1) drives the four lines, so the sweep runs
+     backwards cleanly when the pointer leaves halfway. */
   .link-underline {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
+    --line-w: max(1px, 0.06em);
+    background-image:
+      linear-gradient(currentColor, currentColor),
+      linear-gradient(var(--mcherry), var(--mcherry)),
+      linear-gradient(var(--gfp), var(--gfp)),
+      linear-gradient(var(--dapi), var(--dapi));
+    background-size:
+      clamp(0%, (var(--scan, 0) - 0.45) / 0.55 * 100%, 100%) var(--line-w),
+      clamp(0%, (var(--scan, 0) - 0.3) / 0.55 * 100%, 100%) var(--line-w),
+      clamp(0%, (var(--scan, 0) - 0.15) / 0.55 * 100%, 100%) var(--line-w),
+      clamp(0%, var(--scan, 0) / 0.55 * 100%, 100%) var(--line-w);
     background-position: 0 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.3s var(--ease-out);
+    transition: --scan 0.35s cubic-bezier(0.5, 0, 0.75, 0), color 0.25s ease;
   }
   @media (hover: hover) {
     .link-underline:hover {
-      background-size: 100% 1px;
+      --scan: 1;
+      transition: --scan 0.8s cubic-bezier(0.25, 0.6, 0.3, 1), color 0.25s ease;
+    }
+  }
+  .link-underline:focus-visible {
+    --scan: 1;
+  }
+
+  /* STAGE MOVE. An arrow leaves through the edge it points at and comes
+     back in from the opposite one, like the next field sliding under the
+     objective. The SVG clips it, so it never spills over the label. */
+  .arrow {
+    flex: none;
+    overflow: hidden;
+  }
+  .arrow[data-dir="out"] {
+    --dx: 1;
+    --dy: -1;
+  }
+  .arrow[data-dir="down"] {
+    --dx: 0;
+    --dy: 1;
+  }
+  .arrow[data-dir="right"],
+  .arrow[data-dir="next"] {
+    --dx: 1;
+    --dy: 0;
+  }
+  .arrow[data-dir="prev"] {
+    --dx: -1;
+    --dy: 0;
+  }
+  @media (hover: hover) {
+    :is(a, button:enabled):hover .arrow path {
+      animation: stage-move 0.6s both;
+    }
+  }
+  :is(a, button):focus-visible .arrow path {
+    animation: stage-move 0.6s both;
+  }
+  @keyframes stage-move {
+    0% {
+      translate: 0 0;
+      animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0);
+    }
+    40% {
+      translate: calc(var(--dx) * 22px) calc(var(--dy) * 22px);
+    }
+    40.01% {
+      translate: calc(var(--dx) * -22px) calc(var(--dy) * -22px);
+      animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    100% {
+      translate: 0 0;
     }
   }
 
@@ -367,7 +515,7 @@
     pointer-events: none;
   }
   .channel .swatch {
-    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease, scale 0.2s ease;
   }
   .channel:has(input:not(:checked)) {
     color: var(--muted);
@@ -380,9 +528,29 @@
     outline: 2px solid var(--text);
     outline-offset: 2px;
   }
+  /* SOLO. Hovering a channel solos it in the micrograph, the way you'd
+     look at one channel of a stack before the merge: the other two dim
+     and, if this one is off, it shows through faintly as a preview. The
+     dimming sits under :where() so a channel that's switched off stays
+     off. */
   @media (hover: hover) {
     .channel:hover {
       border-color: var(--line-strong);
+    }
+    .channel:hover .swatch {
+      scale: 1.35;
+      box-shadow: 0 0 calc(var(--glow) * 1.6) currentColor;
+      transition: opacity 0.2s ease, box-shadow 0.3s ease, scale 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .scope-rig:where(:has(.channel:hover #ch-c1)) .scope-layer:not(.scope-layer--c1),
+    .scope-rig:where(:has(.channel:hover #ch-c2)) .scope-layer:not(.scope-layer--c2),
+    .scope-rig:where(:has(.channel:hover #ch-c3)) .scope-layer:not(.scope-layer--c3) {
+      opacity: 0.12;
+    }
+    .scope-rig:has(.channel:hover #ch-c1:not(:checked)) .scope-layer--c1,
+    .scope-rig:has(.channel:hover #ch-c2:not(:checked)) .scope-layer--c2,
+    .scope-rig:has(.channel:hover #ch-c3:not(:checked)) .scope-layer--c3 {
+      opacity: 0.4;
     }
   }
 
@@ -519,11 +687,12 @@
     width: 1.5rem;
     height: 2px;
     background: var(--line-strong);
-    transition: background-color 0.25s ease;
+    transition: background-color 0.25s ease, scale 0.25s var(--ease-out);
   }
   @media (hover: hover) {
     .shot-tick:hover .shot-track {
       background: color-mix(in srgb, var(--text) 45%, transparent);
+      scale: 1 2;
     }
   }
   .shot-fill {
@@ -587,9 +756,22 @@
   .sample-row[aria-selected="true"]::before {
     transform: scaleY(1);
   }
+  /* MAGNIFICATION. Hovering a sample brings it under a stronger objective:
+     its name widens along Archivo's width axis and its bar starts to
+     light, so a click carries on from where the hover left it. */
+  .sample-flow {
+    transition: color 0.25s ease, font-variation-settings 0.3s var(--ease-out);
+  }
   @media (hover: hover) {
     .sample-row:hover {
       background-color: color-mix(in srgb, var(--text) 3%, transparent);
+    }
+    .sample-row:hover .sample-flow {
+      font-variation-settings: "wdth" 125;
+      transition: color 0.25s ease, font-variation-settings 0.5s var(--ease-out);
+    }
+    .sample-row:not([aria-selected="true"]):hover::before {
+      transform: scaleY(0.3);
     }
   }
 
@@ -1107,6 +1289,42 @@
     color: var(--text);
   }
 
+  /* PLATE READER. Hovering a well aims the reader at it: a crosshair runs
+     along its row and its column, under the wells (the plate clips it),
+     the mark swells as it's excited, and the row letter and the column
+     number light up, so the well reads as a coordinate, like B7. The
+     mark scales with `scale`, which the reveal's `excite` keyframes
+     (on `transform`) don't hold. */
+  .well-cell:not(.is-empty) .well::before,
+  .well-cell:not(.is-empty) .well::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    background: color-mix(in srgb, var(--ch) 32%, transparent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .well-cell:not(.is-empty) .well::before {
+    left: 50%;
+    top: -100vh;
+    bottom: -100vh;
+    width: 1px;
+  }
+  .well-cell:not(.is-empty) .well::after {
+    top: 50%;
+    left: -100vw;
+    right: -100vw;
+    height: 1px;
+  }
+  .well-mark {
+    transition: scale 0.25s var(--ease-out);
+  }
+  .plate-letter,
+  .plate-numbers > * {
+    transition: color 0.2s ease;
+  }
+
   @media (hover: hover) {
     .well-cell:not(.is-empty):hover .well {
       color: var(--ch);
@@ -1115,7 +1333,33 @@
         inset 0 0 0 1px var(--ch),
         0 0 calc(var(--glow) * 2.6) -6px var(--ch);
     }
+    .well-cell:not(.is-empty):hover .well::before,
+    .well-cell:not(.is-empty):hover .well::after {
+      opacity: 1;
+      transition-duration: 0.35s;
+    }
+    .well-cell:not(.is-empty):hover .well-mark {
+      scale: 1.2;
+      transition: scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
     .well-cell:not(.is-empty):hover .well-name {
+      color: var(--text);
+    }
+    .plate-row:has(.well-cell:not(.is-empty):hover) .plate-letter {
+      color: var(--ch);
+    }
+    .plate:has(.plate-wells > :nth-child(1):not(.is-empty):hover) .plate-numbers > :nth-child(1),
+    .plate:has(.plate-wells > :nth-child(2):not(.is-empty):hover) .plate-numbers > :nth-child(2),
+    .plate:has(.plate-wells > :nth-child(3):not(.is-empty):hover) .plate-numbers > :nth-child(3),
+    .plate:has(.plate-wells > :nth-child(4):not(.is-empty):hover) .plate-numbers > :nth-child(4),
+    .plate:has(.plate-wells > :nth-child(5):not(.is-empty):hover) .plate-numbers > :nth-child(5),
+    .plate:has(.plate-wells > :nth-child(6):not(.is-empty):hover) .plate-numbers > :nth-child(6),
+    .plate:has(.plate-wells > :nth-child(7):not(.is-empty):hover) .plate-numbers > :nth-child(7),
+    .plate:has(.plate-wells > :nth-child(8):not(.is-empty):hover) .plate-numbers > :nth-child(8),
+    .plate:has(.plate-wells > :nth-child(9):not(.is-empty):hover) .plate-numbers > :nth-child(9),
+    .plate:has(.plate-wells > :nth-child(10):not(.is-empty):hover) .plate-numbers > :nth-child(10),
+    .plate:has(.plate-wells > :nth-child(11):not(.is-empty):hover) .plate-numbers > :nth-child(11),
+    .plate:has(.plate-wells > :nth-child(12):not(.is-empty):hover) .plate-numbers > :nth-child(12) {
       color: var(--text);
     }
   }
@@ -1291,7 +1535,7 @@
     transform: translateY(-50%);
     background: conic-gradient(var(--dapi) 0 33%, var(--gfp) 0 66%, var(--mcherry) 0);
     box-shadow: 0 0 calc(var(--glow) * 0.8) color-mix(in srgb, var(--gfp) 60%, transparent);
-    transition: transform 0.45s var(--ease-out), background 0.45s ease;
+    transition: transform 0.45s var(--ease-out), background 0.45s ease, rotate 0.3s ease, box-shadow 0.3s ease;
   }
   .mode-toggle:has(input:checked) .mode-knob {
     transform: translate(1.2rem, -50%);
@@ -1301,9 +1545,17 @@
     outline: 2px solid var(--text);
     outline-offset: 3px;
   }
+  /* FILTER TURRET. Hovering the switch turns the knob a third of a turn,
+     like the turret moving the next filter cube into the light path. */
   @media (hover: hover) {
     .mode-toggle:hover .mode-track {
       border-color: var(--text);
+    }
+    .mode-toggle:hover .mode-knob {
+      rotate: 120deg;
+      box-shadow: 0 0 calc(var(--glow) * 1.6) color-mix(in srgb, var(--gfp) 80%, transparent);
+      transition: transform 0.45s var(--ease-out), background 0.45s ease,
+        rotate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
   }
 
@@ -1421,15 +1673,89 @@
     vertical-align: middle;
     background: var(--accent);
     opacity: 0.7;
-    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease, scale 0.25s ease, rotate 0.25s ease;
   }
   .nav-dot.is-active {
     opacity: 1;
     box-shadow: 0 0 var(--glow) var(--accent);
   }
+  /* EXCITATION. Pointing at a section excites its dye: the dot swells,
+     turns on its corner and glows in the section's color. */
   @media (hover: hover) {
-    button:hover > .nav-dot {
+    .nav-link:hover > .nav-dot {
       opacity: 1;
+      scale: 1.5;
+      rotate: 45deg;
+      box-shadow: 0 0 calc(var(--glow) * 1.4) var(--accent);
+      transition: opacity 0.2s ease, box-shadow 0.3s ease, scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        rotate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+  }
+
+  /* The logo opens: the brackets part around the initials and each
+     symbol lights up in its channel. */
+  .tag-mark > span {
+    display: inline-block;
+    transition: translate 0.25s var(--ease-out), text-shadow 0.25s ease;
+  }
+  @media (hover: hover) {
+    a:hover > .tag-mark > span,
+    .tag-mark:hover > span {
+      text-shadow: 0 0 var(--glow) currentColor;
+      transition: translate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), text-shadow 0.3s ease;
+    }
+    a:hover > .tag-mark > .tag-open,
+    .tag-mark:hover > .tag-open {
+      translate: -0.2em 0;
+    }
+    a:hover > .tag-mark > .tag-close,
+    .tag-mark:hover > .tag-close {
+      translate: 0.2em 0;
+    }
+  }
+}
+
+/* ============================================================
+   NEIGHBOURS  —  the case file's previous / next links move the
+   stage: the arrow leads the way and the title widens along the
+   width axis as it comes under the objective.
+   ============================================================ */
+@layer components {
+  .case-nav[data-dir="prev"] {
+    --dir: -1;
+  }
+  .case-nav[data-dir="next"] {
+    --dir: 1;
+  }
+  .case-nav-arrow {
+    display: inline-block;
+    transition: translate 0.25s var(--ease-out);
+  }
+  .case-nav-title {
+    transition: color 0.25s ease, font-variation-settings 0.3s var(--ease-out);
+  }
+  @media (hover: hover) {
+    .case-nav:hover .case-nav-arrow {
+      translate: calc(var(--dir) * 0.6rem) 0;
+      transition: translate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .case-nav:hover .case-nav-title {
+      font-variation-settings: "wdth" 125;
+      transition: color 0.25s ease, font-variation-settings 0.5s var(--ease-out);
+    }
+  }
+
+  /* The hexagon answers the pointer ring by ring: the layer under it
+     comes into focus (brighter fill and edge). Decoration only, so it
+     keeps the default cursor. */
+  .hex-ring {
+    transition: fill-opacity 0.25s ease, stroke-opacity 0.25s ease;
+  }
+  @media (hover: hover) {
+    .hex-ring:hover {
+      fill-opacity: 0.22;
+      stroke-opacity: 1;
+      transition-duration: 0.4s;
     }
   }
 }

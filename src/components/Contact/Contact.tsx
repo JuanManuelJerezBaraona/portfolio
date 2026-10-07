@@ -2,6 +2,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { SOCIAL_LINKS, getPersonalInfo } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
+import Arrow from '@/components/ui/Arrow';
 
 const Contact = () => {
   const t = useTranslations('Contact');
@@ -46,9 +47,7 @@ const Contact = () => {
                   <li key={link.id}>
                     <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
                       {link.name}
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                        <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
-                      </svg>
+                      <Arrow dir="out" />
                     </a>
                   </li>
                 ))}

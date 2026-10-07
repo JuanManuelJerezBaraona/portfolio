@@ -208,6 +208,7 @@
       "tokens": "Components use no fixed colors: everything goes through the tokens, and switching modes only redefines them. The only exceptions are the swatches on this page and the share image, which can't read CSS.",
       "contrast": "Body text, secondary text and the six section colors all clear 4.5:1 (WCAG AA) in both modes. The lowest is {min}:1.",
       "blend": "In fluorescence the channels add up (plus-lighter), like light; in brightfield they multiply, like stains.",
+      "hover": "Each control answers the pointer with a different microscope technique: the primary button splits its three channels, the secondary one opens the field diaphragm, links underline one channel at a time, like a confocal scan, and arrows move the stage to the next field. Keyboard focus gets the same answer.",
       "motion": "With reduced motion nothing animates: not the sections coming into focus, not the screenshot cycle.",
       "focus": "Keyboard focus is always visible, and the smallest controls (the screenshots, the carousel scale and the channels) take a tap across about 44 px."
     }

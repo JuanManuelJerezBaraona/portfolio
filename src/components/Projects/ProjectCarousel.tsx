@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
 import { Countries, hostname, stageLabel } from '@/components/ui/ProjectMeta';
 import ShotCycle from '@/components/ui/ShotCycle';
+import Arrow from '@/components/ui/Arrow';
 
 interface ProjectCarouselProps {
   projects: Project[];
@@ -132,9 +133,7 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                         >
                           <StatusDot status={project.status} />
                           <span className="flex-1 truncate">{host}</span>
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 flex-none" aria-hidden="true">
-                            <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
-                          </svg>
+                          <Arrow dir="out" className="h-3.5 w-3.5 flex-none" />
                         </a>
                       ) : (
                         <p className={addressBar}>

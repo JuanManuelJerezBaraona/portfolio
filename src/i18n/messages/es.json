@@ -208,6 +208,7 @@
       "tokens": "Los componentes no usan colores fijos: todo pasa por los tokens, y cambiar de modo solo los redefine. Las únicas excepciones son las muestras de esta página y la imagen para compartir, que no puede leer CSS.",
       "contrast": "El texto principal, el secundario y los seis colores de sección superan 4,5:1 (WCAG AA) en ambos modos. El más bajo es {min}:1.",
       "blend": "En fluorescencia los canales se suman (plus-lighter), como la luz; en campo claro se multiplican, como las tinciones.",
+      "hover": "Cada control responde al cursor con una técnica distinta del microscopio: el botón principal separa sus tres canales, el secundario abre el diafragma de campo, los enlaces se subrayan canal por canal, como un barrido confocal, y las flechas mueven la platina al campo siguiente. El foco del teclado recibe la misma respuesta.",
       "motion": "Con movimiento reducido no se anima nada: ni el enfoque de las secciones ni el ciclo de capturas.",
       "focus": "El foco del teclado siempre se ve, y los controles más chicos (las capturas, la escala del carrusel y los canales) responden al toque en unos 44 px."
     }

@@ -148,7 +148,7 @@ const Navbar = () => {
                     key={link.id}
                     href={`/${link.href}`}
                     onClick={(event) => handleNavClick(event, link.id)}
-                    className={`meta py-2 transition-colors ${
+                    className={`nav-link meta py-2 transition-colors ${
                       isActive ? 'text-text' : 'text-muted hover:text-text'
                     }`}
                     aria-label={t('goTo', { section: link.label })}

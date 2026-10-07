@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
 import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
 import ShotCycle from '@/components/ui/ShotCycle';
+import Arrow from '@/components/ui/Arrow';
 
 interface ProjectViewerProps {
   projects: Project[];
@@ -54,13 +55,13 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
               tabIndex={isSelected ? 0 : -1}
               onClick={() => setSelected(index)}
               onKeyDown={(event) => handleKeyDown(event, index)}
-              className="sample-row grid w-full cursor-pointer grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 border-b border-line px-4 py-6 text-left"
+              className="sample-row group grid w-full cursor-pointer grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 border-b border-line px-4 py-6 text-left"
             >
               <span className={`meta ${isSelected ? 'text-accent' : 'text-muted'}`}>{stageLabel(item)}</span>
               <span>
                 <span
-                  className={`wide block text-[1.7rem] leading-none transition-colors ${
-                    isSelected ? 'text-text' : 'text-muted'
+                  className={`sample-flow wide block text-[1.7rem] leading-none ${
+                    isSelected ? 'text-text' : 'text-muted group-hover:text-text'
                   }`}
                 >
                   {item.flow}
@@ -114,16 +115,12 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href={`/proyectos/${project.id}`} className="btn btn-primary">
                 {t('fullCase')}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                  <path strokeLinecap="square" d="M5 12h14m0 0-6-6m6 6-6 6" />
-                </svg>
+                <Arrow dir="right" />
               </Link>
               {project.url && (
                 <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
                   {t('openSite')}
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4" aria-hidden="true">
-                    <path strokeLinecap="square" d="M7 17 17 7m0 0H8m9 0v9" />
-                  </svg>
+                  <Arrow dir="out" />
                 </a>
               )}
             </div>
