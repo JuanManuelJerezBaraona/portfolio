@@ -55,7 +55,7 @@ export const generateMetadata = async ({ params }: LayoutProps): Promise<Metadat
     metadataBase: new URL(siteUrl),
     title,
     description,
-    keywords: t.raw('keywords') as string[],
+    keywords: t('keywords'),
     authors: [{ name: 'Juan Manuel Jerez Baraona' }],
     alternates: alternatesFor('/', locale),
     openGraph: {

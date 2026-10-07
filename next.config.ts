@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+const withNextIntl = createNextIntlPlugin({
+  requestConfig: "./src/i18n/request.ts",
+  experimental: {
+    // Messages are compiled at build time, so the ICU parser (formatjs,
+    // ~16 KB compressed) stays out of the client bundle. It rules out t.raw.
+    messages: { path: "./src/i18n/messages", format: "json", locales: "infer", precompile: true },
+  },
+});
 
 const nextConfig: NextConfig = {
   images: {

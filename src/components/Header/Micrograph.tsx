@@ -239,6 +239,36 @@ export const micrographSvg = (colors: { c1: string; c2: string; c3: string }) =>
 </svg>`;
 };
 
+/**
+ * The dendrite and puncta channels as standalone SVGs, served from
+ * app/micrograph/[layer] and painted as CSS masks over `currentColor`
+ * (`.scope-mask`). A single-color layer is exactly its color times its alpha,
+ * so the mask draws the same image, while the ~35 KB of path data ships once
+ * as a cacheable file instead of twice in the page (HTML + RSC payload).
+ */
+export const MICROGRAPH_LAYERS = ['dendrites', 'puncta'] as const;
+
+export const micrographLayerSvg = (layer: (typeof MICROGRAPH_LAYERS)[number]) => {
+  const glow = (amount: number) =>
+    `<filter id="g" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${amount}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+  const body =
+    layer === 'dendrites'
+      ? `<defs><radialGradient id="h"><stop offset="0%" stop-color="#fff" stop-opacity="0.22"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>${glow(2.4)}</defs>` +
+        `<circle cx="292" cy="300" r="200" fill="url(#h)"/>` +
+        `<g filter="url(#g)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">` +
+        IMAGE.branches
+          .map((d, order) => `<path d="${d}" stroke-width="${BRANCH_WIDTH[order]}" stroke-opacity="${BRANCH_OPACITY[order]}"/>`)
+          .join('') +
+        IMAGE.axons.map((d) => `<path d="${d}" stroke-width="0.9" stroke-opacity="0.6"/>`).join('') +
+        `</g>`
+      : `<defs>${glow(1.6)}</defs><g filter="url(#g)" fill="none" stroke="#fff" stroke-linecap="round">` +
+        IMAGE.punctaBySize
+          .map((d, i) => `<path d="${d}" stroke-width="${[2.4, 3.4, 4.6][i]}" stroke-opacity="${[0.75, 0.85, 0.95][i]}"/>`)
+          .join('') +
+        `</g>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}" width="${SIZE}" height="${SIZE}">${body}</svg>`;
+};
+
 const Micrograph = () => (
   <div className="scope-field">
     {/* C1 · DAPI · nuclei */}
@@ -266,36 +296,9 @@ const Micrograph = () => (
       </g>
     </svg>
 
-    {/* C2 · GFP · neurons */}
-    <svg {...layerProps} className="scope-layer scope-layer--c2 text-gfp">
-      <defs>
-        <radialGradient id="haze">
-          <stop offset="0%" stopColor="currentColor" stopOpacity="0.22" />
-          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-        </radialGradient>
-        <Glow id="glow-c2" amount={2.4} />
-      </defs>
-      <circle cx="292" cy="300" r="200" fill="url(#haze)" />
-      <g
-        filter="url(#glow-c2)"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {IMAGE.branches.map((d, order) => (
-          <path
-            key={order}
-            d={d}
-            strokeWidth={BRANCH_WIDTH[order]}
-            strokeOpacity={BRANCH_OPACITY[order]}
-          />
-        ))}
-        {IMAGE.axons.map((d, i) => (
-          <path key={i} d={d} strokeWidth={0.9} strokeOpacity={0.6} />
-        ))}
-      </g>
-    </svg>
+    {/* C2 · GFP · neurons: the heaviest path data, so it ships once as a
+        static mask (/micrograph/dendrites.svg) instead of twice in the page. */}
+    <div className="scope-layer scope-layer--c2 scope-mask scope-mask--dendrites text-gfp" aria-hidden="true" />
 
     {/* C2 · GFP · somas, on their own layer: their calcium flashes then only
         repaint these five cells, not the blurred dendrite tree above. */}
@@ -321,17 +324,8 @@ const Micrograph = () => (
       </g>
     </svg>
 
-    {/* C3 · mCherry · synaptic puncta */}
-    <svg {...layerProps} className="scope-layer scope-layer--c3 text-mcherry">
-      <defs>
-        <Glow id="glow-c3" amount={1.6} />
-      </defs>
-      <g filter="url(#glow-c3)" fill="none" stroke="currentColor" strokeLinecap="round">
-        <path d={IMAGE.punctaBySize[0]} strokeWidth={2.4} strokeOpacity={0.75} />
-        <path d={IMAGE.punctaBySize[1]} strokeWidth={3.4} strokeOpacity={0.85} />
-        <path d={IMAGE.punctaBySize[2]} strokeWidth={4.6} strokeOpacity={0.95} />
-      </g>
-    </svg>
+    {/* C3 · mCherry · synaptic puncta, also a static mask. */}
+    <div className="scope-layer scope-layer--c3 scope-mask scope-mask--puncta text-mcherry" aria-hidden="true" />
   </div>
 );
 

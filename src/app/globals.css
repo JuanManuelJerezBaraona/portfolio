@@ -275,6 +275,20 @@
     transition: opacity 0.6s var(--ease-out);
   }
 
+  /* Channels drawn as a static SVG mask over the channel color (Micrograph.tsx). */
+  .scope-mask {
+    background-color: currentColor;
+    mask-position: center;
+    mask-size: cover;
+    mask-repeat: no-repeat;
+  }
+  .scope-mask--dendrites {
+    mask-image: url("/micrograph/dendrites.svg");
+  }
+  .scope-mask--puncta {
+    mask-image: url("/micrograph/puncta.svg");
+  }
+
   /* Lens vignette + faint reticle. */
   .scope::after {
     content: "";
