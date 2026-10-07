@@ -153,7 +153,7 @@ const Architecture = () => {
 
             <Reveal delay={120} className="mt-12">
               <Hexagon />
-              <Link href="#ia" className="meta link-underline mt-4 inline-block text-muted hover:text-text">
+              <Link href="#ia-skills" className="meta link-underline mt-4 inline-block text-muted hover:text-text">
                 {t('skill')} →
               </Link>
             </Reveal>

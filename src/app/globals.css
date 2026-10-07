@@ -1749,6 +1749,36 @@
 }
 
 /* ============================================================
+   PROTOCOL  —  the IA section as a bench protocol, one row per
+   step. The control is flagged the way a protocol flags a
+   critical step: its row tinted in the section's color and a
+   rule drawn across its top once it comes into focus (the same
+   rule that marks the current project in the viewer).
+   ============================================================ */
+@layer components {
+  .protocol-step.is-critical {
+    position: relative;
+    background: color-mix(in oklab, var(--accent) 7%, transparent);
+  }
+  .protocol-step.is-critical::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 calc(var(--glow) * 1.2) var(--accent);
+    transform-origin: left;
+    transition: scale 0.9s var(--ease-out) 0.35s;
+  }
+  /* Without JS there is no .reveal-ready, so the rule is simply there. */
+  .reveal-ready .protocol-step.is-critical:not(.is-in)::before {
+    scale: 0 1;
+  }
+}
+
+/* ============================================================
    LAMP SWITCH  —  the mode change as a View Transition. The
    browser snapshots the page before and after and only animates
    those two images on the GPU: the new light spreads in a circle

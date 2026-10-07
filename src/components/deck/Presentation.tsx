@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import {
   SOCIAL_LINKS,
-  getAiPractices,
+  getAiProtocol,
   getArchitecture,
   getPersonalInfo,
   getProjects,
@@ -20,8 +20,8 @@ const hl = (chunks: ReactNode) => <em className="hl">{chunks}</em>;
 /**
  * An interview deck built from the same data as the site: who he is, the
  * five apps in journey order (one slide each), the architecture they share,
- * how he works with AI, and how to reach him. Nothing here is written twice,
- * so the deck can't say something the site doesn't.
+ * the protocol he follows with AI, and how to reach him. Nothing here is
+ * written twice, so the deck can't say something the site doesn't.
  */
 const Presentation = () => {
   const locale = useLocale();
@@ -39,7 +39,7 @@ const Presentation = () => {
   const timeline = getTimeline(locale);
   const projects = getProjects(locale);
   const layers = getArchitecture(locale);
-  const practices = getAiPractices(locale);
+  const steps = getAiProtocol(locale);
 
   const cover = (
     <div className="deck-cover sec-ia">
@@ -177,14 +177,18 @@ const Presentation = () => {
       <p className="meta text-accent">{t('ai')}</p>
       <h2 className="deck-h2 mt-[0.5em] max-w-[18em]">{tAi.rich('title', { hl })}</h2>
       <p className="deck-lead mt-[0.8em] max-w-[40em] text-muted">{tAi('body')}</p>
-      <ul className="deck-grid mt-[2em]">
-        {practices.map((practice) => (
-          <li key={practice.id}>
-            <span className="wide block">{practice.title}</span>
-            <span className="meta mt-[0.5em] block text-muted">{practice.tools.join(' · ')}</span>
+      <ol className="deck-grid mt-[2em]" aria-label={tAi('protocol')}>
+        {steps.map((step, i) => (
+          <li key={step.id} className={step.critical ? 'border-accent' : undefined}>
+            <span className="meta block text-accent">
+              {String(i + 1).padStart(2, '0')}
+              {step.critical && ` · ${tAi('critical')}`}
+            </span>
+            <span className="wide mt-[0.3em] block">{step.title}</span>
+            <span className="meta mt-[0.5em] block text-muted">{step.tools.join(' · ')}</span>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 

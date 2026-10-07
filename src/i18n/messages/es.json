@@ -118,9 +118,21 @@
   },
   "Ai": {
     "note": "Perfil IA-ready",
-    "title": "Uso IA todos los días. Y <hl>reviso todo</hl> lo que escribe.",
-    "body": "Vengo de analizar datos en un laboratorio, así que trato a un modelo de lenguaje como a cualquier instrumento: rápido y útil, pero no le creo hasta verificarlo.",
-    "skill": "Una de mis skills"
+    "title": "Uso IA todos los días. Con <hl>protocolo y control</hl>, como en el laboratorio.",
+    "body": "Vengo de analizar datos en un laboratorio, donde ningún resultado vale sin su control. A un modelo de lenguaje lo trato igual: es rápido y útil, pero no le creo hasta verificarlo.",
+    "protocol": "Protocolo · una tarea con un agente de código",
+    "stepCount": "{count} pasos",
+    "step": "Paso",
+    "procedure": "Procedimiento",
+    "material": "Material",
+    "critical": "Paso crítico",
+    "skill": "Una de mis skills",
+    "checks": "Leído · probado · entendido",
+    "pass": "Cumple",
+    "fail": "No cumple",
+    "retry": "vuelve al paso {step}",
+    "beyondLabel": "Fuera del editor",
+    "beyond": "También he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n."
   },
   "Skills": {
     "note": "{count} tecnologías",

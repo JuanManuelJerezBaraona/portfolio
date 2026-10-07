@@ -1,7 +1,7 @@
 import type { Locale } from 'next-intl';
 import { inLocale } from '@/i18n/inLocale';
 import {
-  AiPracticeData,
+  AiStepData,
   ArchitectureLayerData,
   NavLinkData,
   PersonalInfoData,
@@ -269,24 +269,34 @@ export const ARCHITECTURE: ArchitectureLayerData[] = [
 ];
 
 /**
- * How he works with AI. Only tools and practices he confirmed using:
- * Claude Code, Codex, OpenCode, GitHub Copilot, writing his own skills,
- * configuring MCP servers, Spec-Driven Development, n8n and integrating
- * LLM APIs.
+ * How he works with AI, as the steps of a lab protocol in the order he
+ * runs them. Only tools and practices he confirmed using: Claude Code,
+ * Codex, OpenCode, GitHub Copilot, writing his own skills, configuring
+ * MCP servers, Spec-Driven Development, n8n and integrating LLM APIs
+ * (those last two live outside the protocol, in the `Ai.beyond` message).
  */
-export const AI_PRACTICES: AiPracticeData[] = [
+export const AI_PROTOCOL: AiStepData[] = [
   {
     id: 'context',
-    title: { es: 'Le doy contexto al agente', en: 'I give the agent context' },
+    title: { es: 'Contexto', en: 'Context' },
     body: {
       es: 'Cada repositorio tiene su CLAUDE.md y su copilot-instructions.md con la arquitectura, los comandos y las convenciones del proyecto. Así el agente parte sabiendo dónde está parado.',
       en: 'Every repository has its own CLAUDE.md and copilot-instructions.md with the project’s architecture, commands and conventions, so the agent starts out knowing where it stands.',
     },
-    tools: ['Claude Code', 'GitHub Copilot'],
+    tools: ['CLAUDE.md', 'copilot-instructions.md'],
+  },
+  {
+    id: 'spec',
+    title: { es: 'Especificación', en: 'Specification' },
+    body: {
+      es: 'Trabajo con Spec-Driven Development: antes de que el agente escriba una línea, queda escrito qué tiene que hacer y cómo se valida. Contra eso reviso en el control.',
+      en: 'I work with Spec-Driven Development: before the agent writes a single line, what it has to do and how it will be validated are written down. That’s what I check against in the control.',
+    },
+    tools: ['Spec-Driven Development'],
   },
   {
     id: 'skills',
-    title: { es: 'Escribo skills propias', en: 'I write my own skills' },
+    title: 'Skills',
     body: {
       es: 'Convierto lo que el equipo repite en skills: cómo armar un endpoint con arquitectura hexagonal en NestJS o cómo integrar las librerías internas de pagos y leads. El agente sigue nuestro patrón en vez de inventar uno.',
       en: 'I turn what the team keeps repeating into skills: how to build an endpoint with hexagonal architecture in NestJS, or how to integrate the internal payments and leads libraries. The agent follows our pattern instead of inventing one.',
@@ -294,17 +304,8 @@ export const AI_PRACTICES: AiPracticeData[] = [
     tools: ['Agent Skills', 'NestJS'],
   },
   {
-    id: 'sdd',
-    title: { es: 'Primero la especificación', en: 'Spec first' },
-    body: {
-      es: 'Trabajo con Spec-Driven Development: antes de que el agente escriba una línea, queda escrito qué tiene que hacer y cómo se valida. El agente implementa a partir de esa especificación y yo reviso el resultado contra ella.',
-      en: 'I work with Spec-Driven Development: before the agent writes a single line, what it has to do and how it will be validated are written down. The agent implements from that spec, and I review the result against it.',
-    },
-    tools: ['Spec-Driven Development'],
-  },
-  {
     id: 'mcp',
-    title: { es: 'Lo conecto a herramientas reales', en: 'I connect it to real tools' },
+    title: { es: 'Instrumentos', en: 'Instruments' },
     body: {
       es: 'Configuro servidores MCP para que el agente consulte el design system Tomaco, los diseños de Figma, las colecciones de Postman, la documentación del equipo en Notion y la de las librerías al día, en lugar de trabajar con supuestos.',
       en: 'I set up MCP servers so the agent checks the Tomaco design system, Figma designs, Postman collections, the team’s docs in Notion and up-to-date library docs instead of working from assumptions.',
@@ -312,22 +313,23 @@ export const AI_PRACTICES: AiPracticeData[] = [
     tools: ['MCP', 'Tomaco', 'Figma', 'Postman', 'Notion', 'Context7'],
   },
   {
-    id: 'llm',
-    title: { es: 'Integro modelos y automatizo flujos', en: 'I integrate models and automate workflows' },
+    id: 'build',
+    title: { es: 'Implementación', en: 'Implementation' },
     body: {
-      es: 'Además de usar IA para programar, he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n.',
-      en: 'Beyond using AI to write code, I’ve integrated language model APIs into applications and I build automations with n8n.',
+      es: 'El agente implementa a partir de la especificación, con el contexto, las skills y las herramientas que le dejé listas en los pasos anteriores.',
+      en: 'The agent implements from the spec, with the context, skills and tools I set up for it in the previous steps.',
     },
-    tools: [{ es: 'APIs de LLM', en: 'LLM APIs' }, 'n8n'],
+    tools: ['Claude Code', 'Codex', 'OpenCode', 'GitHub Copilot'],
   },
   {
-    id: 'review',
-    title: { es: 'Reviso todo lo que produce', en: 'I review everything it produces' },
+    id: 'control',
+    title: 'Control',
     body: {
-      es: 'El agente propone y yo decido. Nada se mergea sin que lo haya leído, probado y entendido.',
-      en: 'The agent proposes and I decide. Nothing gets merged until I’ve read it, tested it and understood it.',
+      es: 'Reviso el resultado contra la especificación. El agente propone y yo decido: nada se mergea sin que lo haya leído, probado y entendido.',
+      en: 'I review the result against the spec. The agent proposes and I decide: nothing gets merged until I’ve read it, tested it and understood it.',
     },
     tools: ['Code review'],
+    critical: true,
   },
 ];
 
@@ -685,6 +687,6 @@ export const getNavLinks = (locale: Locale) => inLocale(NAV_LINKS, locale);
 export const getPersonalInfo = (locale: Locale) => inLocale(PERSONAL_INFO, locale);
 export const getTimeline = (locale: Locale) => inLocale(TIMELINE, locale);
 export const getSkills = (locale: Locale) => inLocale(SKILLS, locale);
-export const getAiPractices = (locale: Locale) => inLocale(AI_PRACTICES, locale);
+export const getAiProtocol = (locale: Locale) => inLocale(AI_PROTOCOL, locale);
 export const getArchitecture = (locale: Locale) => inLocale(ARCHITECTURE, locale);
 export const getProjects = (locale: Locale) => inLocale(PROJECTS, locale);

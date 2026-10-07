@@ -118,9 +118,21 @@
   },
   "Ai": {
     "note": "AI-ready profile",
-    "title": "I use AI every day. And I <hl>review everything</hl> it writes.",
-    "body": "I come from analyzing data in a lab, so I treat a language model like any other instrument: fast and useful, but I don’t trust it until I’ve checked.",
-    "skill": "One of my skills"
+    "title": "I use AI every day. With a <hl>protocol and a control</hl>, like in the lab.",
+    "body": "I come from analyzing data in a lab, where no result counts without its control. I treat a language model the same way: it’s fast and useful, but I don’t trust it until I’ve checked.",
+    "protocol": "Protocol · one task with a coding agent",
+    "stepCount": "{count} steps",
+    "step": "Step",
+    "procedure": "Procedure",
+    "material": "Materials",
+    "critical": "Critical step",
+    "skill": "One of my skills",
+    "checks": "Read · tested · understood",
+    "pass": "Passes",
+    "fail": "Fails",
+    "retry": "back to step {step}",
+    "beyondLabel": "Beyond the editor",
+    "beyond": "I’ve also integrated language model APIs into applications, and I build automations with n8n."
   },
   "Skills": {
     "note": "{count} technologies",

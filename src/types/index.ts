@@ -83,13 +83,17 @@ export interface ArchitectureLayerData {
 }
 export type ArchitectureLayer = InLocale<ArchitectureLayerData>;
 
-export interface AiPracticeData {
+/** One step of the protocol he follows with a coding agent, in the order he runs them. */
+export interface AiStepData {
   id: string;
   title: Text;
   body: Text;
+  /** What the step works with: files, tools or servers. */
   tools: Text[];
+  /** The step nothing gets past without: flagged the way a lab protocol flags one. */
+  critical?: boolean;
 }
-export type AiPractice = InLocale<AiPracticeData>;
+export type AiStep = InLocale<AiStepData>;
 
 export interface NavLinkData {
   id: string;
