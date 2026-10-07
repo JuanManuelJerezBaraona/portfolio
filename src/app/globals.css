@@ -1535,7 +1535,7 @@
     transform: translateY(-50%);
     background: conic-gradient(var(--dapi) 0 33%, var(--gfp) 0 66%, var(--mcherry) 0);
     box-shadow: 0 0 calc(var(--glow) * 0.8) color-mix(in srgb, var(--gfp) 60%, transparent);
-    transition: transform 0.45s var(--ease-out), background 0.45s ease, rotate 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.45s var(--ease-out), background 0.45s ease;
   }
   .mode-toggle:has(input:checked) .mode-knob {
     transform: translate(1.2rem, -50%);
@@ -1545,17 +1545,9 @@
     outline: 2px solid var(--text);
     outline-offset: 3px;
   }
-  /* FILTER TURRET. Hovering the switch turns the knob a third of a turn,
-     like the turret moving the next filter cube into the light path. */
   @media (hover: hover) {
     .mode-toggle:hover .mode-track {
       border-color: var(--text);
-    }
-    .mode-toggle:hover .mode-knob {
-      rotate: 120deg;
-      box-shadow: 0 0 calc(var(--glow) * 1.6) color-mix(in srgb, var(--gfp) 80%, transparent);
-      transition: transform 0.45s var(--ease-out), background 0.45s ease,
-        rotate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
   }
 

@@ -3,6 +3,7 @@ import { SOCIAL_LINKS, getPersonalInfo } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import Arrow from '@/components/ui/Arrow';
+import SocialIcon from '@/components/ui/SocialIcon';
 
 const Contact = () => {
   const t = useTranslations('Contact');
@@ -46,6 +47,7 @@ const Contact = () => {
                 {SOCIAL_LINKS.map((link) => (
                   <li key={link.id}>
                     <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                      <SocialIcon icon={link.icon} />
                       {link.name}
                       <Arrow dir="out" />
                     </a>
