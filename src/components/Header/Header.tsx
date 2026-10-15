@@ -5,7 +5,6 @@ import { getPersonalInfo } from '@/constants/data';
 import Micrograph from './Micrograph';
 import Arrow from '@/components/ui/Arrow';
 import DecryptedText from '@/components/bits/DecryptedText';
-import Magnet from '@/components/bits/Magnet';
 import CircularText from '@/components/bits/CircularText';
 
 const CHANNELS = [
@@ -62,11 +61,10 @@ const Header = () => {
             <Link href="#projects" className="btn btn-primary">
               {t('seeProjects')}
               <Arrow dir="down" />
-              <Magnet />
             </Link>
             <a href={info.cv} download className="btn btn-ghost">
-              <DecryptedText text={tCv('download')} trigger="control" speed={40} />
-              <span className="meta text-muted">PDF</span>
+              {tCv('download')}
+              <span className="meta opacity-60">PDF</span>
             </a>
           </div>
 

@@ -44,6 +44,9 @@
 
   /* How overlapping channels combine, and how much things glow. */
   --blend: plus-lighter;
+  /* The same idea for stacked backgrounds, where plus-lighter isn't
+     available: screen adds light, multiply absorbs it. */
+  --bg-blend: screen;
   --glow: 10px;
   --scope-bg: #000;
   --scope-vignette: rgba(0, 0, 0, 0.9);
@@ -83,6 +86,7 @@
   --sec-contact: #a33460;
 
   --blend: multiply;
+  --bg-blend: multiply;
   --glow: 0px;
   --scope-bg: #f6eff5;
   --scope-vignette: rgba(70, 40, 90, 0.38);
@@ -101,6 +105,14 @@
 
 /* Registered so a link's underline can transition (see HOVERS). Not
    inherited, so a link inside another never picks up its parent's scan. */
+/* Registered so a button's scan can transition (see HOVERS). Inherited,
+   so the button's pseudo-elements read it. */
+@property --acq {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 @property --scan {
   syntax: "<number>";
   inherits: false;
@@ -225,15 +237,25 @@
   /* ============================================================
      HOVERS  —  each kind of control answers the pointer with a
      different technique from the microscope, so no two feel the
-     same: the primary button is a channel merge, the secondary one
-     a field diaphragm, links a sequential scan, arrows the stage
-     moving to the next field. Keyboard focus gets the same answer.
-     Entering takes longer than leaving, so nothing lags behind the
-     pointer on the way out.
+     same: buttons are acquired line by line, links underline one
+     channel after another, arrows move the stage to the next field.
+     Keyboard focus gets the same answer. Entering takes longer than
+     leaving, so nothing lags behind the pointer on the way out.
      ============================================================ */
+
+  /* LINE-BY-LINE ACQUISITION. A point-scanning microscope builds its
+     image one row at a time. On hover the excitation lines (C1, C2, C3)
+     run down the button and leave the acquired image behind them: the
+     secondary button fills with the section's color, the primary one
+     goes from brightfield to darkfield. Leaving runs the scan back up.
+     One registered number (--acq, 0 → 1) drives the fill, the lines
+     and their fade, so a scan cut short reverses from where it was. */
   .btn {
+    --acq-fill: var(--accent);
+    --acq-ink: var(--void);
     position: relative;
     isolation: isolate;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -243,103 +265,92 @@
     font-variation-settings: "wdth" 87.5;
     font-size: 0.8rem;
     font-weight: 500;
-    transition: scale 0.2s var(--ease-out), border-color 0.25s ease, color 0.25s ease;
+    transition:
+      --acq 0.3s cubic-bezier(0.5, 0, 0.75, 0),
+      color 0.12s ease 0.1s,
+      scale 0.2s var(--ease-out),
+      border-color 0.25s ease;
+  }
+  /* The acquired image, uncovered down to the scan line. */
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--acq-fill);
+    box-shadow: var(--acq-edge, none);
+    clip-path: inset(0 0 calc((1 - var(--acq)) * 100%) 0);
+  }
+  /* The three excitation lines, at the front of the scan. They only
+     show while it runs. */
+  .btn::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--acq) * 100% - 6px);
+    height: 6px;
+    background: linear-gradient(
+      var(--dapi) 0 2px,
+      var(--gfp) 2px 4px,
+      var(--mcherry) 4px 6px
+    );
+    box-shadow: 0 0 var(--glow) var(--gfp);
+    opacity: clamp(0, min(var(--acq), 1 - var(--acq)) * 12, 1);
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    .btn:hover {
+      --acq: 1;
+      color: var(--acq-ink);
+      transition:
+        --acq 0.55s cubic-bezier(0.35, 0.1, 0.25, 1),
+        color 0.12s ease 0.2s,
+        scale 0.2s var(--ease-out),
+        border-color 0.25s ease;
+    }
+  }
+  .btn:focus-visible {
+    --acq: 1;
+    color: var(--acq-ink);
   }
   .btn:active {
     scale: 0.97;
     transition-duration: 0.08s;
   }
 
-  /* CHANNEL MERGE. The primary button's white is the three channels on
-     top of each other: GFP paints the button, DAPI and mCherry lie over it
-     and add up to white (in brightfield the stains multiply to near
-     black). On hover they slip out of register and each one shows at the
-     edge it moved towards; a press puts them back. The button is also
-     pulled toward the pointer (bits/Magnet), and while it travels DAPI
-     and mCherry lag behind its velocity (--magnet-vx/-vy), so the motion
-     shows as chromatic aberration that settles when it stops. */
+  /* The primary button is the three channels stacked, so it reads white
+     in fluorescence (added light) and near black in brightfield
+     (multiplied stains). Acquired, it goes darkfield: the page's own
+     field, with its edge and its label lit and a halo just inside the
+     edge, the way darkfield lights a specimen's outline. */
   .btn-primary {
-    --split: 0px;
-    background: var(--gfp);
+    --acq-fill: var(--void);
+    --acq-ink: var(--text);
+    --acq-edge:
+      inset 0 0 0 1px var(--text),
+      inset 0 0 1.1rem -0.35rem color-mix(in srgb, var(--text) 55%, transparent);
+    background:
+      linear-gradient(var(--dapi), var(--dapi)),
+      linear-gradient(var(--gfp), var(--gfp)),
+      linear-gradient(var(--mcherry), var(--mcherry));
+    background-blend-mode: var(--bg-blend);
     color: var(--void);
   }
-  .btn-primary::before,
-  .btn-primary::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    mix-blend-mode: var(--blend);
-    transition: translate 0.25s var(--ease-out);
-  }
-  .btn-primary::before {
-    background: var(--dapi);
-    translate:
-      calc(var(--split) * -1 - var(--magnet-vx, 0px))
-      calc(var(--split) * -0.67 - var(--magnet-vy, 0px));
-  }
-  .btn-primary::after {
-    background: var(--mcherry);
-    translate:
-      calc(var(--split) + var(--magnet-vx, 0px))
-      calc(var(--split) * 0.67 + var(--magnet-vy, 0px));
-  }
-  @media (hover: hover) {
-    .btn-primary:hover {
-      --split: 4px;
-    }
-    .btn-primary:hover::before,
-    .btn-primary:hover::after {
-      transition: translate 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-  }
-  .btn-primary:focus-visible {
-    --split: 4px;
-  }
-  .btn-primary:active {
-    --split: 0px;
-  }
-  .btn-primary:active::before,
-  .btn-primary:active::after {
-    transition: translate 0.08s ease-out;
-  }
 
-  /* FIELD DIAPHRAGM. The secondary button opens like the diaphragm you
-     open when setting up Köhler illumination: an octagon of light grows
-     from the centre until it clears the field, in the section's color.
-     The octagon is drawn in percentages, so it always just covers the
-     button, whatever its width. Its label is read like the hero's
-     "código": it dissolves into DNA bases and is read back
-     (bits/DecryptedText with trigger="control"). */
+  /* The secondary button is an empty field with its outline; acquired, it
+     fills with the section's color. */
   .btn-ghost {
-    --iris-shut: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
-    --iris-open: polygon(121% 79.4%, 79.4% 121%, 20.6% 121%, -21% 79.4%, -21% 20.6%, 20.6% -21%, 79.4% -21%, 121% 20.6%);
     border: 1px solid var(--line-strong);
     color: var(--text);
-  }
-  .btn-ghost::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: color-mix(in srgb, var(--accent) 20%, transparent);
-    clip-path: var(--iris-shut);
-    transition: clip-path 0.3s cubic-bezier(0.5, 0, 0.75, 0);
   }
   @media (hover: hover) {
     .btn-ghost:hover {
       border-color: var(--accent);
     }
-    .btn-ghost:hover::before {
-      clip-path: var(--iris-open);
-      transition: clip-path 0.6s var(--ease-out);
-    }
   }
   .btn-ghost:focus-visible {
     border-color: var(--accent);
-  }
-  .btn-ghost:focus-visible::before {
-    clip-path: var(--iris-open);
   }
 
   /* SEQUENTIAL SCAN. A confocal acquires one channel after another;

@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import FuzzyText from '@/components/bits/FuzzyText';
-import Magnet from '@/components/bits/Magnet';
 
 const NotFound = () => {
   const t = useTranslations('NotFound');
@@ -33,7 +32,6 @@ const NotFound = () => {
         <p className="mt-6 max-w-lg text-lg text-muted">{t('body')}</p>
         <Link href="/#projects" className="btn btn-primary mt-10">
           {t('cta')}
-          <Magnet />
         </Link>
       </div>
     </section>

@@ -7,7 +7,6 @@ import { Countries, Status, hostname } from '@/components/ui/ProjectMeta';
 import Reveal from '@/components/ui/Reveal';
 import ShotCycle from '@/components/ui/ShotCycle';
 import Arrow from '@/components/ui/Arrow';
-import Magnet from '@/components/bits/Magnet';
 
 interface CaseFileProps {
   project: Project;
@@ -69,7 +68,6 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                 {tProject('openSite')}
                 <Arrow dir="out" />
-                <Magnet />
               </a>
             )}
             <Status status={project.status} />

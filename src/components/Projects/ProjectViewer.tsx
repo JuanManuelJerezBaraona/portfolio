@@ -7,8 +7,6 @@ import { Project } from '@/types';
 import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
 import ShotCycle from '@/components/ui/ShotCycle';
 import Arrow from '@/components/ui/Arrow';
-import DecryptedText from '@/components/bits/DecryptedText';
-import Magnet from '@/components/bits/Magnet';
 
 interface ProjectViewerProps {
   projects: Project[];
@@ -150,11 +148,10 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                     <Link href={`/proyectos/${project.id}`} className="btn btn-primary">
                       {t('fullCase')}
                       <Arrow dir="right" />
-                      <Magnet />
                     </Link>
                     {project.url && (
                       <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                        <DecryptedText text={t('openSite')} trigger="control" speed={40} />
+                        {t('openSite')}
                         <Arrow dir="out" />
                       </a>
                     )}

@@ -4,7 +4,6 @@ import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import Arrow from '@/components/ui/Arrow';
 import SocialIcon from '@/components/ui/SocialIcon';
-import DecryptedText from '@/components/bits/DecryptedText';
 import VariableProximity from '@/components/bits/VariableProximity';
 
 const Contact = () => {
@@ -65,15 +64,15 @@ const Contact = () => {
                   <li key={link.id}>
                     <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
                       <SocialIcon icon={link.icon} />
-                      <DecryptedText text={link.name} trigger="control" speed={40} />
+                      {link.name}
                       <Arrow dir="out" />
                     </a>
                   </li>
                 ))}
                 <li>
                   <a href={info.cv} download className="btn btn-ghost">
-                    <DecryptedText text={tCv('download')} trigger="control" speed={40} />
-                    <span className="meta text-muted">PDF</span>
+                    {tCv('download')}
+                    <span className="meta opacity-60">PDF</span>
                   </a>
                 </li>
               </ul>

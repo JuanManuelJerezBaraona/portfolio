@@ -8,9 +8,7 @@
  *   chromatogram colors them (A GFP, C DAPI, G YFP, T mCherry), so the word
  *   dissolves into a sequence and is read back letter by letter;
  * - the real text is what the server renders (and what stays without JS or
- *   with reduced motion). With `trigger="load"` the read runs once after
- *   `delay` and again on hover; with `trigger="control"` it runs whenever the
- *   pointer enters (or the keyboard focuses) the link or button it labels.
+ *   with reduced motion); the read runs once after `delay` and again on hover.
  * As in the original, each scrambled cell keeps the real letter invisible to
  * hold its width, so nothing around it moves, and screen readers get the text.
  */
@@ -40,8 +38,6 @@ interface DecryptedTextProps {
   delay?: number;
   /** Time per step of the read, in ms. */
   speed?: number;
-  /** `load`: once after `delay`, then on hover. `control`: whenever its link or button is hovered or focused. */
-  trigger?: 'load' | 'control';
   className?: string;
 }
 
@@ -49,7 +45,6 @@ export default function DecryptedText({
   text,
   delay = 0,
   speed = 70,
-  trigger = 'load',
   className = '',
 }: DecryptedTextProps) {
   const chars = useMemo(() => Array.from(text), [text]);
@@ -58,7 +53,6 @@ export default function DecryptedText({
   const cellRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const glyphRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const timer = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
-  const rootRef = useRef<HTMLSpanElement>(null);
 
   // A wave turns each letter into a base (letter i at tick i), then a second
   // wave reads them back in the same order (letter i at tick n + LEAD + i).
@@ -85,33 +79,13 @@ export default function DecryptedText({
   }, [chars, speed]);
 
   useEffect(() => {
-    const stop = () => {
+    const start = setTimeout(read, delay);
+    return () => {
+      clearTimeout(start);
       clearInterval(timer.current);
       timer.current = undefined;
     };
-    if (trigger === 'load') {
-      const start = setTimeout(read, delay);
-      return () => {
-        clearTimeout(start);
-        stop();
-      };
-    }
-    const control = rootRef.current?.closest<HTMLElement>('a, button, .btn');
-    if (!control) return stop;
-    const onEnter = (event: PointerEvent) => {
-      if (event.pointerType === 'mouse') read();
-    };
-    const onFocus = () => {
-      if (control.matches(':focus-visible')) read();
-    };
-    control.addEventListener('pointerenter', onEnter);
-    control.addEventListener('focus', onFocus);
-    return () => {
-      control.removeEventListener('pointerenter', onEnter);
-      control.removeEventListener('focus', onFocus);
-      stop();
-    };
-  }, [read, delay, trigger]);
+  }, [read, delay]);
 
   // A base can be wider than the letter it stands in for: squeeze it to fit.
   useLayoutEffect(() => {
@@ -128,7 +102,7 @@ export default function DecryptedText({
   }, [cells]);
 
   return (
-    <span ref={rootRef} className={className} onMouseEnter={trigger === 'load' ? read : undefined}>
+    <span className={className} onMouseEnter={read}>
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
         {chars.map((char, index) => {
