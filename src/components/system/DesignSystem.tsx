@@ -3,6 +3,8 @@ import { Link } from '@/i18n/navigation';
 import { Countries, Status } from '@/components/ui/ProjectMeta';
 import Reveal from '@/components/ui/Reveal';
 import TagMark from '@/components/ui/TagMark';
+import DecryptedText from '@/components/bits/DecryptedText';
+import Magnet from '@/components/bits/Magnet';
 import { contrast, tokenValue, type Mode } from './tokens';
 
 const MODES: Mode[] = ['fluorescence', 'brightfield'];
@@ -212,8 +214,13 @@ const DesignSystem = () => {
             <div>
               <h3 className="meta font-normal text-muted">{t('buttons')}</h3>
               <div className="mt-4 flex flex-wrap gap-3">
-                <span className="btn btn-primary">{t('primary')}</span>
-                <span className="btn btn-ghost">{t('ghost')}</span>
+                <span className="btn btn-primary">
+                  {t('primary')}
+                  <Magnet />
+                </span>
+                <span className="btn btn-ghost">
+                  <DecryptedText text={t('ghost')} trigger="control" speed={40} />
+                </span>
               </div>
             </div>
             <div>

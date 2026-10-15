@@ -4,6 +4,8 @@ import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import Arrow from '@/components/ui/Arrow';
 import SocialIcon from '@/components/ui/SocialIcon';
+import DecryptedText from '@/components/bits/DecryptedText';
+import VariableProximity from '@/components/bits/VariableProximity';
 
 const Contact = () => {
   const t = useTranslations('Contact');
@@ -28,7 +30,22 @@ const Contact = () => {
           <div>
             <Reveal>
               <h2 id="contact-heading" className="display text-[2.6rem] sm:text-6xl lg:text-7xl">
-                {t('title')}
+                {/* A scanning beam: while the heading is on screen a band of
+                    excitation light sweeps across it and the letters it
+                    crosses fluoresce in the section's color. The pointer takes
+                    over the beam: letters near it light up and fade back once
+                    it moves on. */}
+                <VariableProximity
+                  label={t('title')}
+                  fromFontVariationSettings="'wdth' 125, 'wght' 820"
+                  toFontVariationSettings="'wdth' 125, 'wght' 900"
+                  fromColor="var(--text)"
+                  toColor="var(--accent)"
+                  radius={160}
+                  falloff="gaussian"
+                  smoothing={0.35}
+                  idleWave
+                />
               </h2>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
                 {t('body')}
@@ -48,14 +65,14 @@ const Contact = () => {
                   <li key={link.id}>
                     <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
                       <SocialIcon icon={link.icon} />
-                      {link.name}
+                      <DecryptedText text={link.name} trigger="control" speed={40} />
                       <Arrow dir="out" />
                     </a>
                   </li>
                 ))}
                 <li>
                   <a href={info.cv} download className="btn btn-ghost">
-                    {tCv('download')}
+                    <DecryptedText text={tCv('download')} trigger="control" speed={40} />
                     <span className="meta text-muted">PDF</span>
                   </a>
                 </li>

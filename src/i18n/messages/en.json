@@ -35,7 +35,7 @@
     "tools": "Tools"
   },
   "Header": {
-    "title": "I traded the microscope for code.",
+    "title": "I traded the microscope for <seq>code</seq>.",
     "intro": "I’m <b>{name}</b>. I studied biotechnology engineering and worked in a neurobiology lab before moving into software. Today I build the quote, payment and after-sales flows for <b>Seguros Falabella</b> with React, Next.js, NestJS and Strapi, and AI is part of my everyday work.",
     "seeProjects": "See projects",
     "level": "Level",

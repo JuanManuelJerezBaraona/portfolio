@@ -1,15 +1,21 @@
-import type { CSSProperties } from 'react';
+import { Children, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { getPersonalInfo } from '@/constants/data';
 import Micrograph from './Micrograph';
 import Arrow from '@/components/ui/Arrow';
+import DecryptedText from '@/components/bits/DecryptedText';
+import Magnet from '@/components/bits/Magnet';
+import CircularText from '@/components/bits/CircularText';
 
 const CHANNELS = [
-  { id: 'ch-c1', stack: 'frontend', color: 'text-dapi', code: 'C1' },
-  { id: 'ch-c2', stack: 'backend', color: 'text-gfp', code: 'C2' },
-  { id: 'ch-c3', stack: 'ai', color: 'text-mcherry', code: 'C3' },
+  { id: 'ch-c1', stack: 'frontend', color: 'text-dapi', code: 'C1', dye: 'DAPI', ring: 'ring-c1' },
+  { id: 'ch-c2', stack: 'backend', color: 'text-gfp', code: 'C2', dye: 'GFP', ring: 'ring-c2' },
+  { id: 'ch-c3', stack: 'ai', color: 'text-mcherry', code: 'C3', dye: 'mCherry', ring: 'ring-c3' },
 ] as const;
+
+/** Engraved on the objective's barrel, like a real one: its optics, then the three channels. */
+const OPTICS = 'PLAN APO 20×/0.75 · ∞/0.17 · WD 1.0 · ';
 
 const delay = (ms: number) => ({ '--rise-delay': `${ms}ms` }) as CSSProperties;
 
@@ -18,6 +24,13 @@ const Header = () => {
   const tStack = useTranslations('Stack');
   const tCv = useTranslations('Cv');
   const info = getPersonalInfo(useLocale());
+  const engraving = [
+    { text: OPTICS, className: 'text-muted' },
+    ...CHANNELS.map((channel) => ({
+      text: `${channel.code} ${channel.dye} ${tStack(channel.stack)} · `,
+      className: `${channel.color} ${channel.ring}`,
+    })),
+  ];
 
   return (
     <header id="home" className="px-4 pb-20 pt-28 sm:px-6 lg:px-8 lg:pb-28 lg:pt-36">
@@ -28,7 +41,11 @@ const Header = () => {
           <p className="rise meta mt-2 text-muted">{info.location}</p>
 
           <h1 className="rise display mt-6 text-[2.75rem] sm:text-6xl lg:text-[5.4rem]" style={delay(80)}>
-            {t('title')}
+            {/* Genetic code turned source code: once the line has come into
+                focus, the word dissolves into DNA bases and is read back. */}
+            {t.rich('title', {
+              seq: (chunks) => <DecryptedText text={Children.toArray(chunks).join('')} delay={1300} />,
+            })}
           </h1>
 
           <p
@@ -45,9 +62,10 @@ const Header = () => {
             <Link href="#projects" className="btn btn-primary">
               {t('seeProjects')}
               <Arrow dir="down" />
+              <Magnet />
             </Link>
             <a href={info.cv} download className="btn btn-ghost">
-              {tCv('download')}
+              <DecryptedText text={tCv('download')} trigger="control" speed={40} />
               <span className="meta text-muted">PDF</span>
             </a>
           </div>
@@ -79,16 +97,22 @@ const Header = () => {
           </dl>
         </div>
 
-        <figure className="scope-rig mx-auto w-full max-w-[30rem]">
-          <div className="scope">
-            <Micrograph />
-            <div className="scope-reticle" aria-hidden="true" />
-            <div
-              className="absolute bottom-[17%] right-[19%] z-[4] flex flex-col items-end gap-1"
-              aria-hidden="true"
-            >
-              <span className="h-[3px] w-14 bg-text/85" />
-              <span className="meta text-[0.62rem] text-text/80">20 µm</span>
+        <figure className="scope-rig mx-auto w-full max-w-[34rem]">
+          {/* The objective's barrel, engraved around the field (twice, so the
+              letters keep a tight spacing). A channel switched off dims its
+              name here too. */}
+          <div className="objective">
+            <CircularText className="objective-ring" segments={[...engraving, ...engraving]} />
+            <div className="scope">
+              <Micrograph />
+              <div className="scope-reticle" aria-hidden="true" />
+              <div
+                className="absolute bottom-[17%] right-[19%] z-[4] flex flex-col items-end gap-1"
+                aria-hidden="true"
+              >
+                <span className="h-[3px] w-14 bg-text/85" />
+                <span className="meta text-[0.62rem] text-text/80">20 µm</span>
+              </div>
             </div>
           </div>
 

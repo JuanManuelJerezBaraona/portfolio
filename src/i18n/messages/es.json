@@ -35,7 +35,7 @@
     "tools": "Herramientas"
   },
   "Header": {
-    "title": "Pasé del microscopio al código.",
+    "title": "Pasé del microscopio al <seq>código</seq>.",
     "intro": "Soy <b>{name}</b>. Estudié Ingeniería en Biotecnología y trabajé en un laboratorio de neurobiología antes de dedicarme al software. Hoy construyo los flujos de cotización, pago y postventa de <b>Seguros Falabella</b> con React, Next.js, NestJS y Strapi, y la IA es parte de mi día a día.",
     "seeProjects": "Ver proyectos",
     "level": "Nivel",

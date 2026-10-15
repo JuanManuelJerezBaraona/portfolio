@@ -195,6 +195,33 @@
     box-shadow: 0 0 var(--glow) currentColor;
   }
 
+  /* A DNA base standing in for a letter while the hero's "código" is
+     read (bits/DecryptedText). It glows in its channel, like a swatch. */
+  .seq-base {
+    text-shadow: 0 0 var(--glow) currentColor;
+  }
+
+  /* The block cursor of a file being typed out (bits/TextType): solid while
+     it types, then it blinks three times and goes. */
+  .type-caret {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.15em;
+    margin-left: 0.1em;
+    vertical-align: text-bottom;
+    background: var(--accent);
+    box-shadow: 0 0 var(--glow) var(--accent);
+  }
+  .type-caret.is-done {
+    animation: caret-blink 0.9s steps(1) 3 forwards;
+  }
+  @keyframes caret-blink {
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
   /* ============================================================
      HOVERS  —  each kind of control answers the pointer with a
      different technique from the microscope, so no two feel the
@@ -227,7 +254,10 @@
      top of each other: GFP paints the button, DAPI and mCherry lie over it
      and add up to white (in brightfield the stains multiply to near
      black). On hover they slip out of register and each one shows at the
-     edge it moved towards; a press puts them back. */
+     edge it moved towards; a press puts them back. The button is also
+     pulled toward the pointer (bits/Magnet), and while it travels DAPI
+     and mCherry lag behind its velocity (--magnet-vx/-vy), so the motion
+     shows as chromatic aberration that settles when it stops. */
   .btn-primary {
     --split: 0px;
     background: var(--gfp);
@@ -244,15 +274,19 @@
   }
   .btn-primary::before {
     background: var(--dapi);
-    translate: calc(var(--split) * -1) calc(var(--split) * -0.67);
+    translate:
+      calc(var(--split) * -1 - var(--magnet-vx, 0px))
+      calc(var(--split) * -0.67 - var(--magnet-vy, 0px));
   }
   .btn-primary::after {
     background: var(--mcherry);
-    translate: var(--split) calc(var(--split) * 0.67);
+    translate:
+      calc(var(--split) + var(--magnet-vx, 0px))
+      calc(var(--split) * 0.67 + var(--magnet-vy, 0px));
   }
   @media (hover: hover) {
     .btn-primary:hover {
-      --split: 3px;
+      --split: 4px;
     }
     .btn-primary:hover::before,
     .btn-primary:hover::after {
@@ -260,7 +294,7 @@
     }
   }
   .btn-primary:focus-visible {
-    --split: 3px;
+    --split: 4px;
   }
   .btn-primary:active {
     --split: 0px;
@@ -274,7 +308,9 @@
      open when setting up Köhler illumination: an octagon of light grows
      from the centre until it clears the field, in the section's color.
      The octagon is drawn in percentages, so it always just covers the
-     button, whatever its width. */
+     button, whatever its width. Its label is read like the hero's
+     "código": it dissolves into DNA bases and is read back
+     (bits/DecryptedText with trigger="control"). */
   .btn-ghost {
     --iris-shut: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%, 50% 50%);
     --iris-open: polygon(121% 79.4%, 79.4% 121%, 20.6% 121%, -21% 79.4%, -21% 20.6%, 20.6% -21%, 79.4% -21%, 121% 20.6%);
@@ -286,7 +322,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
     clip-path: var(--iris-shut);
     transition: clip-path 0.3s cubic-bezier(0.5, 0, 0.75, 0);
   }
@@ -406,6 +442,51 @@
       0 0 0 12px var(--stage),
       0 0 0 13px var(--line),
       0 40px 120px -40px color-mix(in srgb, var(--gfp) 25%, transparent);
+  }
+
+  /* OBJECTIVE. The field sits in the objective's barrel, engraved like a
+     real one (bits/CircularText): optics, then the three channels in their
+     colors. The ring turns in with the focus pull on load and a little
+     further under the pointer, like a focus knob; a channel switched off
+     dims its name. The type is sized in container units, so the engraving
+     keeps its spacing at any width. */
+  .objective {
+    position: relative;
+    container-type: inline-size;
+    padding: 7.5%;
+  }
+  .objective-ring {
+    position: absolute;
+    inset: 0;
+    font-family: var(--font-martian), ui-monospace, monospace;
+    font-variation-settings: "wdth" 87.5;
+    font-size: 2.15cqw;
+    line-height: 1;
+    text-transform: uppercase;
+    animation: ring-in 2.2s var(--ease-out) 0.25s both;
+    transition: rotate 0.6s var(--ease-out);
+  }
+  @keyframes ring-in {
+    from {
+      transform: rotate(-28deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @media (hover: hover) {
+    .objective:hover .objective-ring {
+      rotate: 12deg;
+      transition: rotate 1.8s var(--ease-out);
+    }
+  }
+  .objective-ring > span {
+    transition: opacity 0.3s ease;
+  }
+  .scope-rig:has(#ch-c1:not(:checked)) .ring-c1,
+  .scope-rig:has(#ch-c2:not(:checked)) .ring-c2,
+  .scope-rig:has(#ch-c3:not(:checked)) .ring-c3 {
+    opacity: 0.22;
   }
 
   .scope-field {

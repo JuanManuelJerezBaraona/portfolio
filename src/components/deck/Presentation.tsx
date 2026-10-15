@@ -47,7 +47,7 @@ const Presentation = () => {
       <p className="meta mt-[2.5em] text-muted">
         {info.name} · {info.location}
       </p>
-      <h1 className="deck-display mt-[0.3em]">{tHeader('title')}</h1>
+      <h1 className="deck-display mt-[0.3em]">{tHeader.rich('title', { seq: (chunks) => chunks })}</h1>
       <p className="deck-lead mt-[0.8em] text-muted">{info.title}</p>
     </div>
   );

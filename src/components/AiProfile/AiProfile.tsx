@@ -5,6 +5,7 @@ import type { AiStep } from '@/types';
 import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import SectionHeading from '@/components/ui/SectionHeading';
+import TextType from '@/components/bits/TextType';
 
 /**
  * One of his real skills, trimmed to what's safe to show publicly. Kept
@@ -45,8 +46,19 @@ const Skill = () => {
         <span className="text-accent">Claude Code</span>
       </figcaption>
       <div className="grid gap-px bg-line lg:grid-cols-2">
-        <pre className="meta overflow-x-auto bg-void p-3.5 leading-relaxed text-muted">{SKILL_TREE}</pre>
-        <pre className="meta overflow-x-auto bg-void p-3.5 leading-relaxed text-text/85">{SKILL_FRONTMATTER}</pre>
+        {/* Printed as in a terminal the first time it comes into view: the
+            tree, then the frontmatter. */}
+        <TextType
+          text={SKILL_TREE}
+          variableSpeed={{ min: 5, max: 16 }}
+          className="meta overflow-x-auto bg-void p-3.5 leading-relaxed text-muted"
+        />
+        <TextType
+          text={SKILL_FRONTMATTER}
+          initialDelay={1400}
+          variableSpeed={{ min: 5, max: 16 }}
+          className="meta overflow-x-auto bg-void p-3.5 leading-relaxed text-text/85"
+        />
       </div>
     </figure>
   );
