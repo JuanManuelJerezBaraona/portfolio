@@ -11,6 +11,13 @@ const withNextIntl = createNextIntlPlugin({
 });
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    // Pinned to this folder. Left to itself, Next takes the directory of the
+    // topmost lockfile it finds going up (a stray package-lock.json in the
+    // parent folder is enough), and then Turbopack resolves and watches every
+    // project beside this one.
+    root: __dirname,
+  },
   images: {
     // AVIF first (~20–30% lighter than WebP on the screenshots), WebP as fallback.
     formats: ["image/avif", "image/webp"],
