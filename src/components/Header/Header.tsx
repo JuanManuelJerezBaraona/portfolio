@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { getPersonalInfo } from '@/constants/data';
 import Micrograph from './Micrograph';
+import LiveMicrograph from './LiveMicrograph';
 import Arrow from '@/components/ui/Arrow';
 import DecryptedText from '@/components/bits/DecryptedText';
 import CircularText from '@/components/bits/CircularText';
@@ -34,7 +35,8 @@ const Header = () => {
   return (
     <header id="home" className="px-4 pb-20 pt-28 sm:px-6 lg:px-8 lg:pb-28 lg:pt-36">
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
-        <div>
+        {/* Marked for the scroll: the copy dims as the hero leaves (ScrollScenes). */}
+        <div data-hero-copy>
           {/* Who he is before the hook: role and level, readable at a glance. */}
           <p className="rise wide text-wrap text-xl leading-snug sm:text-2xl">{info.title}</p>
           <p className="rise meta mt-2 text-muted">{info.location}</p>
@@ -102,7 +104,15 @@ const Header = () => {
           <div className="objective">
             <CircularText className="objective-ring" segments={[...engraving, ...engraving]} />
             <div className="scope">
-              <Micrograph />
+              {/* The field itself, apart from the rim, the reticle and the scale
+                  bar: the scroll takes it out of focus as the hero leaves. The
+                  still image comes from the server; the live one takes over
+                  from it once it can. */}
+              <div className="scope-view" data-hero-view>
+                <Micrograph />
+                <LiveMicrograph />
+                <div className="scope-haze" aria-hidden="true" />
+              </div>
               <div className="scope-reticle" aria-hidden="true" />
               <div
                 className="absolute bottom-[17%] right-[19%] z-[4] flex flex-col items-end gap-1"
@@ -118,6 +128,8 @@ const Header = () => {
             <fieldset className="@container">
               <legend className="meta text-muted">
                 {t('channels')}
+                {/* Only shown once the live image is running (.scope[data-live]). */}
+                <span className="live-hint" aria-hidden="true"> {t('stimulate')}</span>
               </legend>
               {/* Three across only when each box fits "C1 Frontend"; otherwise one per row. */}
               <div className="mt-3 grid grid-cols-1 gap-2 @md:grid-cols-3">

@@ -1,4 +1,15 @@
 import type { CSSProperties } from 'react';
+import {
+  AXON_OPACITY,
+  AXON_WIDTH,
+  BRANCH_OPACITY,
+  BRANCH_WIDTH,
+  PUNCTA_OPACITY,
+  PUNCTA_WIDTH,
+  SIZE,
+  growCulture,
+  type Point,
+} from './neuron';
 
 /**
  * A cultured neuron under a confocal microscope, drawn procedurally.
@@ -7,184 +18,54 @@ import type { CSSProperties } from 'react';
  *   C2 · GFP     → dendrites, axon and somas
  *   C3 · mCherry → synaptic puncta along the dendrites
  *
- * The generator is seeded, so the server always renders the same image and
- * nothing ships to the client. Each channel is its own <svg>; globals.css
- * blends them additively (`.scope-layer`) and wires up the toggles.
+ * The culture comes from a seeded generator (`neuron.ts`), so the server
+ * always renders the same image and this file ships nothing to the client.
+ * Each channel is its own <svg>; globals.css blends them additively
+ * (`.scope-layer`) and wires up the toggles. With JavaScript and WebGL, the
+ * same culture is redrawn live on top of it (`LiveMicrograph`).
  */
-
-const SIZE = 600;
-
-/** Small, fast, seedable PRNG (mulberry32). */
-const createRandom = (seed: number) => {
-  let state = seed;
-  return () => {
-    state = (state + 0x6d2b79f5) | 0;
-    let t = Math.imul(state ^ (state >>> 15), 1 | state);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-};
 
 const round = (n: number) => Math.round(n * 10) / 10;
 
 /** A path number at 0.1 precision without the leading zero (`-.4`, `.7`). */
 const num = (n: number) => String(round(n)).replace(/^(-?)0\./, '$1.');
 
-interface Point {
-  x: number;
-  y: number;
-}
-
-interface Segment {
-  /** Branch order: 0 for primary dendrites, +1 per recursive call. */
-  order: number;
-  d: string;
-}
-
-interface NeuronSpec {
-  x: number;
-  y: number;
-  dendrites: number;
-  reach: number;
-  depth: number;
-  soma: number;
-  axon?: number;
-}
-
-const NEURONS: NeuronSpec[] = [
-  { x: 292, y: 300, dendrites: 7, reach: 74, depth: 3, soma: 15, axon: 420 },
-  { x: 110, y: 470, dendrites: 5, reach: 58, depth: 3, soma: 11, axon: 260 },
-  { x: 490, y: 120, dendrites: 6, reach: 60, depth: 3, soma: 12 },
-  { x: -30, y: 170, dendrites: 5, reach: 70, depth: 3, soma: 12 },
-  { x: 640, y: 450, dendrites: 5, reach: 72, depth: 3, soma: 12 },
-];
-
-/** Width (and brightness) per branch order: primary dendrites are thickest. */
-const BRANCH_WIDTH = [3.4, 2.1, 1.3, 0.8];
-const BRANCH_OPACITY = [0.95, 0.85, 0.7, 0.55];
-
-/** Fixed seed: the neuron grows the same way on every visit. */
-const SEED = 20131126;
-
-const generate = () => {
-  const random = createRandom(SEED);
-  const range = (min: number, max: number) => min + random() * (max - min);
-
-  // Every dendrite segment, tagged with its branch order (= recursion depth).
-  const segments: Segment[] = [];
-  const axons: string[] = [];
-  const somas: { x: number; y: number; r: number; rot: number }[] = [];
-  const puncta: Point[] = [];
-
-  const walk = (start: Point, angle: number, length: number, steps: number, wander: number) => {
-    const points: Point[] = [start];
-    let { x, y } = start;
-    let heading = angle;
-    const step = length / steps;
-    for (let i = 0; i < steps; i += 1) {
-      heading += range(-wander, wander);
-      x += Math.cos(heading) * step;
-      y += Math.sin(heading) * step;
-      points.push({ x, y });
-    }
-    return { points, heading };
-  };
-
-  // Relative steps from the rounded points (`M x y l dx dy dx dy…`): the same
-  // line as absolute `L x y` per point in about half the characters, which
-  // matters because the markup ships twice (HTML + RSC payload).
-  const toPath = (points: Point[]) => {
-    const [first, ...rest] = points.map((p) => ({ x: round(p.x), y: round(p.y) }));
-    let previous = first;
-    const steps = rest.map((p) => {
-      const step = `${num(p.x - previous.x)} ${num(p.y - previous.y)}`;
-      previous = p;
-      return step;
-    });
-    // A minus sign already separates two numbers.
-    return `M${first.x} ${first.y}l${steps.join(' ')}`.replace(/ -/g, '-');
-  };
-
-  const grow = (start: Point, angle: number, length: number, order: number, maxOrder: number) => {
-    const { points, heading } = walk(start, angle, length, 5, 0.28);
-    segments.push({ order, d: toPath(points) });
-
-    // Synapses sit along the dendrite, slightly off the shaft.
-    for (const p of points.slice(1)) {
-      if (random() < 0.55 + order * 0.1) {
-        puncta.push({ x: p.x + range(-3, 3), y: p.y + range(-3, 3) });
-      }
-    }
-
-    if (order >= maxOrder) return;
-    const tip = points[points.length - 1];
-    const spread = range(0.35, 0.7);
-    grow(tip, heading - spread, length * range(0.6, 0.8), order + 1, maxOrder);
-    if (random() < 0.85) {
-      grow(tip, heading + spread, length * range(0.6, 0.8), order + 1, maxOrder);
-    }
-  };
-
-  NEURONS.forEach((spec) => {
-    const offset = random() * Math.PI * 2;
-    for (let i = 0; i < spec.dendrites; i += 1) {
-      const angle = offset + (i / spec.dendrites) * Math.PI * 2 + range(-0.3, 0.3);
-      const start = {
-        x: spec.x + Math.cos(angle) * spec.soma * 0.7,
-        y: spec.y + Math.sin(angle) * spec.soma * 0.7,
-      };
-      grow(start, angle, spec.reach * range(0.8, 1.25), 0, spec.depth);
-    }
-
-    if (spec.axon) {
-      const { points } = walk(
-        { x: spec.x, y: spec.y },
-        offset + range(0, Math.PI * 2),
-        spec.axon,
-        28,
-        0.16,
-      );
-      axons.push(toPath(points));
-    }
-
-    somas.push({ x: spec.x, y: spec.y, r: spec.soma, rot: range(-40, 40) });
+// Relative steps from the rounded points (`M x y l dx dy dx dy…`): the same
+// line as absolute `L x y` per point in about half the characters, which
+// matters because the markup ships twice (HTML + RSC payload).
+const toPath = (points: Point[]) => {
+  const [first, ...rest] = points.map((p) => ({ x: round(p.x), y: round(p.y) }));
+  let previous = first;
+  const steps = rest.map((p) => {
+    const step = `${num(p.x - previous.x)} ${num(p.y - previous.y)}`;
+    previous = p;
+    return step;
   });
-
-  // One path string per branch order keeps the hero's markup small.
-  const branches = BRANCH_WIDTH.map((_, order) =>
-    segments.filter((segment) => segment.order === order).map((segment) => segment.d).join(''),
-  );
-
-  // Glia and out-of-plane cells: nuclei with no visible processes.
-  const nuclei = somas.map((s) => ({ x: s.x, y: s.y, rx: s.r * 0.78, ry: s.r * 0.66, rot: s.rot }));
-  for (let i = 0; i < 26; i += 1) {
-    const r = range(6, 10.5);
-    nuclei.push({
-      x: range(20, SIZE - 20),
-      y: range(20, SIZE - 20),
-      rx: r,
-      ry: r * range(0.62, 0.85),
-      rot: range(0, 180),
-    });
-  }
-
-  // Background puncta that aren't on a visible dendrite.
-  for (let i = 0; i < 70; i += 1) {
-    puncta.push({ x: range(0, SIZE), y: range(0, SIZE) });
-  }
-
-  // Split puncta into three sizes; each size is a single path of
-  // zero-length round-capped strokes, i.e. dots.
-  const punctaBySize = ['', '', ''];
-  for (const p of puncta) {
-    const bucket = Math.floor(random() * 3);
-    punctaBySize[bucket] += `M${round(p.x)} ${round(p.y)}h0`;
-  }
-
-  return { branches, axons, somas, nuclei, punctaBySize };
+  // A minus sign already separates two numbers.
+  return `M${first.x} ${first.y}l${steps.join(' ')}`.replace(/ -/g, '-');
 };
 
-const IMAGE = generate();
+const CULTURE = growCulture();
+
+const IMAGE = {
+  // One path string per branch order keeps the hero's markup small.
+  branches: BRANCH_WIDTH.map((_, order) =>
+    CULTURE.branches
+      .filter((branch) => branch.order === order)
+      .map((branch) => toPath(branch.points))
+      .join(''),
+  ),
+  axons: CULTURE.axons.map((axon) => toPath(axon.points)),
+  somas: CULTURE.somas,
+  nuclei: CULTURE.nuclei,
+  // Each size is a single path of zero-length round-capped strokes, i.e. dots.
+  punctaBySize: PUNCTA_WIDTH.map((_, size) =>
+    CULTURE.puncta
+      .filter((p) => p.size === size)
+      .map((p) => `M${round(p.x)} ${round(p.y)}h0`)
+      .join(''),
+  ),
+};
 
 const Glow = ({ id, amount }: { id: string; amount: number }) => (
   <filter id={id} x="-10%" y="-10%" width="120%" height="120%">
@@ -216,7 +97,7 @@ export const micrographSvg = (colors: { c1: string; c2: string; c3: string }) =>
   const branches = IMAGE.branches
     .map((d, order) => `<path d="${d}" stroke-width="${BRANCH_WIDTH[order]}" stroke-opacity="${BRANCH_OPACITY[order]}"/>`)
     .join('');
-  const axons = IMAGE.axons.map((d) => `<path d="${d}" stroke-width="0.9" stroke-opacity="0.6"/>`).join('');
+  const axons = IMAGE.axons.map((d) => `<path d="${d}" stroke-width="${AXON_WIDTH}" stroke-opacity="${AXON_OPACITY}"/>`).join('');
   const somas = IMAGE.somas
     .map(
       (s) =>
@@ -224,7 +105,7 @@ export const micrographSvg = (colors: { c1: string; c2: string; c3: string }) =>
     )
     .join('');
   const puncta = IMAGE.punctaBySize
-    .map((d, i) => `<path d="${d}" stroke-width="${[2.4, 3.4, 4.6][i]}" stroke-opacity="${[0.75, 0.85, 0.95][i]}"/>`)
+    .map((d, i) => `<path d="${d}" stroke-width="${PUNCTA_WIDTH[i]}" stroke-opacity="${PUNCTA_OPACITY[i]}"/>`)
     .join('');
 
   const glow = (id: string, amount: number) =>
@@ -259,11 +140,11 @@ export const micrographLayerSvg = (layer: (typeof MICROGRAPH_LAYERS)[number]) =>
         IMAGE.branches
           .map((d, order) => `<path d="${d}" stroke-width="${BRANCH_WIDTH[order]}" stroke-opacity="${BRANCH_OPACITY[order]}"/>`)
           .join('') +
-        IMAGE.axons.map((d) => `<path d="${d}" stroke-width="0.9" stroke-opacity="0.6"/>`).join('') +
+        IMAGE.axons.map((d) => `<path d="${d}" stroke-width="${AXON_WIDTH}" stroke-opacity="${AXON_OPACITY}"/>`).join('') +
         `</g>`
       : `<defs>${glow(1.6)}</defs><g filter="url(#g)" fill="none" stroke="#fff" stroke-linecap="round">` +
         IMAGE.punctaBySize
-          .map((d, i) => `<path d="${d}" stroke-width="${[2.4, 3.4, 4.6][i]}" stroke-opacity="${[0.75, 0.85, 0.95][i]}"/>`)
+          .map((d, i) => `<path d="${d}" stroke-width="${PUNCTA_WIDTH[i]}" stroke-opacity="${PUNCTA_OPACITY[i]}"/>`)
           .join('') +
         `</g>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SIZE} ${SIZE}" width="${SIZE}" height="${SIZE}">${body}</svg>`;

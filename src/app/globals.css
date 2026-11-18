@@ -119,6 +119,14 @@
   initial-value: 0;
 }
 
+/* How far down an image the acquisition has got (see SCROLL SCENES): 1 is
+   the whole image. Inherited, so the frame's scan line reads it. */
+@property --scan-y {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
 @theme inline {
   --color-void: var(--void);
   --color-stage: var(--stage);
@@ -312,6 +320,13 @@
   }
   .btn:focus-visible {
     --acq: 1;
+    color: var(--acq-ink);
+  }
+  /* A button that has just done its job (ui/CopyButton) holds the acquired
+     image until it goes back to its label. */
+  .btn[data-copied] {
+    --acq: 1;
+    border-color: var(--accent);
     color: var(--acq-ink);
   }
   .btn:active {
@@ -527,6 +542,64 @@
   }
   .scope-mask--puncta {
     mask-image: url("/micrograph/puncta.svg");
+  }
+
+  /* LIVE. With WebGL the same culture is redrawn on a canvas (Header/
+     liveScope.ts): a z-stack that the pointer tilts, the scroll refocuses
+     and a click stimulates. It fades in over the still image once its
+     first frame is drawn (`data-live`, set by LiveMicrograph), and the
+     still image stops animating underneath. The haze around the central
+     neuron, part of the dendrite mask in the still image, is a layer of
+     its own here, blended like a channel. */
+  .scope-live,
+  .scope-haze {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.9s var(--ease-out);
+  }
+  .scope-haze {
+    pointer-events: none;
+    mix-blend-mode: var(--blend);
+    background: radial-gradient(
+      ellipse 33.33% 33.33% at 48.67% 50%,
+      color-mix(in srgb, var(--gfp) 22%, transparent),
+      transparent
+    );
+  }
+  .scope[data-live] {
+    cursor: crosshair;
+  }
+  .scope[data-live] .scope-live,
+  .scope[data-live] .scope-haze {
+    opacity: 1;
+  }
+  .scope[data-live] .scope-field {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.9s var(--ease-out),
+      visibility 0s 0.9s;
+  }
+  .scope[data-live] .soma {
+    animation: none;
+  }
+  .scope-rig:has(#ch-c2:not(:checked)) .scope-haze {
+    opacity: 0;
+  }
+  /* The line that says the field answers a click, shown only once it
+     does. It holds its place from the start, so nothing moves when the
+     live image takes over. */
+  .live-hint {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.9s var(--ease-out);
+  }
+  .scope-rig:has(.scope[data-live]) .live-hint {
+    visibility: visible;
+    opacity: 1;
   }
 
   /* Lens vignette + faint reticle. */
@@ -1671,7 +1744,11 @@
   .chapter {
     --light-x: 0%;
     --bounce-x: 100%;
-    border-top: 3px solid var(--accent);
+    position: relative;
+    /* Room for the rule (.chapter-rule), which is its own element so the
+       scroll can draw it across. */
+    border-top: 3px solid transparent;
+    background-clip: padding-box;
     background-image:
       radial-gradient(
         ellipse 90% 70% at var(--light-x) 0%,
@@ -1688,6 +1765,16 @@
     --light-x: 100%;
     --bounce-x: 0%;
   }
+  /* Drawn from the corner the chapter's light comes from. */
+  .chapter-rule {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -3px;
+    height: 3px;
+    background: var(--accent);
+    transform-origin: var(--light-x) 50%;
+  }
 
   /* Sized against its own width, so the longest name (ARQUITECTURA)
      just fits on a phone and caps out on a desktop. */
@@ -1700,6 +1787,8 @@
     text-transform: uppercase;
     color: var(--accent);
     transform-origin: 0 60%;
+    /* Full width unless the scroll is bringing it up to it (SCROLL SCENES). */
+    font-variation-settings: "wdth" var(--cover-wdth, 125);
   }
 
   .reveal-ready .reveal.cover {
@@ -1867,6 +1956,170 @@
   /* Without JS there is no .reveal-ready, so the rule is simply there. */
   .reveal-ready .protocol-step.is-critical:not(.is-in)::before {
     scale: 0 1;
+  }
+}
+
+/* ============================================================
+   SCROLL SCENES  —  what the scroll wheel moves (ScrollScenes.tsx,
+   GSAP). The page is complete without any of it: these rules only
+   describe the parts GSAP drives, and `html.scenes-on` is set while
+   it does, so the one-shot transitions it replaces step aside.
+   ============================================================ */
+@layer components {
+  /* STAGE POSITION. A line under the navbar that fills with the scroll,
+     in the color of the section in view. Not drawn until GSAP is. */
+  .nav-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 calc(var(--glow) * 0.6) color-mix(in srgb, var(--accent) 55%, transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    pointer-events: none;
+    transition: background-color 0.4s ease;
+  }
+
+  /* HERO. The copy and the field are moved by the scroll as the hero
+     leaves; the field's wrapper only exists to take that blur and scale,
+     which the rim around it must not get. */
+  .scope-view {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* COVERS. With the scroll driving the name, its own transition would
+     chase every frame, and the one-shot starting pose would stack on top. */
+  .scenes-on .cover .cover-name {
+    transform: none;
+    transition: none;
+  }
+  .cover-name.is-sharp {
+    filter: none !important;
+  }
+
+  /* ACQUISITION. An image is acquired line by line the first time it
+     comes up, the way the buttons are under the pointer: the excitation
+     lines (C1, C2, C3) run down the frame and leave the image behind
+     them. --scan-y (0 → 1) is how far they've got. Only while GSAP runs
+     the scan: at rest there's no clip at all. */
+  .scenes-on .acquire:not(.is-acquired) {
+    position: relative;
+    clip-path: inset(0 0 calc((1 - var(--scan-y)) * 100%) 0);
+  }
+  .scenes-on .acquire:not(.is-acquired)::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    top: calc(var(--scan-y) * 100% - 6px);
+    height: 6px;
+    background: linear-gradient(var(--dapi) 0 2px, var(--gfp) 2px 4px, var(--mcherry) 4px 6px);
+    box-shadow: 0 0 var(--glow) var(--gfp);
+    opacity: clamp(0, min(var(--scan-y), 1 - var(--scan-y)) * 14, 1);
+    pointer-events: none;
+  }
+
+  /* PROJECT INDEX. With the scroll, the bar of each stage reads how far
+     through its project the stage is: empty ahead, filling under the
+     objective, full (and dimmed) behind. It takes the place of the
+     on/off bar (.sample-row::before). */
+  .sample-bar {
+    display: none;
+  }
+  .scenes-on .sample-row::before {
+    content: none;
+  }
+  .scenes-on .sample-bar {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0.4;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity 0.35s ease, box-shadow 0.35s ease;
+  }
+  .scenes-on .sample-row[aria-current="true"] .sample-bar {
+    opacity: 1;
+    box-shadow: 0 0 calc(var(--glow) * 1.2) var(--accent);
+  }
+
+  /* HEXAGON. A request on its way through the layers. Nothing here shows
+     until the scene moves it: the wire's pulse waits above its clip, the
+     routes are a dash parked before the start of their path, and the
+     flashes and hits are transparent. */
+  .hex-wire {
+    position: relative;
+    width: 3px;
+    overflow: hidden;
+    background: linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 100% no-repeat;
+  }
+  /* Parked above the wire's clip with `top`, not a transform: the scene
+     owns the transform. */
+  .hex-wire-pulse {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -50%;
+    height: 50%;
+    background: currentColor;
+    box-shadow: 0 0 var(--glow) currentColor;
+  }
+  .hex-hit {
+    position: absolute;
+    inset: -1px;
+    border: 1px solid currentColor;
+    box-shadow:
+      0 0 calc(var(--glow) * 1.4) -2px currentColor,
+      inset 0 0 calc(var(--glow) * 1.2) -4px currentColor;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hex-flash {
+    fill-opacity: 0.16;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hex-route {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 12 100;
+    stroke-dashoffset: 14;
+    pointer-events: none;
+    filter: drop-shadow(0 0 calc(var(--glow) * 0.4) currentColor);
+  }
+
+  /* PROTOCOL. The sheet's left edge fills as the steps are run, and a
+     step's number lights once it's been passed. */
+  .protocol-rail {
+    position: absolute;
+    z-index: 1;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 calc(var(--glow) * 1.2) var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    pointer-events: none;
+  }
+  .protocol-n {
+    color: var(--muted);
+    transition: color 0.4s ease;
+  }
+  .is-critical .protocol-n,
+  [data-protocol-step][data-done] .protocol-n {
+    color: var(--accent);
   }
 }
 

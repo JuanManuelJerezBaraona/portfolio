@@ -1,6 +1,7 @@
 import type { Locale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { AboutMe, AiProfile, Architecture, Contact, Header, Projects, Skills } from '@/components';
+import ScrollScenes from '@/components/motion/ScrollScenes';
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -19,6 +20,7 @@ const HomePage = async ({ params }: HomePageProps) => {
       <AiProfile />
       <Skills />
       <Contact />
+      <ScrollScenes />
     </>
   );
 };

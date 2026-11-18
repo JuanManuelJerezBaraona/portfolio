@@ -91,6 +91,7 @@ const Skills = () => {
       className="sec-skills chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="skills-heading"
     >
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="skills" note={t('note', { count: skills.length })} />
         <SectionHeading id="skills-heading" className="mt-14" title={t('title')}>

@@ -3,6 +3,7 @@
 import { NAV_LINKS, PERSONAL_INFO, getNavLinks } from '@/constants/data';
 import LocaleSwitch from '@/components/ui/LocaleSwitch';
 import ModeToggle from '@/components/ui/ModeToggle';
+import ScrollProgress from '@/components/motion/ScrollProgress';
 import TagMark from '@/components/ui/TagMark';
 import { Link, usePathname } from '@/i18n/navigation';
 import { useUIStore } from '@/store/uiStore';
@@ -21,7 +22,8 @@ const Navbar = () => {
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const t = useTranslations('Nav');
-  const links = getNavLinks(useLocale());
+  const locale = useLocale();
+  const links = getNavLinks(locale);
   const isHome = pathname === '/';
 
   // Real links (open in a new tab, copy the address); on the home page a
@@ -178,6 +180,8 @@ const Navbar = () => {
             </button>
           </div>
         </div>
+        {/* How far down the page the stage is, in the color of the section in view. */}
+        <ScrollProgress page={`${locale}${pathname}`} className={isHome && activeSection ? `sec-${activeSection}` : ''} />
       </div>
 
       <button

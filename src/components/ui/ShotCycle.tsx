@@ -29,6 +29,8 @@ interface ShotCycleProps {
   priority?: boolean;
   /** False holds the cycle, e.g. on a carousel slide out of focus. */
   active?: boolean;
+  /** Acquire the frame line by line the first time it comes up (`.acquire`, run by ScrollScenes). */
+  acquire?: boolean;
   /** Mobile shots, paired by index with `shots`: the phone shows the one that matches the current shot. */
   phone?: { shots: string[]; className: string; sizes: string };
 }
@@ -45,7 +47,7 @@ interface ShotCycleProps {
  * Only the shots reached so far plus the next one are mounted: stacked in
  * the same spot, lazy loading would otherwise fetch every shot at once.
  */
-const ShotCycle = ({ shots, title, sizes, priority, active = true, phone }: ShotCycleProps) => {
+const ShotCycle = ({ shots, title, sizes, priority, active = true, acquire = false, phone }: ShotCycleProps) => {
   const t = useTranslations('Project');
   const frame = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(0);
@@ -91,7 +93,12 @@ const ShotCycle = ({ shots, title, sizes, priority, active = true, phone }: Shot
   return (
     <>
       <div ref={frame} className="shots">
-        <div className="shots-stack" onPointerEnter={hover(true)} onPointerLeave={hover(false)}>
+        <div
+          className={`shots-stack${acquire ? ' acquire' : ''}`}
+          data-acquire={acquire || undefined}
+          onPointerEnter={hover(true)}
+          onPointerLeave={hover(false)}
+        >
           {shots.map((src, index) => {
             if (!mounted(index)) return null;
             const isCurrent = index === current;

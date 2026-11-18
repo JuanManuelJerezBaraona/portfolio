@@ -13,6 +13,7 @@ const AboutMe = () => {
 
   return (
     <section id="about" className="sec-about chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8" aria-labelledby="about-heading">
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="about" note={t('note')} />
         <div className="mt-14 grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
@@ -22,8 +23,12 @@ const AboutMe = () => {
               <p className="mt-4">{t('code')}</p>
             </SectionHeading>
 
-            <Reveal delay={120} className="mt-12 flex items-end gap-5">
-              <div className="relative aspect-[3/4] w-32 flex-none overflow-hidden border border-line sm:w-40">
+            <div className="mt-12 flex items-end gap-5">
+              {/* Acquired line by line the first time it comes up (ScrollScenes). */}
+              <div
+                className="acquire relative aspect-[3/4] w-32 flex-none overflow-hidden border border-line sm:w-40"
+                data-acquire
+              >
                 <Image
                   src={info.profileImage}
                   alt={t('portrait', { name: info.name })}
@@ -32,16 +37,17 @@ const AboutMe = () => {
                   className="object-cover"
                 />
               </div>
-              <p className="meta pb-1 text-muted">
+              <Reveal as="p" delay={200} className="meta pb-1 text-muted">
                 {info.name}
                 <br />
                 {info.location}
-              </p>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
 
-          <Reveal delay={80}>
-            <ol className="border-t border-line" aria-label={t('timeline')}>
+          {/* No Reveal around the list: its entries come into focus one after another (ScrollScenes). */}
+          <div>
+            <ol className="border-t border-line" aria-label={t('timeline')} data-timeline>
               {timeline.map((entry) => (
                 <li
                   key={`${entry.period}-${entry.place}`}
@@ -70,7 +76,7 @@ const AboutMe = () => {
                 </li>
               ))}
             </ol>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

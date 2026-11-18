@@ -43,7 +43,8 @@
     "inProduction": "En producción",
     "profile": "Perfil",
     "aiReady": "IA-ready",
-    "channels": "Neurona en cultivo, tres canales. Apaga uno para ver cada capa."
+    "channels": "Neurona en cultivo, tres canales. Apaga uno para ver cada capa.",
+    "stimulate": "Haz clic o toca una neurona para estimularla."
   },
   "Cv": {
     "download": "Descargar CV"
@@ -147,7 +148,9 @@
     "location": "Ubicación",
     "languages": "Idiomas",
     "languagesValue": "Español nativo · Inglés B2",
-    "fullStackSince": "Full Stack desde"
+    "fullStackSince": "Full Stack desde",
+    "copy": "Copiar correo",
+    "copied": "Correo copiado"
   },
   "NotFound": {
     "title": "Esta página está fuera de foco.",
@@ -220,7 +223,8 @@
       "contrast": "El texto principal, el secundario y los seis colores de sección superan 4,5:1 (WCAG AA) en ambos modos. El más bajo es {min}:1.",
       "blend": "En fluorescencia los canales se suman (plus-lighter), como la luz; en campo claro se multiplican, como las tinciones.",
       "hover": "Cada control responde al cursor con una técnica distinta del microscopio: los botones se adquieren línea por línea, como en un microscopio de barrido (el secundario se llena con el color de la sección y el principal pasa a campo oscuro), los enlaces se subrayan canal por canal, y las flechas mueven la platina al campo siguiente. El foco del teclado recibe la misma respuesta.",
-      "motion": "Con movimiento reducido no se anima nada: ni el enfoque de las secciones ni el ciclo de capturas.",
+      "scroll": "El scroll mueve la platina: el nombre de cada sección se ensancha y entra en foco, su regla se dibuja, las imágenes se adquieren línea por línea y una barra bajo el menú marca el avance con el color de la sección. La neurona del inicio es una pila de planos dibujada en WebGL: el cursor la inclina, al alejarse cambia el plano de foco y un clic la estimula.",
+      "motion": "Con movimiento reducido no se anima nada: ni el enfoque de las secciones, ni el ciclo de capturas, ni las escenas de scroll; la neurona queda como imagen fija. Solo la barra de avance sigue al scroll.",
       "focus": "El foco del teclado siempre se ve, y los controles más chicos (las capturas, la escala del carrusel y los canales) responden al toque en unos 44 px."
     }
   },

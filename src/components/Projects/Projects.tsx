@@ -16,6 +16,7 @@ const Projects = () => {
       className="sec-projects chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="projects-heading"
     >
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="projects" note={t('note')} />
         <SectionHeading

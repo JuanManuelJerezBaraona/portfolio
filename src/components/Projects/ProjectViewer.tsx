@@ -69,6 +69,8 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                   aria-current={isActive ? 'true' : undefined}
                   className="sample-row group grid grid-cols-[2.5rem_1fr] items-baseline gap-4 border-b border-line px-4 py-5"
                 >
+                  {/* Fills with the scroll through this project (ScrollScenes). */}
+                  <span className="sample-bar" data-field-bar={index} aria-hidden="true" />
                   <span className={`meta ${isActive ? 'text-accent' : 'text-muted'}`}>{stageLabel(item)}</span>
                   <span>
                     <span
@@ -126,10 +128,11 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
                         title={project.title}
                         sizes="(min-width: 1280px) 760px, 60vw"
                         active={index === active}
+                        acquire
                         phone={{
                           shots: project.screenshots.mobile,
                           className:
-                            'pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_var(--shade)]',
+                            'field-phone pointer-events-none absolute -bottom-10 -right-5 w-[19%] border border-line-strong bg-void p-1 shadow-[0_24px_50px_-12px_var(--shade)]',
                           sizes: '150px',
                         }}
                       />

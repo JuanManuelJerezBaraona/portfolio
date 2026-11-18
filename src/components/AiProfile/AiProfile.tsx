@@ -110,6 +110,7 @@ const AiProfile = () => {
       className="sec-ia chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="ia-heading"
     >
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="ia" note={t('note')} />
         <SectionHeading
@@ -132,43 +133,47 @@ const AiProfile = () => {
             <span>{t('material')}</span>
           </div>
 
-          <ol>
-            {steps.map((step, i) => {
-              const artifact = artifacts[step.id];
+          {/* The rail on the sheet's edge fills as the steps are run (ScrollScenes). */}
+          <div className="relative" data-protocol>
+            <span className="protocol-rail" data-protocol-rail aria-hidden="true" />
+            <ol>
+              {steps.map((step, i) => {
+                const artifact = artifacts[step.id];
 
-              return (
-                <li key={step.id} id={`ia-${step.id}`} className="border-b border-line">
-                  <Reveal
-                    className={`${COLUMNS} protocol-step grid gap-y-5 px-4 py-7 sm:px-6 lg:py-9 ${
-                      step.critical ? 'is-critical' : ''
-                    }`}
-                  >
-                    <span
-                      className={`wide text-xl tabular-nums ${step.critical ? 'text-accent' : 'text-muted'}`}
-                      aria-hidden="true"
-                    >
-                      {pad(i + 1)}
-                    </span>
-                    <div>
-                      <h3 className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xl">
-                        {step.title}
-                        {step.critical && <span className="meta text-accent">{t('critical')}</span>}
-                      </h3>
-                      <p className="mt-3 max-w-[38rem] leading-relaxed text-muted">{step.body}</p>
-                    </div>
-                    <div
-                      className={`col-span-full sm:col-span-1 sm:col-start-2 ${
-                        artifact?.wide ? 'lg:col-span-2 lg:col-start-2' : 'lg:col-start-3 lg:pt-1.5'
+                return (
+                  <li key={step.id} id={`ia-${step.id}`} className="border-b border-line" data-protocol-step>
+                    <Reveal
+                      className={`${COLUMNS} protocol-step grid gap-y-5 px-4 py-7 sm:px-6 lg:py-9 ${
+                        step.critical ? 'is-critical' : ''
                       }`}
                     >
-                      <p className="meta mb-2.5 text-muted lg:hidden">{t('material')}</p>
-                      {artifact?.node ?? <Tools step={step} />}
-                    </div>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ol>
+                      <span
+                        className="protocol-n wide text-xl tabular-nums"
+                        aria-hidden="true"
+                      >
+                        {pad(i + 1)}
+                      </span>
+                      <div>
+                        <h3 className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-xl">
+                          {step.title}
+                          {step.critical && <span className="meta text-accent">{t('critical')}</span>}
+                        </h3>
+                        <p className="mt-3 max-w-[38rem] leading-relaxed text-muted">{step.body}</p>
+                      </div>
+                      <div
+                        className={`col-span-full sm:col-span-1 sm:col-start-2 ${
+                          artifact?.wide ? 'lg:col-span-2 lg:col-start-2' : 'lg:col-start-3 lg:pt-1.5'
+                        }`}
+                      >
+                        <p className="meta mb-2.5 text-muted lg:hidden">{t('material')}</p>
+                        {artifact?.node ?? <Tools step={step} />}
+                      </div>
+                    </Reveal>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
 
           <p className="px-4 py-5 leading-relaxed text-muted sm:px-6">
             <span className="meta mb-1.5 block text-text sm:mb-0 sm:mr-3 sm:inline">{t('beyondLabel')}</span>

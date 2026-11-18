@@ -3,6 +3,7 @@ import { SOCIAL_LINKS, getPersonalInfo } from '@/constants/data';
 import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import Arrow from '@/components/ui/Arrow';
+import CopyButton from '@/components/ui/CopyButton';
 import SocialIcon from '@/components/ui/SocialIcon';
 import VariableProximity from '@/components/bits/VariableProximity';
 
@@ -23,6 +24,7 @@ const Contact = () => {
       className="sec-contact chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-36 lg:pt-8"
       aria-labelledby="contact-heading"
     >
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="contact" note={t('note')} />
         <div className="mt-14 grid gap-16 lg:grid-cols-[1.5fr_0.5fr] lg:items-end">
@@ -60,6 +62,9 @@ const Contact = () => {
               </a>
 
               <ul className="mt-12 flex flex-wrap gap-3">
+                <li>
+                  <CopyButton value={info.email} label={t('copy')} done={t('copied')} />
+                </li>
                 {SOCIAL_LINKS.map((link) => (
                   <li key={link.id}>
                     <a href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">

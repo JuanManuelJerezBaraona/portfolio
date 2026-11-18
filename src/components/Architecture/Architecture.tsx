@@ -43,16 +43,20 @@ interface NodeProps {
   label: string;
   /** The adapter on the hexagon's edge that this node talks to. */
   adapter: string;
+  /** Which end of a request it is: where it comes in from, or where it goes out to. */
+  end: 'in' | 'out';
   /** Adapter under the label instead of beside it, for the narrow bottom nodes. */
   stacked?: boolean;
 }
 
-const Node = ({ channel, label, adapter, stacked = false }: NodeProps) => (
+const Node = ({ channel, label, adapter, end, stacked = false }: NodeProps) => (
   <div
-    className={`flex border border-line bg-void px-3.5 py-2.5 ${
+    className={`relative flex border border-line bg-void px-3.5 py-2.5 ${
       stacked ? 'flex-col gap-1' : 'items-center justify-between gap-3'
     }`}
   >
+    {/* Lights in the node's channel when the request leaves it or reaches it. */}
+    <span className={`hex-hit ${CHANNEL[channel]}`} data-hex-hit={end} aria-hidden="true" />
     <span className="flex items-center gap-2.5 text-[0.95rem] font-medium">
       <span className={`swatch ${CHANNEL[channel]}`} aria-hidden="true" />
       {label}
@@ -61,20 +65,28 @@ const Node = ({ channel, label, adapter, stacked = false }: NodeProps) => (
   </div>
 );
 
-const Connector = () => <span className="mx-auto block h-7 w-px bg-line-strong" aria-hidden="true" />;
+const Connector = () => (
+  <span className="hex-wire mx-auto block h-7" aria-hidden="true">
+    <span className="hex-wire-pulse text-dapi" data-hex-wire />
+  </span>
+);
+
+const LAYERS = ['infrastructure', 'application', 'domain'] as const;
 
 const Hexagon = () => {
   const t = useTranslations('Architecture');
   const [outer, middle, inner] = RINGS;
   const bottom = round(CY + outer * SIN60);
+  // The way out runs from the center to a bottom corner and down to its node.
+  const wayOut = outer + (H - bottom);
 
   return (
-    <figure className="border border-line bg-stage">
+    <figure className="border border-line bg-stage" data-hex>
       <figcaption className="meta border-b border-line px-4 py-2.5 text-muted">{t('figure')}</figcaption>
 
       <div className="px-4 py-6 sm:px-6">
         <div className="mx-auto max-w-[22rem]">
-          <Node channel="dapi" label="Next.js · React" adapter={t('endpoint')} />
+          <Node channel="dapi" label="Next.js · React" adapter={t('endpoint')} end="in" />
           <Connector />
 
           <svg viewBox={`0 0 ${W} ${H}`} className="block w-full overflow-visible text-gfp" role="img" aria-label={t('figure')}>
@@ -92,6 +104,34 @@ const Hexagon = () => {
             ))}
             {[CX - outer / 2, CX + outer / 2].map((x) => (
               <line key={x} x1={x} y1={bottom} x2={x} y2={H} stroke="var(--line-strong)" vectorEffect="non-scaling-stroke" />
+            ))}
+
+            {/* A request (ScrollScenes): it comes in through the top edge, reaches
+                the domain and leaves through the two bottom corners. Each layer
+                lights as it's crossed; `data-in` / `data-out` say how far along
+                each way that happens. The way in is told by the layers alone (a
+                line down the middle would run through their names); the way out
+                is also drawn, along the two routes. Still and unseen without the
+                scene. */}
+            {RINGS.map((r, i) => (
+              <polygon
+                key={r}
+                className="hex-flash"
+                data-hex-flash={LAYERS[i]}
+                data-in={((outer - r) / outer).toFixed(3)}
+                data-out={(r / wayOut).toFixed(3)}
+                points={hexagon(r)}
+                fill="currentColor"
+              />
+            ))}
+            {([-1, 1] as const).map((side) => (
+              <path
+                key={side}
+                className={`hex-route ${side < 0 ? 'text-yfp' : 'text-text'}`}
+                data-hex-route
+                d={`M${CX} ${CY}L${CX + (side * outer) / 2} ${bottom}V${H}`}
+                pathLength={100}
+              />
             ))}
 
             <g textAnchor="middle" pointerEvents="none">
@@ -119,8 +159,8 @@ const Hexagon = () => {
           </svg>
 
           <div className="grid grid-cols-2 gap-3">
-            <Node channel="yfp" label="MongoDB" adapter={t('repository')} stacked />
-            <Node channel="text" label={t('otherApis')} adapter={t('httpService')} stacked />
+            <Node channel="yfp" label="MongoDB" adapter={t('repository')} end="out" stacked />
+            <Node channel="text" label={t('otherApis')} adapter={t('httpService')} end="out" stacked />
           </div>
         </div>
       </div>
@@ -140,6 +180,7 @@ const Architecture = () => {
       className="sec-arquitectura chapter px-4 pb-24 pt-6 sm:px-6 lg:px-8 lg:pb-32 lg:pt-8"
       aria-labelledby="arquitectura-heading"
     >
+      <span className="chapter-rule" aria-hidden="true" />
       <div className="mx-auto max-w-7xl">
         <SectionCover id="arquitectura" note={t('note')} />
         <div className="mt-14 grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">

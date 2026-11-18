@@ -43,7 +43,8 @@
     "inProduction": "In production",
     "profile": "Profile",
     "aiReady": "AI-ready",
-    "channels": "Cultured neuron, three channels. Switch one off to see each layer."
+    "channels": "Cultured neuron, three channels. Switch one off to see each layer.",
+    "stimulate": "Click or tap a neuron to stimulate it."
   },
   "Cv": {
     "download": "Download CV"
@@ -147,7 +148,9 @@
     "location": "Location",
     "languages": "Languages",
     "languagesValue": "Spanish (native) · English (B2)",
-    "fullStackSince": "Full Stack since"
+    "fullStackSince": "Full Stack since",
+    "copy": "Copy email",
+    "copied": "Email copied"
   },
   "NotFound": {
     "title": "This page is out of focus.",
@@ -220,7 +223,8 @@
       "contrast": "Body text, secondary text and the six section colors all clear 4.5:1 (WCAG AA) in both modes. The lowest is {min}:1.",
       "blend": "In fluorescence the channels add up (plus-lighter), like light; in brightfield they multiply, like stains.",
       "hover": "Each control answers the pointer with a different microscope technique: buttons are acquired line by line, as in a scanning microscope (the secondary one fills with the section’s color and the primary goes darkfield), links underline one channel at a time, and arrows move the stage to the next field. Keyboard focus gets the same answer.",
-      "motion": "With reduced motion nothing animates: not the sections coming into focus, not the screenshot cycle.",
+      "scroll": "Scrolling moves the stage: each section's name widens and comes into focus, its rule is drawn, images are acquired line by line, and a bar under the menu shows progress in the section's color. The neuron at the top is a stack of planes drawn in WebGL: the pointer tilts it, scrolling away shifts the focal plane, and a click stimulates it.",
+      "motion": "With reduced motion nothing animates: not the sections coming into focus, not the screenshot cycle, not the scroll scenes; the neuron stays a still image. Only the progress bar follows the scroll.",
       "focus": "Keyboard focus is always visible, and the smallest controls (the screenshots, the carousel scale and the channels) take a tap across about 44 px."
     }
   },
