@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { MOTION_OK, loadGsap, whenIdle, type MotionKit } from './gsap';
+import { off } from './debug';
 
 /**
  * The home page's scroll scenes. The sections stay server components: they
@@ -46,7 +47,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
        CSS `filter` on the view, which holds that WebGL canvas. A blur over
        a canvas redrawn every frame made iOS re-rasterize the whole field
        off screen on each one, until it killed the tab. */
-    const hero = document.getElementById('home');
+    const hero = off('heroe') ? null : document.getElementById('home');
     if (hero) {
       const leave = gsap.timeline({
         defaults: { ease: 'power1.in' },
@@ -61,7 +62,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
     /* COVERS. The name starts condensed and out of focus and is brought up
        to full width and sharp as the chapter rises: magnification and focus
        on the scroll wheel. */
-    all('.cover').forEach((cover) => {
+    if (!off('portadas')) all('.cover').forEach((cover) => {
       const name = cover.querySelector<HTMLElement>('.cover-name');
       if (!name) return;
       gsap.fromTo(
@@ -83,7 +84,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
 
     /* RULES. Each chapter's rule is drawn across the page from the corner
        its light comes from. */
-    all('.chapter').forEach((chapter) => {
+    if (!off('reglas')) all('.chapter').forEach((chapter) => {
       const rule = chapter.querySelector('.chapter-rule');
       if (!rule) return;
       gsap.fromTo(
@@ -94,7 +95,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
     });
 
     /* TIMELINE. Entries come into focus one after another as they rise. */
-    const entries = all('[data-timeline] > li');
+    const entries = off('timeline') ? [] : all('[data-timeline] > li');
     if (entries.length) {
       gsap.set(entries, { opacity: 0, y: 18, filter: 'blur(5px)' });
       ScrollTrigger.batch(entries, {
@@ -115,7 +116,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
 
     /* ACQUISITION. The first time an image comes up, it's acquired line by
        line (`.acquire` in globals.css reads --scan-y). */
-    all('[data-acquire]').forEach((frame) => {
+    if (!off('foto')) all('[data-acquire]').forEach((frame) => {
       gsap.fromTo(
         frame,
         { '--scan-y': 0 },
@@ -236,6 +237,7 @@ const ScrollScenes = () => {
   const locale = useLocale();
 
   useEffect(() => {
+    if (off('todas')) return;
     let live = true;
     let revert = () => {};
     const cancel = whenIdle(() => {

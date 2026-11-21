@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { whenIdle } from '@/components/motion/gsap';
+import { off } from '@/components/motion/debug';
 
 /** The still image's focus pull (0.25 s + 2.2 s) has to finish before anything takes over from it. */
 const AFTER_FOCUS_PULL = 2600;
@@ -22,7 +23,7 @@ const LiveMicrograph = () => {
     const node = canvas.current;
     const scope = node?.closest<HTMLElement>('.scope');
     const rig = node?.closest<HTMLElement>('.scope-rig');
-    if (!node || !scope || !rig) return;
+    if (!node || !scope || !rig || off('live')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return;
 

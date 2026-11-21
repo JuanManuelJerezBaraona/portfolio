@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { MOTION_OK, loadGsap, whenIdle } from './gsap';
+import { off } from './debug';
 
 interface ScrollProgressProps {
   /** Changes when the page does, so the line is measured against the new one. */
@@ -21,7 +22,7 @@ const ScrollProgress = ({ page, className = '' }: ScrollProgressProps) => {
 
   useEffect(() => {
     const node = line.current;
-    if (!node) return;
+    if (!node || off('progreso')) return;
     let live = true;
     let kill = () => {};
 
