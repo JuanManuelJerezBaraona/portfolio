@@ -40,23 +40,20 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
       Array.from(scope.querySelectorAll<T>(selector));
 
     /* HERO. As the hero leaves, the field recedes and the copy dims: the
-       objective pulling away before the next field comes up. It starts
-       once the hero's end is on screen, so nothing dims while the hero is
-       still being read. The defocus itself is the live canvas's own (it
-       racks the focus through the stack as the header leaves): never put a
-       CSS `filter` on the view, which holds that WebGL canvas. A blur over
-       a canvas redrawn every frame made iOS re-rasterize the whole field
-       off screen on each one, until it killed the tab. */
+       objective pulling away before the next field comes up. The scroll
+       only flips a class at the point of no return; the move itself is a
+       CSS transition (.is-leaving in globals.css). Scrubbed from here, on
+       every scroll frame, it made iOS kill the tab on a phone as the first
+       chapter came up: the copy and the field (with the live WebGL canvas
+       inside) were re-rendered frame after frame. The defocus is the
+       canvas's own (it racks the focus as the header leaves). */
     const hero = off('heroe') ? null : document.getElementById('home');
     if (hero) {
-      const leave = gsap.timeline({
-        defaults: { ease: 'power1.in' },
-        scrollTrigger: { trigger: hero, start: 'clamp(bottom bottom)', end: 'bottom 25%', scrub: 0.4 },
+      ScrollTrigger.create({
+        trigger: hero,
+        start: 'bottom 55%',
+        toggleClass: { targets: hero, className: 'is-leaving' },
       });
-      const copy = hero.querySelector('[data-hero-copy]');
-      const view = hero.querySelector('[data-hero-view]');
-      if (copy) leave.fromTo(copy, { opacity: 1, y: 0 }, { opacity: 0.35, y: -28 }, 0);
-      if (view) leave.fromTo(view, { scale: 1 }, { scale: 1.1 }, 0);
     }
 
     /* COVERS. The name starts condensed and is brought up to full width as
@@ -221,6 +218,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
 
     return () => {
       root.classList.remove('scenes-on');
+      document.getElementById('home')?.classList.remove('is-leaving');
       all('.acquire.is-acquired').forEach((frame) => frame.classList.remove('is-acquired'));
       all('[data-protocol-step][data-done]').forEach((step) => step.removeAttribute('data-done'));
     };

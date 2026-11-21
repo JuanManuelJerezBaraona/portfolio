@@ -1999,13 +1999,33 @@
     transition: background-color 0.4s ease;
   }
 
-  /* HERO. The copy and the field are moved by the scroll as the hero
-     leaves; the field's wrapper only exists to take that scale, which the
-     rim around it must not get. Never a `filter` here: it holds the
-     WebGL canvas, and a blur over it crashed iOS (see ScrollScenes). */
+  /* HERO. As the hero leaves (ScrollScenes flips .is-leaving at a point
+     of the scroll), the copy dims and the field recedes. A CSS transition,
+     never scrubbed from JS: scrubbed, it made iOS kill the tab on a phone.
+     The individual `translate`/`scale` properties leave the .rise and
+     focus-pull keyframes inside alone. The field's wrapper only exists to
+     take that scale, which the rim around it must not get. Never a
+     `filter` here: it holds the WebGL canvas. */
   .scope-view {
     position: absolute;
     inset: 0;
+  }
+  .scenes-on [data-hero-copy] {
+    transition:
+      opacity 0.5s var(--ease-out),
+      translate 0.5s var(--ease-out);
+  }
+  .scenes-on .is-leaving [data-hero-copy] {
+    opacity: 0.35;
+    translate: 0 -28px;
+    transition-duration: 0.9s;
+  }
+  .scenes-on [data-hero-view] {
+    transition: scale 0.6s var(--ease-out);
+  }
+  .scenes-on .is-leaving [data-hero-view] {
+    scale: 1.1;
+    transition-duration: 1.1s;
   }
 
   /* COVERS. The scroll drives the name's width and opacity; its focus
