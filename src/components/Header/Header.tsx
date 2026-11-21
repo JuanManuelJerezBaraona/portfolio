@@ -104,15 +104,19 @@ const Header = () => {
           <div className="objective">
             <CircularText className="objective-ring" segments={[...engraving, ...engraving]} />
             <div className="scope">
-              {/* The field itself, apart from the rim, the reticle and the scale
-                  bar: the scroll scales it as the hero leaves (no CSS filter: it
-                  holds the WebGL canvas, which defocuses itself). The
-                  still image comes from the server; the live one takes over
-                  from it once it can. */}
-              <div className="scope-view" data-hero-view>
-                <Micrograph />
-                <LiveMicrograph />
-                <div className="scope-haze" aria-hidden="true" />
+              {/* The field's round edge (.scope-clip): it stays still while the
+                  view inside it scales, so the field never grows past the rim. */}
+              <div className="scope-clip">
+                {/* The field itself, apart from the rim, the reticle and the scale
+                    bar: the scroll scales it as the hero leaves (no CSS filter: it
+                    holds the WebGL canvas, which defocuses itself). The
+                    still image comes from the server; the live one takes over
+                    from it once it can. */}
+                <div className="scope-view" data-hero-view>
+                  <Micrograph />
+                  <LiveMicrograph />
+                  <div className="scope-haze" aria-hidden="true" />
+                </div>
               </div>
               <div className="scope-reticle" aria-hidden="true" />
               <div

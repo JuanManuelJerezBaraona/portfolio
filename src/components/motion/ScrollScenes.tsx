@@ -59,25 +59,25 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
       if (view) leave.fromTo(view, { scale: 1 }, { scale: 1.1 }, 0);
     }
 
-    /* COVERS. The name starts condensed and out of focus and is brought up
-       to full width and sharp as the chapter rises: magnification and focus
-       on the scroll wheel. */
+    /* COVERS. The name starts condensed and is brought up to full width as
+       the chapter rises: magnification on the scroll wheel. Its focus is the
+       one-shot CSS transition (.cover.is-in), not scrubbed here: iOS repaints
+       a filter scrubbed from JS in software on every frame, and on a phone
+       that killed the tab as the first chapter came up. The width steps in
+       whole units: every distinct value is a new instance of the variable
+       font, which WebKit keeps for the life of the page. */
     if (!off('portadas')) all('.cover').forEach((cover) => {
       const name = cover.querySelector<HTMLElement>('.cover-name');
       if (!name) return;
       gsap.fromTo(
         name,
-        { '--cover-wdth': 62, opacity: 0.25, filter: 'blur(16px)' },
+        { '--cover-wdth': 62, opacity: 0.25 },
         {
           '--cover-wdth': 125,
           opacity: 1,
-          filter: 'blur(0px)',
           ease: 'power1.out',
+          modifiers: { '--cover-wdth': (value: string) => Math.round(parseFloat(value)) },
           scrollTrigger: { trigger: cover, start: 'top 96%', end: 'top 46%', scrub: 0.6 },
-          // Once sharp, drop the filter altogether rather than keep a 0px blur.
-          onUpdate() {
-            name.classList.toggle('is-sharp', this.progress() === 1);
-          },
         },
       );
     });
@@ -221,7 +221,6 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
 
     return () => {
       root.classList.remove('scenes-on');
-      all('.cover-name.is-sharp').forEach((name) => name.classList.remove('is-sharp'));
       all('.acquire.is-acquired').forEach((frame) => frame.classList.remove('is-acquired'));
       all('[data-protocol-step][data-done]').forEach((step) => step.removeAttribute('data-done'));
     };
