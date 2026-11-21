@@ -208,8 +208,12 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>((p
       if (!transformed) letter.style.transform = '';
     });
 
+    // Whole units only: every distinct value is a new instance of the variable
+    // font, and WebKit keeps each one for the life of the page (see ScrollScenes).
     const settingsAt = (level: number) =>
-      axes.map(({ axis, fromValue, toValue }) => `'${axis}' ${fromValue + (toValue - fromValue) * level}`).join(', ');
+      axes
+        .map(({ axis, fromValue, toValue }) => `'${axis}' ${Math.round(fromValue + (toValue - fromValue) * level)}`)
+        .join(', ');
 
     const measureAnchors = () => {
       const letters = letterRefs.current;

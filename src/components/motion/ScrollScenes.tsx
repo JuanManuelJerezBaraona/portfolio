@@ -38,41 +38,42 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
     const all = <T extends Element = HTMLElement>(selector: string, scope: ParentNode = document) =>
       Array.from(scope.querySelectorAll<T>(selector));
 
-    /* HERO. As the hero leaves, the field goes out of focus and the copy
-       dims: the objective pulling away before the next field comes up. It
-       starts once the hero's end is on screen, so nothing dims while the
-       hero is still being read. */
+    /* HERO. As the hero leaves, the field recedes and the copy dims: the
+       objective pulling away before the next field comes up. The scroll
+       only flips a class at the point of no return; the move itself is a
+       CSS transition (.is-leaving in globals.css). Scrubbed from here, on
+       every scroll frame, it made iOS kill the tab on a phone as the first
+       chapter came up: the copy and the field (with the live WebGL canvas
+       inside) were re-rendered frame after frame. The defocus is the
+       canvas's own (it racks the focus as the header leaves). */
     const hero = document.getElementById('home');
     if (hero) {
-      const leave = gsap.timeline({
-        defaults: { ease: 'power1.in' },
-        scrollTrigger: { trigger: hero, start: 'clamp(bottom bottom)', end: 'bottom 25%', scrub: 0.4 },
+      ScrollTrigger.create({
+        trigger: hero,
+        start: 'bottom 55%',
+        toggleClass: { targets: hero, className: 'is-leaving' },
       });
-      const copy = hero.querySelector('[data-hero-copy]');
-      const view = hero.querySelector('[data-hero-view]');
-      if (copy) leave.fromTo(copy, { opacity: 1, y: 0 }, { opacity: 0.35, y: -28 }, 0);
-      if (view) leave.fromTo(view, { scale: 1, filter: 'blur(0px)' }, { scale: 1.1, filter: 'blur(9px)' }, 0);
     }
 
-    /* COVERS. The name starts condensed and out of focus and is brought up
-       to full width and sharp as the chapter rises: magnification and focus
-       on the scroll wheel. */
+    /* COVERS. The name starts condensed and is brought up to full width as
+       the chapter rises: magnification on the scroll wheel. Its focus is the
+       one-shot CSS transition (.cover.is-in), not scrubbed here: iOS repaints
+       a filter scrubbed from JS in software on every frame, and on a phone
+       that killed the tab as the first chapter came up. The width steps in
+       whole units: every distinct value is a new instance of the variable
+       font, which WebKit keeps for the life of the page. */
     all('.cover').forEach((cover) => {
       const name = cover.querySelector<HTMLElement>('.cover-name');
       if (!name) return;
       gsap.fromTo(
         name,
-        { '--cover-wdth': 62, opacity: 0.25, filter: 'blur(16px)' },
+        { '--cover-wdth': 62, opacity: 0.25 },
         {
           '--cover-wdth': 125,
           opacity: 1,
-          filter: 'blur(0px)',
           ease: 'power1.out',
+          modifiers: { '--cover-wdth': (value: string) => Math.round(parseFloat(value)) },
           scrollTrigger: { trigger: cover, start: 'top 96%', end: 'top 46%', scrub: 0.6 },
-          // Once sharp, drop the filter altogether rather than keep a 0px blur.
-          onUpdate() {
-            name.classList.toggle('is-sharp', this.progress() === 1);
-          },
         },
       );
     });
@@ -216,7 +217,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
 
     return () => {
       root.classList.remove('scenes-on');
-      all('.cover-name.is-sharp').forEach((name) => name.classList.remove('is-sharp'));
+      document.getElementById('home')?.classList.remove('is-leaving');
       all('.acquire.is-acquired').forEach((frame) => frame.classList.remove('is-acquired'));
       all('[data-protocol-step][data-done]').forEach((step) => step.removeAttribute('data-done'));
     };

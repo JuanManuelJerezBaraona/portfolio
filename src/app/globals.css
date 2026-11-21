@@ -470,6 +470,21 @@
       0 40px 120px -40px color-mix(in srgb, var(--gfp) 25%, transparent);
   }
 
+  /* The field's round edge. On iOS the radius + overflow of .scope don't
+     clip the layers WebKit composites (the WebGL canvas, the SVG field
+     while it animates): they showed the square box. A mask clips the whole
+     composited subtree in every engine. It stays still around the view the
+     scroll scales, so the field never grows past the rim. A mask also makes
+     an isolated group, hence the background the channels blend over.
+     Don't swap it for a clip-path or a rounded overflow, and never a
+     `filter` here (it holds the canvas). Only the mask's alpha counts. */
+  .scope-clip {
+    position: absolute;
+    inset: 0;
+    background: var(--scope-bg);
+    mask-image: radial-gradient(closest-side, black calc(100% - 1px), transparent);
+  }
+
   /* OBJECTIVE. The field sits in the objective's barrel, engraved like a
      real one (bits/CircularText): optics, then the three channels in their
      colors. The ring turns in with the focus pull on load and a little
@@ -518,7 +533,9 @@
   .scope-field {
     position: absolute;
     inset: 0;
-    animation: focus-pull 2.2s var(--ease-out) 0.25s both;
+    /* backwards, not both: once sharp the field drops the filter altogether
+       instead of keeping a 0px blur on it for good. */
+    animation: focus-pull 2.2s var(--ease-out) 0.25s backwards;
   }
 
   .scope-layer {
@@ -1982,22 +1999,42 @@
     transition: background-color 0.4s ease;
   }
 
-  /* HERO. The copy and the field are moved by the scroll as the hero
-     leaves; the field's wrapper only exists to take that blur and scale,
-     which the rim around it must not get. */
+  /* HERO. As the hero leaves (ScrollScenes flips .is-leaving at a point
+     of the scroll), the copy dims and the field recedes. A CSS transition,
+     never scrubbed from JS: scrubbed, it made iOS kill the tab on a phone.
+     The individual `translate`/`scale` properties leave the .rise and
+     focus-pull keyframes inside alone. The field's wrapper only exists to
+     take that scale, which the rim around it must not get. Never a
+     `filter` here: it holds the WebGL canvas. */
   .scope-view {
     position: absolute;
     inset: 0;
   }
+  .scenes-on [data-hero-copy] {
+    transition:
+      opacity 0.5s var(--ease-out),
+      translate 0.5s var(--ease-out);
+  }
+  .scenes-on .is-leaving [data-hero-copy] {
+    opacity: 0.35;
+    translate: 0 -28px;
+    transition-duration: 0.9s;
+  }
+  .scenes-on [data-hero-view] {
+    transition: scale 0.6s var(--ease-out);
+  }
+  .scenes-on .is-leaving [data-hero-view] {
+    scale: 1.1;
+    transition-duration: 1.1s;
+  }
 
-  /* COVERS. With the scroll driving the name, its own transition would
-     chase every frame, and the one-shot starting pose would stack on top. */
+  /* COVERS. The scroll drives the name's width and opacity; its focus
+     stays this one-shot CSS transition (.reveal-ready .cover → .is-in).
+     iOS repaints a filter scrubbed from JS in software on every frame,
+     and that killed the tab on a phone; a CSS transition runs on the GPU. */
   .scenes-on .cover .cover-name {
     transform: none;
-    transition: none;
-  }
-  .cover-name.is-sharp {
-    filter: none !important;
+    transition: filter 1.4s var(--ease-out);
   }
 
   /* ACQUISITION. An image is acquired line by line the first time it
