@@ -38,10 +38,14 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
     const all = <T extends Element = HTMLElement>(selector: string, scope: ParentNode = document) =>
       Array.from(scope.querySelectorAll<T>(selector));
 
-    /* HERO. As the hero leaves, the field goes out of focus and the copy
-       dims: the objective pulling away before the next field comes up. It
-       starts once the hero's end is on screen, so nothing dims while the
-       hero is still being read. */
+    /* HERO. As the hero leaves, the field recedes and the copy dims: the
+       objective pulling away before the next field comes up. It starts
+       once the hero's end is on screen, so nothing dims while the hero is
+       still being read. The defocus itself is the live canvas's own (it
+       racks the focus through the stack as the header leaves): never put a
+       CSS `filter` on the view, which holds that WebGL canvas. A blur over
+       a canvas redrawn every frame made iOS re-rasterize the whole field
+       off screen on each one, until it killed the tab. */
     const hero = document.getElementById('home');
     if (hero) {
       const leave = gsap.timeline({
@@ -51,7 +55,7 @@ const buildScenes = ({ gsap, ScrollTrigger }: MotionKit) => {
       const copy = hero.querySelector('[data-hero-copy]');
       const view = hero.querySelector('[data-hero-view]');
       if (copy) leave.fromTo(copy, { opacity: 1, y: 0 }, { opacity: 0.35, y: -28 }, 0);
-      if (view) leave.fromTo(view, { scale: 1, filter: 'blur(0px)' }, { scale: 1.1, filter: 'blur(9px)' }, 0);
+      if (view) leave.fromTo(view, { scale: 1 }, { scale: 1.1 }, 0);
     }
 
     /* COVERS. The name starts condensed and out of focus and is brought up

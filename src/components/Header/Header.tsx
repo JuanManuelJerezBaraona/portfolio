@@ -105,7 +105,8 @@ const Header = () => {
             <CircularText className="objective-ring" segments={[...engraving, ...engraving]} />
             <div className="scope">
               {/* The field itself, apart from the rim, the reticle and the scale
-                  bar: the scroll takes it out of focus as the hero leaves. The
+                  bar: the scroll scales it as the hero leaves (no CSS filter: it
+                  holds the WebGL canvas, which defocuses itself). The
                   still image comes from the server; the live one takes over
                   from it once it can. */}
               <div className="scope-view" data-hero-view>

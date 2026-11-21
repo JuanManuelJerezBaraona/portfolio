@@ -1983,8 +1983,9 @@
   }
 
   /* HERO. The copy and the field are moved by the scroll as the hero
-     leaves; the field's wrapper only exists to take that blur and scale,
-     which the rim around it must not get. */
+     leaves; the field's wrapper only exists to take that scale, which the
+     rim around it must not get. Never a `filter` here: it holds the
+     WebGL canvas, and a blur over it crashed iOS (see ScrollScenes). */
   .scope-view {
     position: absolute;
     inset: 0;
