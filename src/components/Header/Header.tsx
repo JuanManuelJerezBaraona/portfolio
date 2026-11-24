@@ -37,8 +37,16 @@ const Header = () => {
       <div className="mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
         {/* Marked for the scroll: the copy dims as the hero leaves (ScrollScenes). */}
         <div data-hero-copy>
-          {/* Who he is before the hook: role and level, readable at a glance. */}
-          <p className="rise wide text-wrap text-xl leading-snug sm:text-2xl">{info.title}</p>
+          {/* Who he is before the hook, readable at a glance: the role he applies
+              for, then the one he holds with its level, one per line (as one
+              phrase it would break mid-role on most screens). */}
+          <p className="rise wide text-xl leading-snug sm:text-2xl">
+            {info.roles.map((role) => (
+              <span key={role} className="block">
+                {role}
+              </span>
+            ))}
+          </p>
           <p className="rise meta mt-2 text-muted">{info.location}</p>
 
           <h1 className="rise display mt-6 text-[2.75rem] sm:text-6xl lg:text-[5.4rem]" style={delay(80)}>
@@ -87,10 +95,10 @@ const Header = () => {
               <dd className="mt-1 font-medium">CL · PE · CO</dd>
             </div>
             <div>
-              <dt className="meta text-muted">{t('profile')}</dt>
+              <dt className="meta text-muted">{t('ai')}</dt>
               <dd className="mt-1 font-medium">
                 <Link href="#ia" className="sec-ia link-underline text-accent">
-                  {t('aiReady')}
+                  {t('aiValue')}
                 </Link>
               </dd>
             </div>

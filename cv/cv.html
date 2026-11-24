@@ -2,18 +2,21 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Juan Manuel Jerez Baraona · Desarrollador Full Stack · CV</title>
+<title>Juan Manuel Jerez Baraona · Ingeniero de IA (AI Engineer) · Desarrollador Full Stack · CV</title>
 <meta name="author" content="Juan Manuel Jerez Baraona">
-<meta name="keywords" content="Desarrollador Full Stack, React, Next.js, NestJS, TypeScript, Node.js, Strapi, MongoDB, Vue, Nuxt, Playwright, Spec-Driven Development, Claude Code, Codex, OpenCode, GitHub Copilot, MCP, n8n">
+<meta name="keywords" content="Ingeniero de IA, AI Engineer, agentes de IA, RAG, LLM, Mastra, LangChain, LangGraph, embeddings, MongoDB Atlas Vector Search, evals, MCP, Agent Skills, API de Claude, Desarrollador Full Stack, TypeScript, NestJS, Next.js, React, Node.js, Strapi, MongoDB, Vue, Nuxt, Playwright, Spec-Driven Development, Claude Code, Codex, OpenCode, GitHub Copilot, n8n">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block">
 <!--
   ATS rules this file follows on purpose:
   - one column, in reading order; no tables, text boxes or text inside images
-  - standard section names (Perfil, Experiencia, Habilidades e idiomas, Educación)
+  - standard section names (Perfil, Experiencia, Proyectos, Habilidades e idiomas, Educación)
   - every date in the same format, every link written out as text
   - ligatures off, so "fi"/"fl" extract as two letters instead of one glyph
   Build the PDF with `npm run cv`.
+
+  The page is full: about 4 mm are left. Anything added has to be paid for
+  with a cut, and each PDF checked to still be one page.
 -->
 <style>
   @page { size: A4; margin: 0; }
@@ -124,7 +127,7 @@
     <h1>Juan Manuel Jerez Baraona</h1>
     <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 6 2 12l5.5 6" stroke="var(--dapi)"/><path d="M14 3.5 10 20.5" stroke="var(--gfp)"/><path d="M16.5 6 22 12l-5.5 6" stroke="var(--mcherry)"/></svg>
   </div>
-  <p class="headline">Desarrollador Full Stack Semi Senior · React · Next.js · NestJS · TypeScript</p>
+  <p class="headline">Ingeniero de IA · Desarrollador Full Stack Semi Senior · TypeScript · NestJS</p>
   <p class="contact">
     <span>Santiago, Chile</span>
     <span><a href="tel:+56983601614">+56 9 8360 1614</a></span>
@@ -140,11 +143,11 @@
 <section>
   <h2>Perfil</h2>
   <p class="summary">
-    Desarrollador Full Stack desde 2022 e Ingeniero en Biotecnología. En Seguros Falabella desarrollo
-    los flujos de cotización, aceptación digital, pago y postventa para Chile, Perú y Colombia con React,
-    Next.js, NestJS, Strapi y TypeScript; he migrado aplicaciones de Nuxt/Vue a Next.js, optimizado
-    aplicaciones legacy y participo en decisiones de arquitectura. Uso agentes de IA (Claude Code,
-    Codex, OpenCode, Copilot) con Spec-Driven Development y reviso todo lo que generan.
+    Ingeniero de IA (AI Engineer) y Desarrollador Full Stack semi senior; Ingeniero en Biotecnología. En
+    Seguros Falabella desarrollo los flujos de cotización, pago y postventa para Chile, Perú y Colombia con
+    Next.js y NestJS, y construí un asistente interno con agentes y RAG (Mastra,
+    LangChain/LangGraph). En proyectos propios integro la API de Claude con salida estructurada y
+    valido cada respuesta. Programo con agentes (Claude Code, Codex) y reviso lo que generan.
   </p>
 </section>
 
@@ -158,11 +161,10 @@
     </div>
     <ul>
       <li>Desarrollo de cinco aplicaciones del recorrido del cliente de seguros: sitio regional de cotización y contratación, aceptación digital en tiendas, botón de pago, login de clientes y ejecutivos, y plataforma postventa.</li>
-      <li>Migración de aplicaciones Nuxt/Vue a Next.js con TypeScript y mejora del rendimiento de aplicaciones legacy.</li>
-      <li>Frontend con Next.js, React, TypeScript y Zustand; design system Tomaco documentado en Storybook desde Figma.</li>
-      <li>Backend con NestJS y arquitectura hexagonal, MongoDB y contenido administrable con Strapi 5 (CMS headless).</li>
-      <li>Participación en decisiones de arquitectura y automatización de pruebas end-to-end con Playwright.</li>
+      <li>Asistente interno de desarrollo con agentes y RAG: Mastra, LangChain/LangGraph y MongoDB Atlas Vector Search.</li>
       <li>Desarrollo asistido por IA: skills propias para Claude Code, MCP (Tomaco, Figma, Postman, Notion) y contexto por repo.</li>
+      <li>Frontend con Next.js, React, TypeScript y Zustand sobre el design system Tomaco (Storybook, Figma); backend con NestJS y arquitectura hexagonal, MongoDB y Strapi 5 (CMS headless). Participo en las decisiones de arquitectura.</li>
+      <li>Migración de Nuxt/Vue a Next.js (TypeScript), mejora de rendimiento en legacy y pruebas end-to-end con Playwright.</li>
     </ul>
   </div>
 
@@ -171,9 +173,7 @@
       <h3>Desarrollador Full Stack <span class="org">· ABO Consultores</span></h3>
       <span class="date">2024</span>
     </div>
-    <ul>
-      <li>Desarrollo web full stack con React, TypeScript, Node.js, Express, MongoDB y Tailwind CSS.</li>
-    </ul>
+    <p class="context">Desarrollo web full stack con React, TypeScript, Node.js, Express, MongoDB y Tailwind CSS.</p>
   </div>
 
   <div class="entry">
@@ -181,9 +181,7 @@
       <h3>Desarrollador Full Stack <span class="org">· SUPER CBD</span></h3>
       <span class="date">2022 – 2024</span>
     </div>
-    <ul>
-      <li>Desarrollo full stack de e-commerce con React, Node.js, Express y PostgreSQL.</li>
-    </ul>
+    <p class="context">Desarrollo full stack de e-commerce con React, Node.js, Express y PostgreSQL.</p>
   </div>
 
   <div class="entry">
@@ -191,9 +189,7 @@
       <h3>Desarrollador Frontend <span class="org">· Farmacia Veterinaria Los Pingos</span></h3>
       <span class="date">2016 – 2022</span>
     </div>
-    <ul>
-      <li>Desarrollo de e-commerce con JavaScript, React, HTML, CSS y Bootstrap.</li>
-    </ul>
+    <p class="context">Desarrollo de e-commerce con JavaScript, React, HTML, CSS y Bootstrap.</p>
   </div>
 
   <div class="entry">
@@ -201,39 +197,38 @@
       <h3>Asistente de Investigación <span class="org">· Laboratorio de Neurobiología</span></h3>
       <span class="date">2013 – 2016</span>
     </div>
-    <ul>
-      <li>Ciencia de datos, estadística y bioinformática.</li>
-    </ul>
+    <p class="context">Ciencia de datos, estadística y bioinformática.</p>
   </div>
 </section>
 
 <section class="projects">
-  <h2>Proyectos en producción · Seguros Falabella</h2>
+  <h2>Proyectos en producción</h2>
   <ul>
     <li><b>Portal Seguros Falabella ·</b><span class="meta"> Chile, Perú y Colombia · Next.js, NestJS, Strapi 5, MongoDB · segurosfalabella.com</span></li>
     <li><b>Aceptación Digital ·</b><span class="meta"> Chile · Next.js, NestJS, Tomaco, Strapi 5, MongoDB · aceptacion.segurosfalabella.com</span></li>
     <li><b>Botón de Pago ·</b><span class="meta"> Chile · Next.js, NestJS, Zustand, Strapi 5, MongoDB · pago.segurosfalabella.com</span></li>
     <li><b>Postventa y login de clientes y ejecutivos ·</b><span class="meta"> Chile, Perú y Colombia · React, NestJS · clientes.segurosfalabella.com</span></li>
+    <li><b>Diccionario Métricas ·</b><span class="meta"> proyecto propio con IA · Next.js, Supabase, API de Claude · diccionario-metricas.vercel.app</span></li>
   </ul>
 </section>
 
 <section>
   <h2>Habilidades e idiomas</h2>
   <dl class="skills">
-    <dt>Frontend</dt>
-    <dd>TypeScript, JavaScript, React, Next.js, Vue, Nuxt, Zustand, HTML5, CSS3, Sass, Tailwind CSS, Bootstrap, Material UI, Storybook, Vite</dd>
+    <dt>Ingeniería de IA</dt>
+    <dd>Agentes y RAG (Mastra, LangChain, LangGraph), embeddings, MongoDB Atlas Vector Search, API de Claude, tool calling, structured outputs, evals, guardrails, MCP, n8n</dd>
+    <dt>IA para desarrollo</dt>
+    <dd>Claude Code, Codex, OpenCode, GitHub Copilot, Spec-Driven Development, Agent Skills</dd>
     <dt>Backend</dt>
     <dd>Node.js, NestJS, Express, Fastify, Strapi (CMS headless), APIs REST, OAuth 2.0, Server-Sent Events, Swagger, Apigee, arquitectura hexagonal</dd>
+    <dt>Frontend</dt>
+    <dd>TypeScript, JavaScript, React, Next.js, Vue, Nuxt, Zustand, Tailwind CSS, Sass, Storybook</dd>
     <dt>Bases de datos</dt>
-    <dd>MongoDB, PostgreSQL</dd>
-    <dt>Testing</dt>
-    <dd>Playwright (end-to-end), Jest</dd>
-    <dt>IA para desarrollo</dt>
-    <dd>Claude Code, Codex, OpenCode, GitHub Copilot, Spec-Driven Development (SDD), Agent Skills, MCP (Model Context Protocol), n8n, integración de APIs de LLM, context engineering</dd>
+    <dd>MongoDB, PostgreSQL, Supabase</dd>
     <dt>DevOps y nube</dt>
     <dd>GitHub Actions, GitLab CI, Docker, Google Cloud (GCP), Datadog, Kibana</dd>
     <dt>Herramientas</dt>
-    <dd>Git, GitHub, GitLab, Figma, Postman</dd>
+    <dd>Git, GitHub, GitLab, Figma, Postman · Testing: Playwright (end-to-end), Jest, Vitest</dd>
     <dt>Idiomas</dt>
     <dd>Español nativo, inglés intermedio (B2) con clases continuas desde 2023</dd>
   </dl>

@@ -1,6 +1,7 @@
 import type { Locale } from 'next-intl';
 import { inLocale } from '@/i18n/inLocale';
 import {
+  AiBuildData,
   AiStepData,
   ArchitectureLayerData,
   NavLinkData,
@@ -20,11 +21,17 @@ import {
  * its English twin right next to it.
  */
 
+/**
+ * The order here is the order of the page (`app/[locale]/page.tsx` has to
+ * match: the navbar marks the active section by walking both in step). IA
+ * comes second on purpose: the hero says "Ingeniero de IA", so that chapter
+ * can't sit under six screens of projects.
+ */
 export const NAV_LINKS: NavLinkData[] = [
   { id: 'about', label: { es: 'Trayectoria', en: 'Background' }, href: '#about' },
+  { id: 'ia', label: { es: 'IA', en: 'AI' }, href: '#ia' },
   { id: 'projects', label: { es: 'Proyectos', en: 'Projects' }, href: '#projects' },
   { id: 'arquitectura', label: { es: 'Arquitectura', en: 'Architecture' }, href: '#arquitectura' },
-  { id: 'ia', label: { es: 'IA', en: 'AI' }, href: '#ia' },
   { id: 'skills', label: 'Stack', href: '#skills' },
   { id: 'contact', label: { es: 'Contacto', en: 'Contact' }, href: '#contact' },
 ];
@@ -32,9 +39,13 @@ export const NAV_LINKS: NavLinkData[] = [
 export const PERSONAL_INFO: PersonalInfoData = {
   name: 'Juan Manuel Jerez Baraona',
   shortName: 'Juan Manuel Jerez',
-  // "Semi senior" is the Latin American level; "mid-level" is how the US and Europe say it.
-  // The non-breaking space keeps "semi senior" on one line in the hero.
-  title: { es: 'Desarrollador Full Stack semi\u00a0senior', en: 'Mid-level Full Stack developer' },
+  // The role he applies for, then the one he holds today with its level; the hero sets one
+  // per line. "Semi senior" is the Latin American level; "mid-level" is how the US and
+  // Europe say it. The non-breaking space keeps "semi senior" together.
+  roles: [
+    { es: 'Ingeniero de IA', en: 'AI Engineer' },
+    { es: 'Desarrollador Full Stack semi\u00a0senior', en: 'Mid-level Full Stack developer' },
+  ],
   level: { es: 'Semi senior', en: 'Mid-level' },
   location: 'Santiago, Chile',
   fullStackSince: 2022,
@@ -100,6 +111,10 @@ export const TIMELINE: TimelineEntryData[] = [
     },
     highlights: [
       {
+        es: 'Asistente interno de desarrollo con agentes y RAG (Mastra, LangChain/LangGraph, MongoDB Atlas Vector Search).',
+        en: 'Internal coding assistant with agents and RAG (Mastra, LangChain/LangGraph, MongoDB Atlas Vector Search).',
+      },
+      {
         es: 'Migración de aplicaciones Nuxt y Vue a Next.js con TypeScript.',
         en: 'Migrated Nuxt and Vue applications to Next.js with TypeScript.',
       },
@@ -154,16 +169,32 @@ export const SKILLS: SkillData[] = [
 
   { id: 'mongodb', name: 'MongoDB', category: 'database' },
   { id: 'postgresql', name: 'PostgreSQL', category: 'database' },
+  { id: 'atlas-vector', name: 'Atlas Vector Search', category: 'database' },
+  { id: 'supabase', name: 'Supabase', category: 'database' },
+
+  // The plate breaks a category every twelve wells, so the order is the
+  // layout: the first twelve are one row, what he builds with language
+  // models; the rest is the next row, how he codes with agents.
+  { id: 'mastra', name: 'Mastra', category: 'ai' },
+  { id: 'langchain', name: 'LangChain', category: 'ai' },
+  { id: 'langgraph', name: 'LangGraph', category: 'ai' },
+  { id: 'rag', name: 'RAG', category: 'ai' },
+  { id: 'embeddings', name: 'Embeddings', category: 'ai' },
+  { id: 'claude-api', name: { es: 'API de Claude', en: 'Claude API' }, category: 'ai' },
+  { id: 'tool-calling', name: 'Tool calling', category: 'ai' },
+  { id: 'structured-outputs', name: 'Structured outputs', category: 'ai' },
+  { id: 'evals', name: 'Evals', category: 'ai' },
+  { id: 'guardrails', name: 'Guardrails', category: 'ai' },
+  { id: 'mcp', name: 'MCP', category: 'ai' },
+  { id: 'harness', name: 'Agent harness', category: 'ai' },
 
   { id: 'claude-code', name: 'Claude Code', category: 'ai' },
   { id: 'codex', name: 'Codex', category: 'ai' },
   { id: 'opencode', name: 'OpenCode', category: 'ai' },
   { id: 'copilot', name: 'GitHub Copilot', category: 'ai' },
   { id: 'sdd', name: 'Spec-Driven Development', category: 'ai' },
-  { id: 'mcp', name: 'MCP', category: 'ai' },
   { id: 'skills', name: 'Agent Skills', category: 'ai' },
   { id: 'context-eng', name: 'Context engineering', category: 'ai' },
-  { id: 'llm-apis', name: { es: 'APIs de LLM', en: 'LLM APIs' }, category: 'ai' },
   { id: 'n8n', name: 'n8n', category: 'ai' },
 
   { id: 'git', name: 'Git', category: 'tools' },
@@ -269,11 +300,11 @@ export const ARCHITECTURE: ArchitectureLayerData[] = [
 ];
 
 /**
- * How he works with AI, as the steps of a lab protocol in the order he
+ * How he codes with an agent, as the steps of a lab protocol in the order he
  * runs them. Only tools and practices he confirmed using: Claude Code,
  * Codex, OpenCode, GitHub Copilot, writing his own skills, configuring
- * MCP servers, Spec-Driven Development, n8n and integrating LLM APIs
- * (those last two live outside the protocol, in the `Ai.beyond` message).
+ * MCP servers and Spec-Driven Development. What he builds with language
+ * models is in `AI_BUILDS`, below; n8n is the `Ai.beyond` note.
  */
 export const AI_PROTOCOL: AiStepData[] = [
   {
@@ -334,18 +365,115 @@ export const AI_PROTOCOL: AiStepData[] = [
 ];
 
 /**
- * Projects are ordered as the real insurance customer journey:
+ * What he has built with language models, each with the control that checks
+ * its output (the section's one idea: no result counts without its control).
+ * Every row carries a `status`, which is what keeps it honest:
+ *
+ * - `assistant` (work): on his word, November 2026. The Seguros Falabella
+ *   repositories aren't on his machine. He confirmed an internal tool that
+ *   helps the team write code, built with Mastra and LangChain/LangGraph,
+ *   RAG over embeddings in MongoDB Atlas Vector Search, and its three
+ *   controls (shows its sources, has an evaluation set, a person reviews).
+ * - `inspiracion` (live): ~/Proyectos/diccionario-metricas, `apps/web/lib/
+ *   barras.ts` and `validar-barras.ts`. Not RAG: the prompt is grounded by a
+ *   Postgres search, with no embeddings.
+ * - `classifier` (building): ~/Proyectos/sr-barriga, `src/server/llm/`. Not
+ *   deployed, and no eval results are stored: the copy says the eval set
+ *   exists, never what it scored. He asked for it to appear only here.
+ * - `harness` (study): ~/Proyectos/skill ("arnes"). Its README says no
+ *   request has reached the real API yet, so the control says offline tests
+ *   against a simulated model and nothing more.
+ *
+ * No figures, like the projects: his repos hold real ones (the size of the
+ * eval set, the confidence threshold, the daily cap, the number of tests),
+ * and they go in only if he asks for them.
+ */
+export const AI_BUILDS: AiBuildData[] = [
+  {
+    id: 'assistant',
+    title: { es: 'Asistente de desarrollo', en: 'Coding assistant' },
+    place: 'Seguros Falabella',
+    status: 'work',
+    method: {
+      es: 'Una herramienta de uso interno que ayuda al equipo a programar siguiendo nuestros patrones y librerías. Usa agentes con Mastra y LangChain/LangGraph, y la recuperación busca en embeddings guardados en MongoDB Atlas Vector Search.',
+      en: 'An internal tool that helps the team write code following our patterns and libraries. It uses agents with Mastra and LangChain/LangGraph, and retrieval searches embeddings stored in MongoDB Atlas Vector Search.',
+    },
+    control: {
+      es: 'Cada respuesta muestra las fuentes de donde salió, hay un set de evaluación y una persona del equipo revisa el resultado antes de usarlo.',
+      en: 'Every answer shows the sources it came from, there’s an evaluation set, and someone on the team reviews the result before using it.',
+    },
+    tools: ['Mastra', 'LangChain', 'LangGraph', 'RAG', 'MongoDB Atlas Vector Search'],
+  },
+  {
+    id: 'inspiracion',
+    title: 'Inspiración',
+    place: 'Diccionario Métricas',
+    status: 'live',
+    method: {
+      es: 'La API de Claude escribe versos de rap para una palabra, con salida estructurada. El prompt lleva las rimas candidatas que encuentra la búsqueda de la propia aplicación en Postgres.',
+      en: 'The Claude API writes rap verses for a word, with structured output. The prompt carries the candidate rhymes found by the app’s own Postgres search.',
+    },
+    control: {
+      es: 'Mi motor fonético revisa cada verso y descarta el que no rima o no usa la palabra. Los resultados quedan en caché y hay un tope diario de generaciones.',
+      en: 'My phonetic engine checks every verse and discards any that doesn’t rhyme or doesn’t use the word. Results are cached and generations are capped per day.',
+    },
+    tools: ['Claude API', 'Structured outputs', 'PostgreSQL'],
+    project: 'diccionario-metricas',
+  },
+  {
+    id: 'classifier',
+    title: { es: 'Clasificador de respuestas', en: 'Reply classifier' },
+    place: 'Sr. Barriga',
+    status: 'building',
+    method: {
+      es: 'En una plataforma de cobranza entre empresas, Claude solo clasifica lo que responde el deudor, con salida estructurada que vuelvo a validar con Zod. Qué hacer después lo deciden reglas escritas, no el modelo.',
+      en: 'On a business-to-business debt collection platform, Claude only classifies what the debtor replies, with structured output that I validate again with Zod. What happens next is decided by written rules, not by the model.',
+    },
+    control: {
+      es: 'Un set de evaluación ya escrito, que todavía no he corrido contra la API: casos etiquetados, con intentos de prompt injection y casos ambiguos. Bajo cierto umbral de confianza, o si el modelo se niega, la respuesta pasa a una persona.',
+      en: 'An evaluation set, written but not yet run against the API: labelled cases, with prompt injection attempts and ambiguous cases. Below a confidence threshold, or if the model refuses, the reply goes to a person.',
+    },
+    tools: ['Claude API', 'Zod', 'Evals', 'Guardrails', 'Prompt caching'],
+  },
+  {
+    id: 'harness',
+    title: { es: 'Un harness de agentes', en: 'An agent harness' },
+    place: 'arnes',
+    status: 'study',
+    method: {
+      es: 'Para entender cómo funciona un agente por dentro construí uno en TypeScript sobre la API de Claude, sin SDK de agentes: el bucle, herramientas tipadas con Zod, subagentes, hooks, cliente MCP, skills y sesiones.',
+      en: 'To understand how an agent works inside, I built one in TypeScript on the Claude API, with no agent SDK: the loop, tools typed with Zod, subagents, hooks, an MCP client, skills and sessions.',
+    },
+    control: {
+      es: 'Un motor de permisos decide qué puede hacer el agente. Solo pruebas sin conexión, con el modelo simulado: todavía no ha corrido contra la API real.',
+      en: 'A permission engine decides what the agent may do. Offline tests only, against a simulated model: it hasn’t run against the real API yet.',
+    },
+    tools: ['TypeScript', 'Claude API', 'Zod', 'MCP'],
+  },
+];
+
+/**
+ * First the five Seguros Falabella apps (`kind: 'journey'`), ordered as the
+ * real insurance customer journey:
  * Cotización → Aceptación → Pago → Acceso → Postventa.
  * Countries follow the CV. `role`, `summary`, `challenge` and
  * `contributions` were seeded from the descriptions and real stacks;
  * review before treating them as verified. `outcome` states what the
  * application does for its users, with no figures: he chose not to show
  * numbers he can't back. Don't add metrics unless he gives real ones.
+ *
+ * Then his own projects (`kind: 'own'`), which are not stages of anything.
+ * Diccionario Métricas is described from its repository
+ * (~/Proyectos/diccionario-metricas): the repo is private, so only the live
+ * site is linked, and its AI feature (Inspiración) is in closed testing:
+ * Premium is an email allow-list until payments exist, which the `outcome`
+ * says because a visitor without an account sees those verses blurred.
  */
 export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-landing',
     title: { es: 'Portal Seguros Falabella', en: 'Seguros Falabella Portal' },
+    kind: 'journey',
     category: 'Seguros Falabella',
     stage: 1,
     flow: { es: 'Cotización', en: 'Quote' },
@@ -401,6 +529,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-aceptacion-digital',
     title: { es: 'Aceptación Digital', en: 'Digital Acceptance' },
+    kind: 'journey',
     category: 'Seguros Falabella',
     stage: 2,
     flow: { es: 'Aceptación', en: 'Acceptance' },
@@ -462,6 +591,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-boton-pago',
     title: { es: 'Botón de Pago', en: 'Payment Button' },
+    kind: 'journey',
     category: 'Seguros Falabella',
     stage: 3,
     flow: { es: 'Pago', en: 'Payment' },
@@ -519,6 +649,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-login-postventa',
     title: { es: 'Login Postventa', en: 'After-sales Login' },
+    kind: 'journey',
     category: 'Seguros Falabella',
     stage: 4,
     flow: { es: 'Acceso', en: 'Access' },
@@ -578,6 +709,7 @@ export const PROJECTS: ProjectData[] = [
   {
     id: 'seguros-falabella-postventa',
     title: { es: 'Postventa', en: 'After-sales Platform' },
+    kind: 'journey',
     category: 'Seguros Falabella',
     stage: 5,
     flow: { es: 'Postventa', en: 'After-sales' },
@@ -621,9 +753,72 @@ export const PROJECTS: ProjectData[] = [
       ],
     },
   },
+  {
+    id: 'diccionario-metricas',
+    kind: 'own',
+    title: 'Diccionario Métricas',
+    category: { es: 'Proyecto propio', en: 'Personal project' },
+    flow: { es: 'Rimas', en: 'Rhymes' },
+    status: 'live',
+    role: {
+      es: 'Proyecto propio, de punta a punta: datos, motor fonético, aplicación e integración con IA.',
+      en: 'A personal project, end to end: data, phonetic engine, application and the AI integration.',
+    },
+    description: {
+      es: 'Diccionario de rimas para rap y freestyle en español, con pronunciación latinoamericana.',
+      en: 'Rhyme dictionary for Spanish-language rap and freestyle, with Latin American pronunciation.',
+    },
+    summary: {
+      es: 'Un diccionario de rimas para rap en español: un motor fonético propio agrupa las palabras como suenan en Latinoamérica, y Claude propone versos que ese mismo motor descarta si no riman.',
+      en: 'A rhyme dictionary for rap in Spanish: a phonetic engine of my own groups words by how they sound in Latin America, and Claude suggests verses that the same engine discards if they don’t rhyme.',
+    },
+    challenge: {
+      es: 'Que la rima valga como suena, no como se escribe, y que los versos de un modelo de lenguaje rimen de verdad.',
+      en: 'Make a rhyme right by how it sounds, not how it’s spelled, and make sure a language model’s verses really rhyme.',
+    },
+    // Four short lines, like the other projects: the deck's case slide has no room for more.
+    contributions: [
+      {
+        es: 'Motor fonético en TypeScript, escrito desde cero.',
+        en: 'Phonetic engine in TypeScript, written from scratch.',
+      },
+      {
+        es: 'Búsqueda en Postgres: con el patrón de vocales invertido, rimar es comparar un prefijo.',
+        en: 'Search in Postgres: with the vowel pattern reversed, rhyming is a prefix match.',
+      },
+      {
+        es: 'Inspiración: Claude escribe versos con salida estructurada y el motor descarta el que no rima.',
+        en: 'Inspiración: Claude writes verses with structured output and the engine discards any that don’t rhyme.',
+      },
+      {
+        es: 'Next.js 16, Supabase y Vitest; hecho con Claude Code por pull requests.',
+        en: 'Next.js 16, Supabase and Vitest; built with Claude Code through pull requests.',
+      },
+    ],
+    outcome: {
+      es: 'Quien escribe rap busca una palabra y ve sus rimas ordenadas por cuántas vocales comparten, como suenan en Latinoamérica. Inspiración, en prueba cerrada hasta que Premium salga a la venta, propone versos ya revisados por el motor.',
+      en: 'Anyone writing rap looks up a word and sees its rhymes ordered by how many vowels they share, as they sound in Latin America. Inspiración, in closed testing until Premium goes on sale, suggests verses the engine has already checked.',
+    },
+    techStack: ['TypeScript', 'Next.js', 'React', 'Tailwind CSS', 'Claude API', 'Supabase', 'PostgreSQL', 'Vitest'],
+    url: 'https://diccionario-metricas.vercel.app',
+    screenshots: {
+      desktop: [
+        '/project-shots/desktop/diccionario-metricas-inicio-desktop.png',
+        '/project-shots/desktop/diccionario-metricas-rimas-desktop.png',
+        '/project-shots/desktop/diccionario-metricas-inspiracion-desktop.png',
+        '/project-shots/desktop/diccionario-metricas-entrenar-desktop.png',
+      ],
+      mobile: [
+        '/project-shots/mobile/diccionario-metricas-inicio-mobile.png',
+        '/project-shots/mobile/diccionario-metricas-rimas-mobile.png',
+        '/project-shots/mobile/diccionario-metricas-inspiracion-mobile.png',
+        '/project-shots/mobile/diccionario-metricas-entrenar-mobile.png',
+      ],
+    },
+  },
 ];
 
-type StackGroup = Exclude<SkillCategory, 'ai'>;
+type StackGroup = SkillCategory;
 
 /** Category for each technology, used to group the stack on case-file pages. */
 const TECH_CATEGORY: Record<string, StackGroup> = {
@@ -637,13 +832,17 @@ const TECH_CATEGORY: Record<string, StackGroup> = {
   'Tomaco Components': 'frontend',
   NestJS: 'backend',
   'Strapi 5': 'backend',
+  'Claude API': 'ai',
   MongoDB: 'database',
   PostgreSQL: 'database',
+  Supabase: 'database',
   Storybook: 'tools',
   Figma: 'tools',
+  Vitest: 'tools',
 };
 
-const GROUP_ORDER: StackGroup[] = ['frontend', 'backend', 'database', 'tools'];
+/** The same order as the plate in Stack. */
+const GROUP_ORDER: StackGroup[] = ['frontend', 'backend', 'ai', 'database', 'tools'];
 
 export interface TechGroup {
   /** Translated through the `Stack` messages. */
@@ -688,5 +887,6 @@ export const getPersonalInfo = (locale: Locale) => inLocale(PERSONAL_INFO, local
 export const getTimeline = (locale: Locale) => inLocale(TIMELINE, locale);
 export const getSkills = (locale: Locale) => inLocale(SKILLS, locale);
 export const getAiProtocol = (locale: Locale) => inLocale(AI_PROTOCOL, locale);
+export const getAiBuilds = (locale: Locale) => inLocale(AI_BUILDS, locale);
 export const getArchitecture = (locale: Locale) => inLocale(ARCHITECTURE, locale);
 export const getProjects = (locale: Locale) => inLocale(PROJECTS, locale);

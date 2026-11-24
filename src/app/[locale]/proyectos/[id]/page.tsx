@@ -25,7 +25,9 @@ export const generateMetadata = async ({
     return { title: t('projectNotFound') };
   }
 
-  const title = `${project.title} · ${project.flow} — Juan Manuel Jerez`;
+  // A stage is named by its place in the journey; a project of his own, by being his.
+  const place = project.kind === 'journey' ? project.flow : project.category;
+  const title = `${project.title} · ${place} — Juan Manuel Jerez`;
 
   return {
     title,

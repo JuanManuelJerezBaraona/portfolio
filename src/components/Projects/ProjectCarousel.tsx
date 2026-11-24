@@ -12,7 +12,7 @@ interface ProjectCarouselProps {
   projects: Project[];
 }
 
-/** Minor divisions on the scale between two stages. */
+/** Minor divisions on the scale between two projects. */
 const DIVISIONS = 5;
 
 const addressBar = 'meta flex items-center gap-2.5 border-b border-line px-3 py-2.5 text-muted';
@@ -36,10 +36,11 @@ const measure = (track: HTMLElement) => {
 };
 
 /**
- * Mobile projects view: the journey as glass slides on the microscope
- * stage. Swiping moves the stage (native scroll-snap) and only the slide
- * under the objective is in focus. The scale below follows the stage
- * through a CSS variable, so scrolling never re-renders; React only
+ * Mobile projects view: the projects as glass slides on the microscope
+ * stage, the five stages of the journey and then the project of his own
+ * ("+" on the scale). Swiping moves the stage (native scroll-snap) and only
+ * the slide under the objective is in focus. The scale below follows the
+ * stage through a CSS variable, so scrolling never re-renders; React only
  * hears which slide is centred.
  */
 const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
@@ -114,8 +115,14 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
                     <span className="slide-stage display">{stageLabel(project)}</span>
                     <span className="min-w-0">
                       <span className="wide block truncate text-xl leading-none">{project.flow}</span>
+                      {/* A stage says where it runs; a project of his own says so, on the same
+                          line, so every label keeps the same height. */}
                       <span className="mt-2 block">
-                        <Countries countries={project.countries} />
+                        {project.kind === 'journey' ? (
+                          <Countries countries={project.countries} />
+                        ) : (
+                          <span className="meta text-muted">{project.category}</span>
+                        )}
                       </span>
                     </span>
                   </header>
@@ -175,7 +182,11 @@ const ProjectCarousel = ({ projects }: ProjectCarouselProps) => {
             <button
               key={project.id}
               type="button"
-              aria-label={t('stage', { stage: stageLabel(project), flow: project.flow })}
+              aria-label={
+                project.kind === 'journey'
+                  ? t('stage', { stage: stageLabel(project), flow: project.flow })
+                  : `${project.category}: ${project.title}`
+              }
               aria-current={index === active ? 'true' : undefined}
               onClick={() => goTo(index)}
               className="vernier-stop meta"

@@ -3,14 +3,14 @@ import { useTranslations } from 'next-intl';
 import { groupTechStack } from '@/constants/data';
 import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
-import { Countries, Status, hostname } from '@/components/ui/ProjectMeta';
+import { Countries, Status, hostname, journeyOf, placeLabel, stageLabel } from '@/components/ui/ProjectMeta';
 import Reveal from '@/components/ui/Reveal';
 import ShotCycle from '@/components/ui/ShotCycle';
 import Arrow from '@/components/ui/Arrow';
 
 interface CaseFileProps {
   project: Project;
-  /** The whole journey, for the stage index at the top. */
+  /** Every project, for the index at the top: the journey, then his own. */
   projects: Project[];
   prev: Project | null;
   next: Project | null;
@@ -24,6 +24,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
   const tStack = useTranslations('Stack');
   const stackGroups = groupTechStack(project.techStack);
   const mobileShots = project.screenshots?.mobile ?? [];
+  const firstOwn = projects.find((node) => node.kind === 'own');
 
   return (
     <article className="sec-projects px-4 pb-24 pt-28 sm:px-6 lg:px-8 lg:pt-32">
@@ -33,18 +34,25 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
             {t('back')}
           </Link>
 
-          <ol className="flex items-center gap-4" aria-label={tProject('stages')}>
+          <ol className="flex items-center gap-4" aria-label={tProject('index')}>
             {projects.map((node) => {
               const isCurrent = node.id === project.id;
               return (
-                <li key={node.id}>
+                <li
+                  key={node.id}
+                  // A rule where the journey ends and his own projects begin.
+                  className={node === firstOwn ? 'border-l border-line-strong pl-4' : undefined}
+                >
                   <Link
                     href={`/proyectos/${node.id}`}
                     aria-current={isCurrent ? 'page' : undefined}
                     className={`meta ${isCurrent ? 'text-accent' : 'link-underline text-muted hover:text-text'}`}
                   >
-                    {pad(node.stage)}
-                    <span className="sr-only"> · {node.flow}</span>
+                    {stageLabel(node)}
+                    <span className="sr-only">
+                      {' '}
+                      · {node.kind === 'journey' ? node.flow : `${node.category}: ${node.title}`}
+                    </span>
                   </Link>
                 </li>
               );
@@ -54,7 +62,15 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
 
         <header className="mt-14">
           <p className="rise meta text-muted">
-            <span className="text-accent">{pad(project.stage)} · {project.flow}</span> · {project.category}
+            {project.kind === 'journey' ? (
+              <>
+                <span className="text-accent">{placeLabel(project)}</span> · {project.category}
+              </>
+            ) : (
+              <>
+                <span className="text-accent">{project.category}</span> · {project.flow}
+              </>
+            )}
           </p>
           <h1 className="rise display mt-5 text-[2.6rem] sm:text-6xl lg:text-7xl" style={{ animationDelay: '80ms' }}>
             {project.title}
@@ -71,7 +87,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               </a>
             )}
             <Status status={project.status} />
-            <Countries countries={project.countries} />
+            {project.kind === 'journey' && <Countries countries={project.countries} />}
           </div>
         </header>
 
@@ -143,24 +159,38 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
           <Reveal as="aside" className="self-start lg:sticky lg:top-28">
             <h2 className="meta border-b border-line pb-3 font-normal text-muted">{t('sheet')}</h2>
             <dl className="divide-y divide-line">
-              <div className="flex items-center justify-between gap-4 py-3">
-                <dt className="meta text-muted">{t('stage')}</dt>
-                <dd className="meta">
-                  {t('stageOf', { stage: pad(project.stage), total: pad(projects.length), flow: project.flow })}
-                </dd>
-              </div>
+              {/* A stage says which one of the journey it is; a project of his own, that it's his. */}
+              {project.kind === 'journey' ? (
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="meta text-muted">{t('stage')}</dt>
+                  <dd className="meta">
+                    {t('stageOf', {
+                      stage: pad(project.stage),
+                      total: pad(journeyOf(projects).length),
+                      flow: project.flow,
+                    })}
+                  </dd>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="meta text-muted">{t('kind')}</dt>
+                  <dd className="meta">{project.category}</dd>
+                </div>
+              )}
               <div className="flex items-center justify-between gap-4 py-3">
                 <dt className="meta text-muted">{t('status')}</dt>
                 <dd>
                   <Status status={project.status} />
                 </dd>
               </div>
-              <div className="flex items-center justify-between gap-4 py-3">
-                <dt className="meta text-muted">{t('countries')}</dt>
-                <dd>
-                  <Countries countries={project.countries} />
-                </dd>
-              </div>
+              {project.kind === 'journey' && (
+                <div className="flex items-center justify-between gap-4 py-3">
+                  <dt className="meta text-muted">{t('countries')}</dt>
+                  <dd>
+                    <Countries countries={project.countries} />
+                  </dd>
+                </div>
+              )}
               {stackGroups.map((group) => (
                 <div key={group.key} className="py-3">
                   <dt className="meta text-muted">{tStack(group.key)}</dt>
@@ -175,7 +205,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
           {prev ? (
             <Link href={`/proyectos/${prev.id}`} className="case-nav group py-8 sm:pr-8" data-dir="prev">
               <span className="meta text-muted">
-                <span className="case-nav-arrow">←</span> {pad(prev.stage)} · {prev.flow}
+                <span className="case-nav-arrow">←</span> {placeLabel(prev)}
               </span>
               <span className="case-nav-title wide mt-2 block text-2xl group-hover:text-accent">{prev.title}</span>
             </Link>
@@ -189,7 +219,7 @@ const CaseFile = ({ project, projects, prev, next }: CaseFileProps) => {
               data-dir="next"
             >
               <span className="meta text-muted">
-                {pad(next.stage)} · {next.flow} <span className="case-nav-arrow">→</span>
+                {placeLabel(next)} <span className="case-nav-arrow">→</span>
               </span>
               <span className="case-nav-title wide mt-2 block text-2xl group-hover:text-accent">{next.title}</span>
             </Link>

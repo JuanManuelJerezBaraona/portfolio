@@ -23,10 +23,11 @@ export type Skill = InLocale<SkillData>;
 
 export type CountryCode = 'CL' | 'PE' | 'CO';
 
-export interface ProjectData {
+interface ProjectBase {
   id: string;
   title: Text;
-  category: string;
+  /** Who it's for: the client, or "Proyecto propio". */
+  category: Text;
   description: Text;
   techStack: string[];
   url?: string;
@@ -37,26 +38,44 @@ export interface ProjectData {
     mobile: string[];
   };
 
-  /** Position in the customer journey (1 = entry). */
-  stage: number;
-  /** Journey stage name, e.g. "Cotización". */
+  /** Journey stage name ("Cotización"); for a project of his own, what it is in a word ("Rimas"). */
   flow: Text;
-  /** Countries where the flow runs in production. */
-  countries: CountryCode[];
   /** "live" = public URL in production, "internal" = restricted access. */
   status: 'live' | 'internal';
-  /** What Juan Manuel specifically owned on this flow. */
+  /** What Juan Manuel specifically owned on this project. */
   role: Text;
   /** Longer narrative used on the case-file hero. */
   summary: Text;
-  /** The problem this flow had to solve. */
+  /** The problem it had to solve. */
   challenge: Text;
   /** Concrete contributions, grounded in the real stack. */
   contributions: Text[];
   /** What the application does for its users, in one sentence, with no figures. */
   outcome: Text;
 }
+
+/** One of the Seguros Falabella apps: a stage of the customer journey. */
+export interface JourneyProjectData extends ProjectBase {
+  kind: 'journey';
+  /** Position in the customer journey (1 = entry). */
+  stage: number;
+  /** Countries where the flow runs in production. */
+  countries: CountryCode[];
+}
+
+/** A project of his own, outside the journey: no stage and no countries. */
+export interface OwnProjectData extends ProjectBase {
+  kind: 'own';
+}
+
+/**
+ * A union on purpose: anything that reads `stage` or `countries` has to
+ * narrow on `kind` first, so nothing can present a project of his own as a
+ * stage of the insurance journey.
+ */
+export type ProjectData = JourneyProjectData | OwnProjectData;
 export type Project = InLocale<ProjectData>;
+export type JourneyProject = InLocale<JourneyProjectData>;
 
 export interface TimelineEntryData {
   /** e.g. "2016 – 2022" */
@@ -95,6 +114,27 @@ export interface AiStepData {
 }
 export type AiStep = InLocale<AiStepData>;
 
+/** Something he built with language models, and the control that checks its output. */
+export interface AiBuildData {
+  id: string;
+  title: Text;
+  /** Employer or project it belongs to. */
+  place: Text;
+  /**
+   * How far it has got, shown next to the place (`Ai.status*`): at work,
+   * a project of his own that is live, one still being built, or a study.
+   */
+  status: 'work' | 'live' | 'building' | 'study';
+  /** What the model does and how it is wired. */
+  method: Text;
+  /** What checks its output before anyone relies on it. */
+  control: Text;
+  tools: Text[];
+  /** Id of its case file, when it has one. */
+  project?: string;
+}
+export type AiBuild = InLocale<AiBuildData>;
+
 export interface NavLinkData {
   id: string;
   label: Text;
@@ -112,8 +152,11 @@ export interface SocialLink {
 export interface PersonalInfoData {
   name: string;
   shortName: string;
-  /** Role with level, the first thing the hero says about him. */
-  title: Text;
+  /**
+   * What he works as, the first thing the hero says about him, one role per
+   * line: the role he applies for, then the one he holds today with its level.
+   */
+  roles: Text[];
   /** Seniority on its own, for the fact rows. */
   level: Text;
   location: Text;

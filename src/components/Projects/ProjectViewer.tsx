@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { Link } from '@/i18n/navigation';
 import { Project } from '@/types';
-import { Countries, Status, hostname, stageLabel } from '@/components/ui/ProjectMeta';
+import { Countries, Status, hostname, placeLabel, stageLabel } from '@/components/ui/ProjectMeta';
 import ShotCycle from '@/components/ui/ShotCycle';
 import Arrow from '@/components/ui/Arrow';
 
@@ -12,12 +12,20 @@ interface ProjectViewerProps {
   projects: Project[];
 }
 
+interface Row {
+  project: Project;
+  /** Position in the whole list: the fields, the observer and the index bars all go by it. */
+  index: number;
+}
+
 /**
- * Desktop projects view: the five apps lie one after another on a vertical
- * stage, so scrolling is enough to see them all. The journey stays pinned
- * on the left as an index; the project crossing the middle of the screen
- * is under the objective (in focus, and marked in the index) and the rest
- * sit outside the focal plane. A click on the index moves the stage there.
+ * Desktop projects view: the projects lie one after another on a vertical
+ * stage, so scrolling is enough to see them all. The index stays pinned on
+ * the left: the five stages of the journey and, under its own label, the
+ * project of his own, which is not a stage of anything. The project crossing
+ * the middle of the screen is under the objective (in focus, and marked in
+ * the index) and the rest sit outside the focal plane. A click on the index
+ * moves the stage there.
  */
 const ProjectViewer = ({ projects }: ProjectViewerProps) => {
   const t = useTranslations('Project');
@@ -25,7 +33,11 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
   const [active, setActive] = useState(0);
   // Until the observer reports, every project stays sharp, so nothing is blurred without JS.
   const [ready, setReady] = useState(false);
-  const total = String(projects.length).padStart(2, '0');
+  const rows: Row[] = projects.map((project, index) => ({ project, index }));
+  const journey = rows.filter((row) => row.project.kind === 'journey');
+  const own = rows.filter((row) => row.project.kind === 'own');
+  // "NN / 05" counts the stages of the journey, not the list.
+  const total = String(journey.length).padStart(2, '0');
 
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return;
@@ -55,38 +67,51 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
     field.focus({ preventScroll: true });
   };
 
+  const indexRow = ({ project: item, index }: Row) => {
+    const isActive = ready && index === active;
+    return (
+      <li key={item.id}>
+        <a
+          href={`#project-${item.id}`}
+          onClick={(event) => goTo(event, index)}
+          aria-current={isActive ? 'true' : undefined}
+          className="sample-row group grid grid-cols-[2.5rem_1fr] items-baseline gap-4 border-b border-line px-4"
+        >
+          {/* Fills with the scroll through this project (ScrollScenes). */}
+          <span className="sample-bar" data-field-bar={index} aria-hidden="true" />
+          <span className={`meta ${isActive ? 'text-accent' : 'text-muted'}`}>{stageLabel(item)}</span>
+          <span>
+            <span
+              className={`sample-flow wide block leading-none ${
+                isActive ? 'text-text' : 'text-muted group-hover:text-text'
+              }`}
+            >
+              {item.flow}
+            </span>
+            <span className="mt-2 block text-[0.95rem] text-muted">{item.title}</span>
+          </span>
+        </a>
+      </li>
+    );
+  };
+
   return (
     <div className="grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-14 xl:gap-20">
-      <nav aria-label={t('stages')} className="self-start lg:sticky lg:top-28">
-        <ol className="border-t border-line">
-          {projects.map((item, index) => {
-            const isActive = ready && index === active;
-            return (
-              <li key={item.id}>
-                <a
-                  href={`#project-${item.id}`}
-                  onClick={(event) => goTo(event, index)}
-                  aria-current={isActive ? 'true' : undefined}
-                  className="sample-row group grid grid-cols-[2.5rem_1fr] items-baseline gap-4 border-b border-line px-4 py-5"
-                >
-                  {/* Fills with the scroll through this project (ScrollScenes). */}
-                  <span className="sample-bar" data-field-bar={index} aria-hidden="true" />
-                  <span className={`meta ${isActive ? 'text-accent' : 'text-muted'}`}>{stageLabel(item)}</span>
-                  <span>
-                    <span
-                      className={`sample-flow wide block text-[1.55rem] leading-none ${
-                        isActive ? 'text-text' : 'text-muted group-hover:text-text'
-                      }`}
-                    >
-                      {item.flow}
-                    </span>
-                    <span className="mt-2 block text-[0.95rem] text-muted">{item.title}</span>
-                  </span>
-                </a>
-              </li>
-            );
-          })}
+      <nav aria-label={t('index')} className="self-start lg:sticky lg:top-28">
+        <ol aria-label={t('stages')} className="border-t border-line">
+          {journey.map(indexRow)}
         </ol>
+        {own.length > 0 && (
+          <>
+            {/* Outside the journey: its own label, so "+" isn't read as a sixth stage. */}
+            <p id="project-index-own" className="meta px-4 pb-2.5 pt-6 text-muted">
+              {own[0].project.category}
+            </p>
+            <ol aria-labelledby="project-index-own" className="border-t border-line">
+              {own.map(indexRow)}
+            </ol>
+          </>
+        )}
       </nav>
 
       <ol className="space-y-24">
@@ -106,14 +131,14 @@ const ProjectViewer = ({ projects }: ProjectViewerProps) => {
             <article aria-labelledby={`project-${project.id}-title`}>
               {/* Where one project starts: a rule with its stage, lit when it's under the objective. */}
               <p className="field-head">
-                <span className="meta text-accent">
-                  {stageLabel(project)} · {project.flow}
-                </span>
-                <Countries countries={project.countries} />
+                <span className="meta text-accent">{placeLabel(project)}</span>
+                {project.kind === 'journey' && <Countries countries={project.countries} />}
                 <Status status={project.status} />
-                <span className="meta ml-auto text-muted">
-                  {stageLabel(project)} / {total}
-                </span>
+                {project.kind === 'journey' && (
+                  <span className="meta ml-auto text-muted">
+                    {stageLabel(project)} / {total}
+                  </span>
+                )}
               </p>
 
               <div className="field-body">

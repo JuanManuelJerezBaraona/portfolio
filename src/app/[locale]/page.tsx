@@ -13,11 +13,12 @@ const HomePage = async ({ params }: HomePageProps) => {
 
   return (
     <>
+      {/* The same order as NAV_LINKS: the navbar marks the active section by it. */}
       <Header />
       <AboutMe />
+      <AiProfile />
       <Projects />
       <Architecture />
-      <AiProfile />
       <Skills />
       <Contact />
       <ScrollScenes />

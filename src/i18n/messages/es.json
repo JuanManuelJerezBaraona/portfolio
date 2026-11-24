@@ -1,14 +1,14 @@
 {
   "Meta": {
-    "title": "Juan Manuel Jerez Baraona · Desarrollador Full Stack semi senior",
-    "description": "Desarrollador Full Stack semi senior en Santiago, Chile. Ingeniero en biotecnología que hoy construye los flujos de cotización, pago y postventa de Seguros Falabella con React, Next.js, NestJS y Strapi, y trabaja a diario con agentes de IA.",
+    "title": "Juan Manuel Jerez Baraona · Ingeniero de IA · Desarrollador Full Stack semi senior",
+    "description": "Ingeniero de IA y desarrollador Full Stack semi senior en Santiago, Chile. Ingeniero en biotecnología que hoy construye con agentes y RAG (Mastra, LangChain), integra la API de Claude en proyectos propios y desarrolla los flujos de cotización, pago y postventa de Seguros Falabella con Next.js y NestJS.",
     "ogLocale": "es_CL",
-    "keywords": "desarrollador full stack, desarrollador full-stack, desarrollador semi senior, react, next.js, typescript, nestjs, strapi, nuxt, vue, playwright, claude code, codex, opencode, github copilot, spec-driven development, n8n, mcp, ia, santiago de chile",
+    "keywords": "ingeniero de ia, ai engineer, ingeniero de inteligencia artificial, agentes de ia, rag, llm, mastra, langchain, langgraph, embeddings, mongodb atlas vector search, evals, mcp, agent skills, agent harness, api de claude, desarrollador full stack, desarrollador full-stack, desarrollador semi senior, typescript, next.js, nestjs, react, strapi, nuxt, vue, playwright, claude code, codex, opencode, github copilot, spec-driven development, n8n, santiago de chile",
     "projectNotFound": "Proyecto no encontrado — Juan Manuel Jerez"
   },
   "Og": {
     "title": "Pasé del microscopio al código.",
-    "detail": "Full Stack semi senior · React, Next.js, NestJS · IA-ready",
+    "detail": "Ingeniero de IA · Full Stack semi senior · Agentes y RAG",
     "footer": "Santiago, Chile · Seguros Falabella · CL PE CO"
   },
   "Nav": {
@@ -36,13 +36,13 @@
   },
   "Header": {
     "title": "Pasé del microscopio al <seq>código</seq>.",
-    "intro": "Soy <b>{name}</b>. Estudié Ingeniería en Biotecnología y trabajé en un laboratorio de neurobiología antes de dedicarme al software. Hoy construyo los flujos de cotización, pago y postventa de <b>Seguros Falabella</b> con React, Next.js, NestJS y Strapi, y la IA es parte de mi día a día.",
+    "intro": "Soy <b>{name}</b>. Estudié Ingeniería en Biotecnología y trabajé en un laboratorio de neurobiología antes de dedicarme al software. Hoy, en <b>Seguros Falabella</b>, construyo los flujos de cotización, pago y postventa con Next.js y NestJS, y construí para el equipo una herramienta interna con agentes y RAG (Mastra y LangChain).",
     "seeProjects": "Ver proyectos",
     "level": "Nivel",
     "fullStackSince": "Full Stack desde",
     "inProduction": "En producción",
-    "profile": "Perfil",
-    "aiReady": "IA-ready",
+    "ai": "IA",
+    "aiValue": "Agentes · RAG",
     "channels": "Neurona en cultivo, tres canales. Apaga uno para ver cada capa.",
     "stimulate": "Haz clic o toca una neurona para estimularla."
   },
@@ -54,19 +54,19 @@
     "timeline": "Trayectoria",
     "title": "Del laboratorio al desarrollo web.",
     "lab": "Estudié Ingeniería en Biotecnología y pasé tres años en un laboratorio de neurobiología haciendo estadística, análisis de datos y bioinformática. Ahí aprendí a no creerle a un resultado hasta poder reproducirlo.",
-    "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como desarrollador full stack. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
+    "code": "En 2016 empecé a programar tiendas online y desde 2022 trabajo como desarrollador full stack. Hoy parte de ese trabajo es construir con modelos de lenguaje: una herramienta interna con agentes y RAG para el equipo, y proyectos propios con la API de Claude. La costumbre del laboratorio se vino conmigo: pruebo, mido y reviso antes de dar algo por terminado.",
     "portrait": "Retrato de {name}"
   },
   "Projects": {
-    "note": "Seguros Falabella · CL · PE · CO",
+    "note": "Seguros Falabella · CL · PE · CO · + 1 propio",
     "title": "Cinco etapas del <hl>mismo cliente</hl>.",
-    "body": "Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites.",
+    "body": "Cinco aplicaciones que, en orden, cubren lo que hace una persona con su seguro: lo cotiza, lo contrata, lo paga, entra a su cuenta y resuelve trámites. Y al final, un proyecto propio: un diccionario de rimas con IA.",
     "empty": "Todavía no hay proyectos publicados."
   },
   "Architecture": {
     "note": "De Figma a producción",
     "title": "Por dentro, <hl>la misma arquitectura</hl>.",
-    "body": "Las cinco aplicaciones comparten capas: un frontend en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un frontend se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
+    "body": "Las cinco aplicaciones de Seguros Falabella comparten capas: un frontend en Next.js o React, servicios en NestJS con arquitectura hexagonal, contenido en Strapi y datos en MongoDB. Cada capa tiene una sola responsabilidad, así que un frontend se puede migrar o una integración cambiar sin tocar las reglas de negocio.",
     "figure": "Servicios NestJS · arquitectura hexagonal",
     "domain": "Dominio",
     "domainNote": "reglas de negocio",
@@ -86,6 +86,7 @@
     "public": "Público",
     "internal": "Acceso interno",
     "internalAddress": "acceso interno",
+    "index": "Índice de proyectos",
     "stages": "Etapas del recorrido",
     "desktopShot": "Captura de {title} en escritorio",
     "desktopShotOf": "Captura {n} de {total} de {title} en escritorio",
@@ -99,10 +100,10 @@
     "openSite": "Abrir sitio",
     "openSiteAt": "Abrir sitio: {host}",
     "carousel": "carrusel",
-    "carouselLabel": "Proyectos, una etapa por lámina",
-    "scale": "Etapas",
+    "carouselLabel": "Proyectos, uno por lámina",
+    "scale": "Proyectos",
     "stage": "Etapa {stage}: {flow}",
-    "swipe": "Desliza para cambiar de etapa"
+    "swipe": "Desliza para cambiar de proyecto"
   },
   "Case": {
     "back": "← Todos los proyectos",
@@ -113,14 +114,23 @@
     "sheet": "Ficha técnica",
     "stage": "Etapa",
     "stageOf": "{stage} de {total} · {flow}",
+    "kind": "Tipo",
     "status": "Estado",
     "countries": "Países",
-    "neighbours": "Etapa anterior y siguiente"
+    "neighbours": "Proyecto anterior y siguiente"
   },
   "Ai": {
-    "note": "Perfil IA-ready",
-    "title": "Uso IA todos los días. Con <hl>protocolo y control</hl>, como en el laboratorio.",
-    "body": "Vengo de analizar datos en un laboratorio, donde ningún resultado vale sin su control. A un modelo de lenguaje lo trato igual: es rápido y útil, pero no le creo hasta verificarlo.",
+    "note": "Agentes · RAG · MCP · evals",
+    "title": "Construyo con modelos de lenguaje y programo con agentes. Cada resultado, <hl>con su control</hl>.",
+    "body": "Vengo de analizar datos en un laboratorio, donde ningún resultado vale sin su control. A un modelo de lenguaje lo trato igual: es rápido y útil, pero no le creo hasta verificarlo. Primero, lo que he construido con ellos; después, el protocolo que sigo cuando programo con un agente.",
+    "builds": "Sistemas · lo que he construido con modelos de lenguaje",
+    "buildsNote": "Cada uno con su control",
+    "system": "Sistema",
+    "control": "Control",
+    "statusWork": "uso interno",
+    "statusLive": "proyecto propio, en producción",
+    "statusBuilding": "proyecto propio, en desarrollo",
+    "statusStudy": "proyecto propio, de estudio",
     "protocol": "Protocolo · una tarea con un agente de código",
     "stepCount": "{count} pasos",
     "step": "Paso",
@@ -132,18 +142,18 @@
     "pass": "Cumple",
     "fail": "No cumple",
     "retry": "vuelve al paso {step}",
-    "beyondLabel": "Fuera del editor",
-    "beyond": "También he integrado APIs de modelos de lenguaje dentro de aplicaciones y armo automatizaciones con n8n."
+    "beyondLabel": "Además",
+    "beyond": "Armo automatizaciones con n8n."
   },
   "Skills": {
-    "note": "{count} tecnologías",
+    "note": "{count} tecnologías y prácticas",
     "title": "Con qué trabajo.",
-    "body": "Cada pocillo es una tecnología que uso, ordenada por canal: frontend, backend, IA, datos y herramientas."
+    "body": "Cada pocillo es una tecnología o una práctica con la que trabajo, ordenada por canal: frontend, backend, IA, datos y herramientas."
   },
   "Contact": {
     "note": "Disponible para nuevas oportunidades",
     "title": "Conversemos.",
-    "body": "¿Buscas un desarrollador full stack para tu equipo? Escríbeme: el correo es la vía más directa y respondo rápido.",
+    "body": "¿Buscas un ingeniero de IA o un desarrollador full stack para tu equipo? Escríbeme: el correo es la vía más directa y respondo rápido.",
     "level": "Nivel",
     "location": "Ubicación",
     "languages": "Idiomas",
@@ -233,7 +243,7 @@
   },
   "Deck": {
     "metaTitle": "Presentación — Juan Manuel Jerez",
-    "metaDescription": "Mis cinco proyectos en Seguros Falabella, en el orden del recorrido del cliente.",
+    "metaDescription": "Lo que construyo con IA y mis proyectos en Seguros Falabella, en el orden del recorrido del cliente.",
     "label": "Presentación",
     "prev": "Lámina anterior",
     "next": "Lámina siguiente",
@@ -242,7 +252,8 @@
     "counter": "Lámina {n} de {total}",
     "about": "Quién soy",
     "journey": "El recorrido",
-    "ai": "Cómo trabajo con IA",
+    "builds": "Qué construyo con IA",
+    "ai": "Cómo programo con agentes",
     "contact": "Contacto",
     "site": "Sitio",
     "cv": "CV"

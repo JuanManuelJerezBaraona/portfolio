@@ -53,7 +53,7 @@ const GROUPS: { key: GroupKey; measure: Measure; tokens: [name: string, key: Tok
   },
 ];
 
-const SECTIONS = ['about', 'projects', 'arquitectura', 'ia', 'skills', 'contact'];
+const SECTIONS = ['about', 'ia', 'projects', 'arquitectura', 'skills', 'contact'];
 
 // The same mapping as the hero's channel toggles, plus YFP for data.
 const CHANNELS = [

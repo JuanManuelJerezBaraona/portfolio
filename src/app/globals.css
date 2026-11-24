@@ -858,11 +858,26 @@
 
   /* ============================================================
      PROJECT INDEX  —  the journey pinned beside the stage on
-     desktop; the stage under the objective lights up in its row.
+     desktop, and under it the project of his own; the one under
+     the objective lights up in its row. The rows' height is set
+     here and not with utilities, so a short screen can tighten it:
+     the pinned index has to fit under the navbar with all six.
      ============================================================ */
   .sample-row {
     position: relative;
+    padding-block: 1.25rem;
     transition: background-color 0.25s ease;
+  }
+  .sample-flow {
+    font-size: 1.55rem;
+  }
+  @media (min-width: 1024px) and (max-height: 820px) {
+    .sample-row {
+      padding-block: 0.8rem;
+    }
+    .sample-flow {
+      font-size: 1.3rem;
+    }
   }
   .sample-row::before {
     content: "";
@@ -2296,9 +2311,10 @@
     border-left: 1px solid var(--line-strong);
     padding-left: 1.6em;
   }
+  /* One column per stage of the journey (--n, set by the slide). */
   .deck-journey {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr));
     border-top: 1px solid var(--line-strong);
   }
   .deck-journey > li {
@@ -2312,6 +2328,12 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.4em 2.4em;
+  }
+  /* Two across for longer items (what he built with AI); the portrait rule
+     below still stacks them, since it comes later with the same weight. */
+  .deck-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.2em 3em;
   }
   .deck-grid > li {
     padding-top: 0.9em;

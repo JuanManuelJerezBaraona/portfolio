@@ -6,6 +6,8 @@ import Reveal from '@/components/ui/Reveal';
 import SectionCover from '@/components/ui/SectionCover';
 import SectionHeading from '@/components/ui/SectionHeading';
 import TextType from '@/components/bits/TextType';
+import Builds from './Builds';
+import { COLUMNS, pad } from './sheet';
 
 /**
  * One of his real skills, trimmed to what's safe to show publicly. Kept
@@ -29,12 +31,6 @@ description: Arquitectura hexagonal
   respetando las capas domain,
   application e infrastructure.
 ---`;
-
-/** Step number, procedure, and the material: under it on phones, beside it from lg. Shared by the header row and every step. */
-const COLUMNS =
-  'grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-x-4 lg:grid-cols-[4.5rem_minmax(0,1fr)_24rem] lg:gap-x-12';
-
-const pad = (n: number) => String(n).padStart(2, '0');
 
 const Skill = () => {
   const t = useTranslations('Ai');
@@ -121,6 +117,9 @@ const AiProfile = () => {
           <p>{t('body')}</p>
         </SectionHeading>
 
+        {/* First what he has built with language models, then how he codes with an agent. */}
+        <Builds />
+
         <figure className="mt-14 border border-line bg-stage lg:mt-16">
           <figcaption className="meta flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-line px-4 py-3 sm:px-6">
             <span className="text-text">{t('protocol')}</span>
@@ -141,7 +140,12 @@ const AiProfile = () => {
                 const artifact = artifacts[step.id];
 
                 return (
-                  <li key={step.id} id={`ia-${step.id}`} className="border-b border-line" data-protocol-step>
+                  <li
+                    key={step.id}
+                    id={`ia-${step.id}`}
+                    className="border-b border-line last:border-b-0"
+                    data-protocol-step
+                  >
                     <Reveal
                       className={`${COLUMNS} protocol-step grid gap-y-5 px-4 py-7 sm:px-6 lg:py-9 ${
                         step.critical ? 'is-critical' : ''
@@ -174,11 +178,6 @@ const AiProfile = () => {
               })}
             </ol>
           </div>
-
-          <p className="px-4 py-5 leading-relaxed text-muted sm:px-6">
-            <span className="meta mb-1.5 block text-text sm:mb-0 sm:mr-3 sm:inline">{t('beyondLabel')}</span>
-            {t('beyond')}
-          </p>
         </figure>
       </div>
     </section>

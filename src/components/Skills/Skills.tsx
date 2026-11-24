@@ -11,11 +11,19 @@ import { ICONS, STACK_SPRITE } from './icons';
 /** Practices, services and libraries without a brand mark get a monogram instead. */
 const MONOGRAMS: Record<string, string> = {
   zustand: 'Zu',
+  mastra: 'MST',
+  rag: 'RAG',
+  embeddings: 'EMB',
+  'tool-calling': 'TOOL',
+  'structured-outputs': 'JSON',
+  evals: 'EVAL',
+  guardrails: 'GRD',
+  harness: 'HRN',
   codex: 'CDX',
   sdd: 'SDD',
   skills: 'SK',
   'context-eng': 'CTX',
-  'llm-apis': 'API',
+  'atlas-vector': 'VEC',
   rest: 'REST',
   hexagonal: 'HEX',
   apigee: 'APG',
@@ -34,7 +42,6 @@ const CATEGORIES: { key: SkillCategory; channel: string }[] = [
 ];
 
 const COLUMNS = 12;
-const ROW_LETTERS = 'ABCDEFGH';
 
 interface PlateRow {
   letter: string;
@@ -44,14 +51,18 @@ interface PlateRow {
   skills: Skill[];
 }
 
-/** Lays the stack out like a well plate: one or more 12-well rows per category. */
+/**
+ * Lays the stack out like a well plate: one or more 12-well rows per
+ * category, lettered from A as on a real one. Today that is eight rows,
+ * A to H: a full 96-well plate.
+ */
 const buildRows = (all: Skill[]): PlateRow[] => {
   const rows: PlateRow[] = [];
   for (const category of CATEGORIES) {
     const skills = all.filter((skill) => skill.category === category.key);
     for (let i = 0; i < skills.length; i += COLUMNS) {
       rows.push({
-        letter: ROW_LETTERS[rows.length],
+        letter: String.fromCharCode(65 + rows.length),
         category: i === 0 ? category.key : undefined,
         channel: category.channel,
         skills: skills.slice(i, i + COLUMNS),
@@ -71,7 +82,10 @@ const Well = ({ skill, column }: { skill: Skill; column: number }) => {
             <use href={`${STACK_SPRITE}#${skill.id}`} />
           </svg>
         ) : (
-          <span className="well-mark well-monogram">{MONOGRAMS[skill.id]}</span>
+          // A skill added without a mark still gets one, so no well is left blank.
+          <span className="well-mark well-monogram">
+            {MONOGRAMS[skill.id] ?? skill.name.slice(0, 3).toUpperCase()}
+          </span>
         )}
       </span>
       <span className="well-name">{skill.name}</span>

@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import {
   SOCIAL_LINKS,
+  getAiBuilds,
   getAiProtocol,
   getArchitecture,
   getPersonalInfo,
   getProjects,
   getTimeline,
 } from '@/constants/data';
-import { Countries, Status, stageLabel } from '@/components/ui/ProjectMeta';
+import { Countries, Status, journeyOf, placeLabel, stageLabel } from '@/components/ui/ProjectMeta';
 import TagMark from '@/components/ui/TagMark';
 import Deck from './Deck';
 
@@ -17,11 +18,20 @@ const CHANNEL = { dapi: 'text-dapi', gfp: 'text-gfp', yfp: 'text-yfp', text: 'te
 
 const hl = (chunks: ReactNode) => <em className="hl">{chunks}</em>;
 
+const STATUS = {
+  work: 'statusWork',
+  live: 'statusLive',
+  building: 'statusBuilding',
+  study: 'statusStudy',
+} as const;
+
 /**
- * An interview deck built from the same data as the site: who he is, the
- * five apps in journey order (one slide each), the architecture they share,
- * the protocol he follows with AI, and how to reach him. Nothing here is
- * written twice, so the deck can't say something the site doesn't.
+ * An interview deck built from the same data as the site, in the site's
+ * order: who he is, what he has built with AI and the protocol he follows
+ * with a coding agent, the journey of the five Seguros Falabella apps, one
+ * slide per project (the five and then his own), the architecture they
+ * share, and how to reach him. Nothing here is written twice, so the deck
+ * can't say something the site doesn't.
  */
 const Presentation = () => {
   const locale = useLocale();
@@ -40,6 +50,8 @@ const Presentation = () => {
   const projects = getProjects(locale);
   const layers = getArchitecture(locale);
   const steps = getAiProtocol(locale);
+  const builds = getAiBuilds(locale);
+  const stages = journeyOf(projects);
 
   const cover = (
     <div className="deck-cover sec-ia">
@@ -48,7 +60,7 @@ const Presentation = () => {
         {info.name} · {info.location}
       </p>
       <h1 className="deck-display mt-[0.3em]">{tHeader.rich('title', { seq: (chunks) => chunks })}</h1>
-      <p className="deck-lead mt-[0.8em] text-muted">{info.title}</p>
+      <p className="deck-lead mt-[0.8em] text-muted">{info.roles.join(' · ')}</p>
     </div>
   );
 
@@ -78,8 +90,8 @@ const Presentation = () => {
       <p className="meta text-accent">{t('journey')}</p>
       <h2 className="deck-h2 mt-[0.5em]">{tProjects.rich('title', { hl })}</h2>
       <p className="deck-lead mt-[0.8em] max-w-[40em] text-muted">{tProjects('body')}</p>
-      <ol className="deck-journey mt-[2.2em]">
-        {projects.map((project) => (
+      <ol className="deck-journey mt-[2.2em]" style={{ '--n': stages.length } as CSSProperties}>
+        {stages.map((project) => (
           <li key={project.id}>
             <span className="meta text-accent">{stageLabel(project)}</span>
             <span className="wide mt-[0.4em] block text-[1.35em] leading-none">{project.flow}</span>
@@ -100,10 +112,13 @@ const Presentation = () => {
       <div key={project.id} className="deck-split deck-split--case sec-projects">
         <div>
           <p className="meta text-muted">
-            <span className="text-accent">
-              {stageLabel(project)} · {project.flow}
-            </span>{' '}
-            · <Countries countries={project.countries} />
+            <span className="text-accent">{placeLabel(project)}</span>
+            {project.kind === 'journey' && (
+              <>
+                {' '}
+                · <Countries countries={project.countries} />
+              </>
+            )}
           </p>
           <h2 className="deck-h2 mt-[0.4em]">{project.title}</h2>
           <div className="mt-[0.6em]">
@@ -172,11 +187,29 @@ const Presentation = () => {
     </div>
   );
 
+  /* What he has built with language models, each with its control: the thesis of the IA section. */
+  const aiBuilds = (
+    <div className="sec-ia">
+      <p className="meta text-accent">{t('builds')}</p>
+      <h2 className="deck-h2 mt-[0.5em] max-w-[20em]">{tAi.rich('title', { hl })}</h2>
+      <ol className="deck-grid deck-grid--2 mt-[1.6em]" aria-label={tAi('builds')}>
+        {builds.map((build, i) => (
+          <li key={build.id}>
+            <span className="meta block text-accent">
+              {String.fromCharCode(65 + i)} · {build.place} · {tAi(STATUS[build.status])}
+            </span>
+            <span className="wide mt-[0.3em] block">{build.title}</span>
+            <span className="mt-[0.4em] block text-muted">{build.control}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+
   const ai = (
     <div className="sec-ia">
       <p className="meta text-accent">{t('ai')}</p>
-      <h2 className="deck-h2 mt-[0.5em] max-w-[18em]">{tAi.rich('title', { hl })}</h2>
-      <p className="deck-lead mt-[0.8em] max-w-[40em] text-muted">{tAi('body')}</p>
+      <h2 className="deck-h2 mt-[0.5em] max-w-[18em]">{tAi('protocol')}</h2>
       <ol className="deck-grid mt-[2em]" aria-label={tAi('protocol')}>
         {steps.map((step, i) => (
           <li key={step.id} className={step.critical ? 'border-accent' : undefined}>
@@ -220,7 +253,7 @@ const Presentation = () => {
     </div>
   );
 
-  return <Deck slides={[cover, about, journey, ...cases, architecture, ai, contact]} />;
+  return <Deck slides={[cover, about, aiBuilds, ai, journey, ...cases, architecture, contact]} />;
 };
 
 export default Presentation;
